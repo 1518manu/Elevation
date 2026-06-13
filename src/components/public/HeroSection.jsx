@@ -24,7 +24,7 @@ export default function HeroSection() {
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: `linear-gradient(135deg, rgba(26,58,92,0.92) 0%, rgba(15,37,64,0.75) 100%), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80')`,
+          backgroundImage: `linear-gradient(135deg, rgba(0,0,0,0.92) 0%, rgba(139,0,0,0.75) 100%), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80')`,
         }}
       />
 

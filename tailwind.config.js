@@ -8,8 +8,8 @@ export default {
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
-          dark: '#0F2540',
-          light: '#2A5A8C',
+          dark: '#8B0000',
+          light: '#DC143C',
         },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
@@ -18,9 +18,9 @@ export default {
         accent: {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
-          dark: '#C99B32',
+          dark: '#B22222',
         },
-        alfa: { navy: '#1A3A5C', gold: '#E8B84B' },
+        alfa: { navy: '#000000', gold: '#FF0000' },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',

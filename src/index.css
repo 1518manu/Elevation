@@ -5,41 +5,41 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 0 0% 0%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 0 0% 0%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 210 55% 23%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 43 74% 60%;
-    --accent-foreground: 210 55% 23%;
+    --popover-foreground: 0 0% 0%;
+    --primary: 0 72% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 95%;
+    --secondary-foreground: 0 0% 0%;
+    --muted: 0 0% 95%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 0 72% 50%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 210 55% 23%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 72% 50%;
     --radius: 0.5rem;
 
-    --alfa-primary: #1a3a5c;
-    --alfa-primary-dark: #0f2540;
-    --alfa-primary-light: #2a5a8c;
-    --alfa-accent: #e8b84b;
-    --alfa-accent-dark: #c99b32;
-    --alfa-gray-50: #f8f9fa;
-    --alfa-gray-100: #f1f3f5;
-    --alfa-gray-200: #e9ecef;
-    --alfa-gray-500: #6c757d;
-    --alfa-gray-700: #495057;
-    --alfa-gray-900: #212529;
-    --alfa-success: #2e7d32;
-    --alfa-warning: #f57c00;
-    --alfa-error: #c62828;
-    --alfa-info: #1565c0;
+    --alfa-primary: #FF0000;
+    --alfa-primary-dark: #8B0000;
+    --alfa-primary-light: #DC143C;
+    --alfa-accent: #FF0000;
+    --alfa-accent-dark: #B22222;
+    --alfa-gray-50: #fafafa;
+    --alfa-gray-100: #f5f5f5;
+    --alfa-gray-200: #e5e5e5;
+    --alfa-gray-500: #737373;
+    --alfa-gray-700: #404040;
+    --alfa-gray-900: #171717;
+    --alfa-success: #000000;
+    --alfa-warning: #FF0000;
+    --alfa-error: #FF0000;
+    --alfa-info: #FF0000;
   }
 
   * {

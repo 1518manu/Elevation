@@ -38,7 +38,7 @@ export default function Navbar() {
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 border-b border-gray-200 bg-red-50 transition-shadow duration-300',
+        'sticky top-0 z-50 border-b border-gray-200 bg-white transition-shadow duration-300',
         scrolled && 'shadow-md'
       )}
     >

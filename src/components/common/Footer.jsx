@@ -16,12 +16,12 @@ export default function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="bg-primary-dark text-white">
+    <footer className="bg-black text-white">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-1">
             <div className="mb-4 flex items-center gap-2">
-              <ArrowUpFromLine className="h-8 w-8 text-accent" />
+              <ArrowUpFromLine className="h-8 w-8 text-red-600" />
               <span className="font-heading text-xl font-bold">{APP_NAME}</span>
             </div>
             <p className="mb-4 text-sm text-gray-300">{settings?.tagline || ' Rise high with us'}</p>
@@ -30,7 +30,7 @@ export default function Footer() {
                 const Icon = socialIcons[key]
                 if (!Icon || !url) return null
                 return (
-                  <a key={key} href={url} target="_blank" rel="noopener noreferrer" className="rounded-full bg-white/10 p-2 hover:bg-accent hover:text-primary transition-colors" aria-label={key}>
+                  <a key={key} href={url} target="_blank" rel="noopener noreferrer" className="rounded-full bg-white/10 p-2 hover:bg-red-600 hover:text-white transition-colors" aria-label={key}>
                     <Icon className="h-4 w-4" />
                   </a>
                 )
@@ -39,7 +39,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-4 font-heading font-semibold text-accent">Products</h4>
+            <h4 className="mb-4 font-heading font-semibold text-red-600">Products</h4>
             <ul className="space-y-2">
               {FOOTER_LINKS.products.map((l) => (
                 <li key={l.href}><Link to={l.href} className="text-sm text-gray-300 hover:text-white">{l.label}</Link></li>
@@ -48,7 +48,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-4 font-heading font-semibold text-accent">Services</h4>
+            <h4 className="mb-4 font-heading font-semibold text-red-600">Services</h4>
             <ul className="space-y-2">
               {FOOTER_LINKS.services.map((l) => (
                 <li key={l.href}><Link to={l.href} className="text-sm text-gray-300 hover:text-white">{l.label}</Link></li>
@@ -57,7 +57,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-4 font-heading font-semibold text-accent">Company</h4>
+            <h4 className="mb-4 font-heading font-semibold text-red-600">Company</h4>
             <ul className="space-y-2">
               {FOOTER_LINKS.company.map((l) => (
                 <li key={l.href}><Link to={l.href} className="text-sm text-gray-300 hover:text-white">{l.label}</Link></li>
@@ -66,7 +66,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-4 font-heading font-semibold text-accent">Legal</h4>
+            <h4 className="mb-4 font-heading font-semibold text-red-600">Legal</h4>
             <ul className="space-y-2">
               {FOOTER_LINKS.legal.map((l) => (
                 <li key={l.href}><Link to={l.href} className="text-sm text-gray-300 hover:text-white">{l.label}</Link></li>
