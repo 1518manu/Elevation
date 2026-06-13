@@ -39,7 +39,7 @@ export default function ContactPage() {
   return (
     <>
       <SEOHead title="Contact Us" description="Get in touch with Alfa Elevator for quotes, support, and inquiries." jsonLd={jsonLd} />
-      <section className="bg-primary py-16 text-white">
+      <section className="bg-black py-16 text-white">
         <div className="mx-auto max-w-7xl px-4">
           <nav className="mb-4 text-sm text-white/70">Home / Contact</nav>
           <h1 className="font-heading text-4xl font-bold">Contact Us</h1>
@@ -49,15 +49,15 @@ export default function ContactPage() {
         <div className="mx-auto max-w-7xl px-4">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
             <div>
-              <h2 className="mb-6 font-heading text-2xl font-semibold text-primary">Get In Touch</h2>
+              <h2 className="mb-6 font-heading text-2xl font-semibold text-black">Get In Touch</h2>
               {settings?.phones?.map((p, i) => (
-                <p key={i} className="mb-3 flex items-center gap-2 text-gray-600"><Phone className="h-5 w-5 text-accent" /><a href={`tel:${p}`}>{p}</a></p>
+                <p key={i} className="mb-3 flex items-center gap-2 text-gray-600"><Phone className="h-5 w-5 text-red-600" /><a href={`tel:${p}`}>{p}</a></p>
               ))}
               {settings?.emails?.map((e, i) => (
-                <p key={i} className="mb-3 flex items-center gap-2 text-gray-600"><Mail className="h-5 w-5 text-accent" /><a href={`mailto:${e}`}>{e}</a></p>
+                <p key={i} className="mb-3 flex items-center gap-2 text-gray-600"><Mail className="h-5 w-5 text-red-600" /><a href={`mailto:${e}`}>{e}</a></p>
               ))}
               {settings?.addresses?.map((a, i) => (
-                <p key={i} className="mb-3 flex items-start gap-2 text-gray-600"><MapPin className="mt-1 h-5 w-5 text-accent" />{a.street}, {a.city}, {a.state} - {a.pincode}</p>
+                <p key={i} className="mb-3 flex items-start gap-2 text-gray-600"><MapPin className="mt-1 h-5 w-5 text-red-600" />{a.street}, {a.city}, {a.state} - {a.pincode}</p>
               ))}
               {settings?.google_maps_embed && (
                 <div className="mt-6 overflow-hidden rounded-xl" dangerouslySetInnerHTML={{ __html: settings.google_maps_embed }} />
@@ -88,7 +88,7 @@ export default function ContactPage() {
                 <Textarea id="message" rows={5} {...register('message')} />
                 {errors.message && <p className="text-xs text-red-500">{errors.message.message}</p>}
               </div>
-              <Button type="submit" disabled={isSubmitting} className="w-full bg-accent text-primary">{isSubmitting ? 'Sending...' : 'Send Message'}</Button>
+              <Button type="submit" disabled={isSubmitting} className="w-full bg-red-600 text-black">{isSubmitting ? 'Sending...' : 'Send Message'}</Button>
             </form>
           </div>
         </div>

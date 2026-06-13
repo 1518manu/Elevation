@@ -2,18 +2,18 @@ import { QUOTE_STATUSES, CONTACT_STATUSES, APPLICATION_STATUSES } from '@/lib/co
 import { Badge } from '@/components/ui/badge'
 
 const statusStyles = {
-  new: 'bg-blue-100 text-blue-700',
-  read: 'bg-amber-100 text-amber-700',
-  replied: 'bg-green-100 text-green-700',
-  contacted: 'bg-amber-100 text-amber-700',
-  quoted: 'bg-purple-100 text-purple-700',
-  closed: 'bg-green-100 text-green-700',
+  new: 'bg-black/10 text-black',
+  read: 'bg-gray-100 text-gray-700',
+  replied: 'bg-red-600/10 text-red-600',
+  contacted: 'bg-gray-100 text-gray-700',
+  quoted: 'bg-red-600/10 text-red-600',
+  closed: 'bg-black/10 text-black',
   lost: 'bg-red-100 text-red-700',
-  reviewed: 'bg-blue-100 text-blue-700',
-  shortlisted: 'bg-purple-100 text-purple-700',
-  interview: 'bg-amber-100 text-amber-700',
+  reviewed: 'bg-gray-100 text-gray-700',
+  shortlisted: 'bg-red-600/10 text-red-600',
+  interview: 'bg-gray-100 text-gray-700',
   rejected: 'bg-red-100 text-red-700',
-  hired: 'bg-green-100 text-green-700',
+  hired: 'bg-black/10 text-black',
 }
 
 const allStatuses = [...QUOTE_STATUSES, ...CONTACT_STATUSES, ...APPLICATION_STATUSES]

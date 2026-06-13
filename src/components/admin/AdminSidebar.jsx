@@ -24,7 +24,7 @@ export default function AdminSidebar() {
   return (
     <aside className={cn('flex h-screen flex-col bg-gray-900 text-white transition-all duration-300', collapsed ? 'w-[60px]' : 'w-60')}>
       <div className="flex h-16 items-center justify-between border-b border-white/10 px-4">
-        {!collapsed && <span className="font-heading font-bold text-accent">Alfa Admin</span>}
+        {!collapsed && <span className="font-heading font-bold text-red-600">Alfa Admin</span>}
         <button onClick={() => setCollapsed(!collapsed)} className="rounded p-1 hover:bg-white/10" aria-label="Toggle sidebar">
           <ChevronLeft className={cn('h-5 w-5 transition-transform', collapsed && 'rotate-180')} />
         </button>
@@ -40,7 +40,7 @@ export default function AdminSidebar() {
               to={item.href}
               className={cn(
                 'flex items-center gap-3 px-4 py-3 text-sm transition-colors hover:bg-white/5',
-                active && 'border-l-[3px] border-accent bg-accent/10 text-accent'
+                active && 'border-l-[3px] border-red-600 bg-red-600/10 text-red-600'
               )}
               title={collapsed ? item.label : undefined}
             >
@@ -55,7 +55,7 @@ export default function AdminSidebar() {
         <div className={cn('flex items-center gap-3', collapsed && 'justify-center')}>
           <Avatar className="h-9 w-9">
             <AvatarImage src={user?.avatar_url} />
-            <AvatarFallback className="bg-accent text-primary">{user?.full_name?.charAt(0) || 'U'}</AvatarFallback>
+            <AvatarFallback className="bg-red-600 text-white">{user?.full_name?.charAt(0) || 'U'}</AvatarFallback>
           </Avatar>
           {!collapsed && (
             <div className="flex-1 overflow-hidden">

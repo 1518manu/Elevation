@@ -54,8 +54,8 @@ export default function HomePage() {
       <section className="py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mb-12 text-center">
-            <h2 className="mb-3 font-heading text-3xl font-semibold text-primary md:text-4xl">Our Services</h2>
-            <div className="mx-auto h-1 w-10 bg-accent" />
+            <h2 className="mb-3 font-heading text-3xl font-semibold text-black md:text-4xl">Our Services</h2>
+            <div className="mx-auto h-1 w-10 bg-red-600" />
           </motion.div>
           <ServicesGrid />
         </div>
@@ -65,8 +65,8 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 flex items-end justify-between">
             <div>
-              <h2 className="mb-3 font-heading text-3xl font-semibold text-primary md:text-4xl">Featured Products</h2>
-              <div className="h-1 w-10 bg-accent" />
+              <h2 className="mb-3 font-heading text-3xl font-semibold text-black md:text-4xl">Featured Products</h2>
+              <div className="h-1 w-10 bg-red-600" />
             </div>
             <Button asChild variant="outline"><Link to="/products">View All</Link></Button>
           </div>
@@ -79,8 +79,8 @@ export default function HomePage() {
       <section className="py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
-            <h2 className="mb-3 font-heading text-3xl font-semibold text-primary md:text-4xl">Our Process</h2>
-            <div className="mx-auto h-1 w-10 bg-accent" />
+            <h2 className="mb-3 font-heading text-3xl font-semibold text-black md:text-4xl">Our Process</h2>
+            <div className="mx-auto h-1 w-10 bg-red-600" />
           </div>
           <ProcessStepper />
         </div>
@@ -89,8 +89,8 @@ export default function HomePage() {
       <section className="bg-gray-50 py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
-            <h2 className="mb-3 font-heading text-3xl font-semibold text-primary md:text-4xl">What Our Clients Say</h2>
-            <div className="mx-auto h-1 w-10 bg-accent" />
+            <h2 className="mb-3 font-heading text-3xl font-semibold text-black md:text-4xl">What Our Clients Say</h2>
+            <div className="mx-auto h-1 w-10 bg-red-600" />
           </div>
           <TestimonialsCarousel />
         </div>
@@ -108,8 +108,8 @@ export default function HomePage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-12 flex items-end justify-between">
               <div>
-                <h2 className="mb-3 font-heading text-3xl font-semibold text-primary md:text-4xl">Latest from Blog</h2>
-                <div className="h-1 w-10 bg-accent" />
+                <h2 className="mb-3 font-heading text-3xl font-semibold text-black md:text-4xl">Latest from Blog</h2>
+                <div className="h-1 w-10 bg-red-600" />
               </div>
               <Button asChild variant="outline"><Link to="/blog">View All</Link></Button>
             </div>

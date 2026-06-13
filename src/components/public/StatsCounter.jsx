@@ -24,8 +24,8 @@ function StatItem({ icon: Icon, value, label, suffix = '+', inView }) {
   const count = useCountUp(value, 2000, inView)
   return (
     <div className="text-center">
-      <Icon className="mx-auto mb-3 h-8 w-8 text-accent" />
-      <p className="font-heading text-4xl font-bold text-primary">{count}{suffix}</p>
+      <Icon className="mx-auto mb-3 h-8 w-8 text-red-600" />
+      <p className="font-heading text-4xl font-bold text-black">{count}{suffix}</p>
       <p className="mt-1 text-sm uppercase tracking-wide text-gray-500">{label}</p>
     </div>
   )
@@ -55,7 +55,7 @@ export default function StatsCounter() {
 
   return (
     <section ref={ref} className="relative overflow-hidden py-16 md:py-24">
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-accent/10 to-primary/5" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/5 via-red-600/10 to-black/5" />
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -27,7 +27,7 @@ export default function ProductsPage() {
   return (
     <>
       <SEOHead title="Our Elevator Products" description="Browse our complete range of passenger elevators, home lifts, freight elevators, escalators and more." />
-      <section className="bg-primary py-16 text-white">
+      <section className="bg-black py-16 text-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <nav className="mb-4 text-sm text-white/70">Home / Products</nav>
           <h1 className="font-heading text-4xl font-bold">Our Elevator Products</h1>
@@ -42,7 +42,7 @@ export default function ProductsPage() {
                 <button
                   key={tab.value}
                   onClick={() => setSearchParams(tab.value === 'all' ? {} : { category: tab.value })}
-                  className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${category === tab.value ? 'bg-primary text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+                  className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${category === tab.value ? 'bg-black text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
                 >
                   {tab.label}
                 </button>

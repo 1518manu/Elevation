@@ -15,7 +15,7 @@ export default function BlogCard({ blog }) {
       </div>
       <div className="p-5">
         {blog.category && <Badge variant="secondary" className="mb-2">{blog.category}</Badge>}
-        <h3 className="mb-2 font-heading text-lg font-semibold text-primary group-hover:text-accent-dark">{blog.title}</h3>
+        <h3 className="mb-2 font-heading text-lg font-semibold text-black group-hover:text-red-700">{blog.title}</h3>
         <div className="flex items-center gap-3 text-xs text-gray-500">
           <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{blog.read_time_mins || 5} min read</span>
           {blog.published_at && <span>{formatDate(blog.published_at)}</span>}

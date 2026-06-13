@@ -69,7 +69,7 @@ export default function JobDetailPage() {
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <Badge className="mb-3 capitalize">{job.department}</Badge>
-            <h1 className="mb-4 font-heading text-3xl font-bold text-primary">{job.title}</h1>
+            <h1 className="mb-4 font-heading text-3xl font-bold text-black">{job.title}</h1>
             <div className="mb-6 flex flex-wrap gap-4 text-sm text-gray-600">
               {job.location && <span>{job.location}</span>}
               <span className="capitalize">{job.job_type?.replace('_', ' ')}</span>
@@ -78,20 +78,20 @@ export default function JobDetailPage() {
             <div className="prose max-w-none mb-8" dangerouslySetInnerHTML={{ __html: job.description || '' }} />
             {job.requirements?.length > 0 && (
               <div className="mb-6">
-                <h3 className="mb-3 font-semibold text-primary">Requirements</h3>
+                <h3 className="mb-3 font-semibold text-black">Requirements</h3>
                 <ul className="list-disc pl-5 space-y-1">{job.requirements.map((r, i) => <li key={i}>{r}</li>)}</ul>
               </div>
             )}
             {job.responsibilities?.length > 0 && (
               <div>
-                <h3 className="mb-3 font-semibold text-primary">Responsibilities</h3>
+                <h3 className="mb-3 font-semibold text-black">Responsibilities</h3>
                 <ul className="list-disc pl-5 space-y-1">{job.responsibilities.map((r, i) => <li key={i}>{r}</li>)}</ul>
               </div>
             )}
           </div>
           <div>
             <div className="sticky top-24 rounded-xl bg-white p-6 shadow-card">
-              <h3 className="mb-4 font-heading text-xl font-semibold text-primary">Apply Now</h3>
+              <h3 className="mb-4 font-heading text-xl font-semibold text-black">Apply Now</h3>
               {submitted ? (
                 <p className="text-green-600">Thank you! Your application has been submitted.</p>
               ) : (
@@ -120,7 +120,7 @@ export default function JobDetailPage() {
                     <Input id="resume" type="file" accept=".pdf,.docx" onChange={(e) => setValue('resume', e.target.files[0])} />
                     {errors.resume && <p className="text-xs text-red-500">{errors.resume.message}</p>}
                   </div>
-                  <Button type="submit" disabled={isSubmitting} className="w-full bg-accent text-primary">{isSubmitting ? 'Submitting...' : 'Submit Application'}</Button>
+                  <Button type="submit" disabled={isSubmitting} className="w-full bg-red-600 text-black">{isSubmitting ? 'Submitting...' : 'Submit Application'}</Button>
                 </form>
               )}
             </div>

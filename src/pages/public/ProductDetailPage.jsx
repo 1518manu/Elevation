@@ -57,20 +57,20 @@ export default function ProductDetailPage() {
           </div>
           <div className="lg:col-span-2">
             <Badge className="mb-3 capitalize">{product.category}</Badge>
-            <h1 className="mb-4 font-heading text-3xl font-bold text-primary">{product.name}</h1>
+            <h1 className="mb-4 font-heading text-3xl font-bold text-black">{product.name}</h1>
             <p className="mb-6 text-gray-600">{product.short_description}</p>
             <div className="mb-6 flex gap-3">
-              <Button onClick={openModal} className="bg-accent text-primary hover:bg-accent-dark">Get Free Quote</Button>
+              <Button onClick={openModal} className="bg-red-600 text-black hover:bg-red-700">Get Free Quote</Button>
               {product.brochure_url && (
                 <Button asChild variant="outline"><a href={product.brochure_url} target="_blank" rel="noopener noreferrer"><Download className="mr-2 h-4 w-4" />Download Brochure</a></Button>
               )}
             </div>
             {product.features?.length > 0 && (
               <div className="mb-6">
-                <h3 className="mb-3 font-semibold text-primary">Features</h3>
+                <h3 className="mb-3 font-semibold text-black">Features</h3>
                 <ul className="space-y-2">
                   {product.features.map((f, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm"><Check className="mt-0.5 h-4 w-4 text-accent" />{f}</li>
+                    <li key={i} className="flex items-start gap-2 text-sm"><Check className="mt-0.5 h-4 w-4 text-red-600" />{f}</li>
                   ))}
                 </ul>
               </div>
@@ -80,13 +80,13 @@ export default function ProductDetailPage() {
 
         {Object.keys(specs).length > 0 && (
           <div className="mt-12">
-            <h2 className="mb-4 font-heading text-2xl font-semibold text-primary">Specifications</h2>
+            <h2 className="mb-4 font-heading text-2xl font-semibold text-black">Specifications</h2>
             <div className="overflow-hidden rounded-xl border">
               <table className="w-full">
                 <tbody>
                   {Object.entries(specs).map(([key, val]) => (
                     <tr key={key} className="border-b last:border-0">
-                      <td className="bg-gray-50 px-4 py-3 font-medium text-primary w-1/3">{key}</td>
+                      <td className="bg-gray-50 px-4 py-3 font-medium text-black w-1/3">{key}</td>
                       <td className="px-4 py-3 text-gray-600">{val}</td>
                     </tr>
                   ))}
@@ -98,7 +98,7 @@ export default function ProductDetailPage() {
 
         {related.length > 0 && (
           <div className="mt-16">
-            <h2 className="mb-6 font-heading text-2xl font-semibold text-primary">Related Products</h2>
+            <h2 className="mb-6 font-heading text-2xl font-semibold text-black">Related Products</h2>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
               {related.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
             </div>

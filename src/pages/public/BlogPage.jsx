@@ -9,7 +9,7 @@ export default function BlogPage() {
   return (
     <>
       <SEOHead title="Blog" description="Elevator industry insights, buying guides, and company news from Alfa Elevator." />
-      <section className="bg-primary py-16 text-white">
+      <section className="bg-black py-16 text-white">
         <div className="mx-auto max-w-7xl px-4">
           <nav className="mb-4 text-sm text-white/70">Home / Blog</nav>
           <h1 className="font-heading text-4xl font-bold">Blog & Insights</h1>

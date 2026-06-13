@@ -11,13 +11,13 @@ export default function ProjectCard({ project }) {
         {image ? (
           <img src={getImageUrl(image)} alt={project.title} loading="lazy" className="h-full w-full object-cover transition-transform group-hover:scale-105" />
         ) : (
-          <div className="flex h-full items-center justify-center bg-primary/10">
-            <Building2 className="h-12 w-12 text-primary/30" />
+          <div className="flex h-full items-center justify-center bg-black/10">
+            <Building2 className="h-12 w-12 text-black/30" />
           </div>
         )}
       </div>
       <div className="p-5">
-        <h3 className="mb-2 font-heading text-lg font-semibold text-primary">{project.title}</h3>
+        <h3 className="mb-2 font-heading text-lg font-semibold text-black">{project.title}</h3>
         {project.client_name && <p className="mb-1 text-sm text-gray-600">{project.client_name}</p>}
         {(project.city || project.state) && (
           <p className="flex items-center gap-1 text-sm text-gray-500">

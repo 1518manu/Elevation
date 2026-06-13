@@ -38,8 +38,8 @@ export default function LoginPage() {
       <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
         <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-card">
           <div className="mb-8 flex flex-col items-center">
-            <ArrowUpFromLine className="mb-2 h-10 w-10 text-primary" />
-            <h1 className="font-heading text-2xl font-bold text-primary">Admin Login</h1>
+            <ArrowUpFromLine className="mb-2 h-10 w-10 text-black" />
+            <h1 className="font-heading text-2xl font-bold text-black">Admin Login</h1>
             <p className="text-sm text-gray-500">Sign in to manage your content</p>
           </div>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -53,7 +53,7 @@ export default function LoginPage() {
               <Input id="password" type="password" {...register('password')} />
               {errors.password && <p className="text-xs text-red-500">{errors.password.message}</p>}
             </div>
-            <Button type="submit" disabled={isSubmitting} className="w-full bg-primary">{isSubmitting ? 'Signing in...' : 'Sign In'}</Button>
+            <Button type="submit" disabled={isSubmitting} className="w-full bg-black">{isSubmitting ? 'Signing in...' : 'Sign In'}</Button>
           </form>
           <div className="my-4 flex items-center gap-4">
             <div className="h-px flex-1 bg-gray-200" />
@@ -61,7 +61,7 @@ export default function LoginPage() {
             <div className="h-px flex-1 bg-gray-200" />
           </div>
           <Button onClick={handleGoogle} variant="outline" className="w-full">Sign in with Google</Button>
-          <p className="mt-6 text-center text-sm text-gray-500"><Link to="/" className="text-primary hover:underline">← Back to website</Link></p>
+          <p className="mt-6 text-center text-sm text-gray-500"><Link to="/" className="text-black hover:underline">← Back to website</Link></p>
         </div>
       </div>
     </>

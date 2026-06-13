@@ -21,7 +21,7 @@ export default function AdminTopbar({ title }) {
 
   return (
     <header className="flex h-16 items-center justify-between border-b bg-white px-6">
-      <h1 className="font-heading text-xl font-semibold text-primary">{title || 'Dashboard'}</h1>
+      <h1 className="font-heading text-xl font-semibold text-black">{title || 'Dashboard'}</h1>
       <div className="flex items-center gap-4">
         <button className="relative rounded-full p-2 hover:bg-gray-100" aria-label="Notifications">
           <Bell className="h-5 w-5 text-gray-600" />

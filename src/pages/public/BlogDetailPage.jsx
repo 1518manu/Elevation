@@ -31,7 +31,7 @@ export default function BlogDetailPage() {
         <nav className="mb-6 text-sm text-gray-500"><Link to="/blog">Blog</Link> / {blog.title}</nav>
         {blog.cover_image && <img src={getImageUrl(blog.cover_image, 1200, 85)} alt={blog.title} className="mb-8 aspect-video w-full rounded-xl object-cover" />}
         {blog.category && <Badge className="mb-4">{blog.category}</Badge>}
-        <h1 className="mb-4 font-heading text-3xl font-bold text-primary md:text-4xl">{blog.title}</h1>
+        <h1 className="mb-4 font-heading text-3xl font-bold text-black md:text-4xl">{blog.title}</h1>
         <div className="mb-8 flex items-center gap-4 text-sm text-gray-500">
           <span className="flex items-center gap-1"><Clock className="h-4 w-4" />{blog.read_time_mins} min read</span>
           {blog.published_at && <span>{formatDate(blog.published_at)}</span>}

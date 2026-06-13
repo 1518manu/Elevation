@@ -10,7 +10,7 @@ export default function AboutPage() {
   return (
     <>
       <SEOHead title="About Us" description="Learn about Alfa Elevator — India's trusted elevator manufacturer with 15+ years of experience." />
-      <section className="bg-primary py-16 text-white">
+      <section className="bg-black py-16 text-white">
         <div className="mx-auto max-w-7xl px-4">
           <nav className="mb-4 text-sm text-white/70">Home / About</nav>
           <h1 className="font-heading text-4xl font-bold">About Alfa Elevator</h1>
@@ -29,11 +29,11 @@ export default function AboutPage() {
           </p>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 mt-12">
             <div className="rounded-xl bg-gray-50 p-6">
-              <h3 className="font-heading text-xl font-semibold text-primary mb-2">Our Mission</h3>
+              <h3 className="font-heading text-xl font-semibold text-black mb-2">Our Mission</h3>
               <p className="text-gray-600">To provide safe, reliable, and innovative vertical transportation solutions that elevate the quality of life and business across India.</p>
             </div>
             <div className="rounded-xl bg-gray-50 p-6">
-              <h3 className="font-heading text-xl font-semibold text-primary mb-2">Our Vision</h3>
+              <h3 className="font-heading text-xl font-semibold text-black mb-2">Our Vision</h3>
               <p className="text-gray-600">To be India's most trusted elevator brand, known for engineering excellence, customer service, and sustainable practices.</p>
             </div>
           </div>

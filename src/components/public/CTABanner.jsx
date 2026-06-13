@@ -6,8 +6,8 @@ export default function CTABanner({ title = 'Ready to Elevate Your Building?', s
   const { openModal } = useQuoteModal()
 
   return (
-    <section className="relative overflow-hidden bg-primary py-16 md:py-24">
-      <div className="absolute inset-0 bg-gradient-to-r from-primary-dark to-primary-light opacity-50" />
+    <section className="relative overflow-hidden bg-black py-16 md:py-24">
+      <div className="absolute inset-0 bg-gradient-to-r from-black to-red-600 opacity-50" />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -16,7 +16,7 @@ export default function CTABanner({ title = 'Ready to Elevate Your Building?', s
       >
         <h2 className="mb-4 font-heading text-3xl font-bold text-white md:text-4xl">{title}</h2>
         <p className="mb-8 text-lg text-white/80">{subtitle}</p>
-        <Button onClick={openModal} size="lg" className="bg-accent px-8 font-bold text-primary hover:bg-accent-dark">
+        <Button onClick={openModal} size="lg" className="bg-red-600 px-8 font-bold text-white hover:bg-red-700">
           Get Free Quote
         </Button>
       </motion.div>

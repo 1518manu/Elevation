@@ -69,7 +69,7 @@ export default function HeroSection() {
         >
           {badges.map(({ icon: Icon, label }) => (
             <span key={label} className="flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm text-white">
-              <Icon className="h-4 w-4 text-accent" />
+              <Icon className="h-4 w-4 text-red-600" />
               {label}
             </span>
           ))}
@@ -82,8 +82,8 @@ export default function HeroSection() {
         transition={{ duration: 0.8, delay: 0.6 }}
         className="absolute bottom-32 right-8 hidden max-w-xs rounded-xl bg-white/95 p-4 shadow-card lg:block"
       >
-        <p className="text-xs font-medium uppercase tracking-wide text-accent">Latest Project</p>
-        <p className="font-heading font-semibold text-primary">Prestige Tower, Bengaluru</p>
+        <p className="text-xs font-medium uppercase tracking-wide text-red-600">Latest Project</p>
+        <p className="font-heading font-semibold text-black">Prestige Tower, Bengaluru</p>
       </motion.div>
 
       <motion.div

@@ -33,10 +33,10 @@ export default function ServicesGrid() {
               to={`/services/${service.slug}`}
               className="group block rounded-xl bg-white p-6 shadow-card transition-all hover:-translate-y-1 hover:shadow-card-hover"
             >
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                <Icon className="h-6 w-6 text-primary" />
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-black/10">
+                <Icon className="h-6 w-6 text-black" />
               </div>
-              <h3 className="mb-2 font-heading text-xl font-semibold text-primary group-hover:text-accent-dark">
+              <h3 className="mb-2 font-heading text-xl font-semibold text-black group-hover:text-red-700">
                 {service.title}
               </h3>
               <p className="text-sm text-gray-600">{service.short_description}</p>

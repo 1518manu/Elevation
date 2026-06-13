@@ -15,7 +15,7 @@ export default function CareersPage() {
   return (
     <>
       <SEOHead title="Careers" description="Join Alfa Elevator team. Open positions in technical, sales, HR and operations across India." />
-      <section className="bg-primary py-16 text-white">
+      <section className="bg-black py-16 text-white">
         <div className="mx-auto max-w-7xl px-4">
           <nav className="mb-4 text-sm text-white/70">Home / Careers</nav>
           <h1 className="font-heading text-4xl font-bold">Join Our Team</h1>
@@ -26,7 +26,7 @@ export default function CareersPage() {
         <div className="mx-auto max-w-7xl px-4">
           <div className="mb-8 flex flex-wrap gap-2">
             {tabs.map((t) => (
-              <button key={t.value} onClick={() => setDept(t.value)} className={`rounded-full px-4 py-2 text-sm font-medium ${dept === t.value ? 'bg-primary text-white' : 'bg-gray-100 text-gray-700'}`}>{t.label}</button>
+              <button key={t.value} onClick={() => setDept(t.value)} className={`rounded-full px-4 py-2 text-sm font-medium ${dept === t.value ? 'bg-black text-white' : 'bg-gray-100 text-gray-700'}`}>{t.label}</button>
             ))}
           </div>
           {isLoading ? <PageLoader /> : filtered.length === 0 ? (
