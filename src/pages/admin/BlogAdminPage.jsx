@@ -68,7 +68,7 @@ export default function BlogAdminPage() {
               <label className="flex items-center gap-2"><input type="checkbox" checked={current.is_published} onChange={(e) => setForm({ ...current, is_published: e.target.checked })} />Published</label>
               <div className="flex gap-2">
                 <Button variant="outline" onClick={() => navigate('/admin/blog')}>Cancel</Button>
-                <Button className="bg-primary" onClick={async () => {
+                <Button className="bg-red-600" onClick={async () => {
                   const payload = { ...current, published_at: current.is_published ? new Date().toISOString() : null }
                   if (id === 'new') await createBlog.mutateAsync(payload)
                   else await updateBlog.mutateAsync({ id, ...payload })
@@ -89,10 +89,10 @@ export default function BlogAdminPage() {
         <div className="mb-4 flex items-center justify-between">
           <div className="flex gap-2">
             {['all', 'published', 'drafts'].map((f) => (
-              <button key={f} onClick={() => setFilter(f)} className={`rounded-full px-4 py-1.5 text-sm capitalize ${filter === f ? 'bg-primary text-white' : 'bg-gray-100'}`}>{f}</button>
+              <button key={f} onClick={() => setFilter(f)} className={`rounded-full px-4 py-1.5 text-sm capitalize ${filter === f ? 'bg-red-600 text-white' : 'bg-gray-100'}`}>{f}</button>
             ))}
           </div>
-          <Button asChild className="bg-primary"><Link to="/admin/blog/new"><Plus className="mr-2 h-4 w-4" />Write Article</Link></Button>
+          <Button asChild className="bg-red-600"><Link to="/admin/blog/new"><Plus className="mr-2 h-4 w-4" />Write Article</Link></Button>
         </div>
         <DataTable columns={columns} data={filtered} isLoading={isLoading} />
       </div>

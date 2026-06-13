@@ -20,7 +20,7 @@ export default function ServicesPage() {
       </section>
       <section className="bg-gray-50 py-16">
         <div className="mx-auto max-w-7xl px-4">
-          <h2 className="mb-12 text-center font-heading text-3xl font-semibold text-primary">How We Work</h2>
+          <h2 className="mb-12 text-center font-heading text-3xl font-semibold text-black">How We Work</h2>
           <ProcessStepper />
         </div>
       </section>

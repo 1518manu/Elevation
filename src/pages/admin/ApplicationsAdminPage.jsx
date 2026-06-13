@@ -24,7 +24,7 @@ export default function ApplicationsAdminPage() {
       </Select>
     )},
     { accessorKey: 'created_at', header: 'Applied', cell: ({ row }) => formatDate(row.original.created_at) },
-    { id: 'resume', header: 'Resume', cell: ({ row }) => row.original.resume_url ? <a href={row.original.resume_url} target="_blank" rel="noopener noreferrer" className="text-primary underline">View</a> : '-' },
+    { id: 'resume', header: 'Resume', cell: ({ row }) => row.original.resume_url ? <a href={row.original.resume_url} target="_blank" rel="noopener noreferrer" className="text-red-600 underline">View</a> : '-' },
   ]
 
   return (

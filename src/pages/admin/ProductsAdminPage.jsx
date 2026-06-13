@@ -67,7 +67,7 @@ export default function ProductsAdminPage() {
     <div>
       <AdminTopbar title="Products" />
       <div className="p-6">
-        <div className="mb-4 flex justify-end"><Button onClick={openCreate} className="bg-primary"><Plus className="mr-2 h-4 w-4" />Add Product</Button></div>
+        <div className="mb-4 flex justify-end"><Button onClick={openCreate} className="bg-red-600"><Plus className="mr-2 h-4 w-4" />Add Product</Button></div>
         <DataTable columns={columns} data={products} isLoading={isLoading} />
       </div>
 
@@ -94,7 +94,7 @@ export default function ProductsAdminPage() {
               <label className="flex items-center gap-2"><input type="checkbox" checked={form.is_featured} onChange={(e) => setForm({ ...form, is_featured: e.target.checked })} />Featured</label>
               <label className="flex items-center gap-2"><input type="checkbox" checked={form.is_active} onChange={(e) => setForm({ ...form, is_active: e.target.checked })} />Active</label>
             </div>
-            <Button onClick={handleSave} className="w-full bg-primary">Save Product</Button>
+            <Button onClick={handleSave} className="w-full bg-red-600">Save Product</Button>
           </div>
         </DialogContent>
       </Dialog>

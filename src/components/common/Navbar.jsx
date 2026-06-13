@@ -49,7 +49,7 @@ export default function Navbar() {
             alt="Elevation Logo"
             className="h-11 w-15"
           />
-          <span className="font-heading text-lg font-bold tracking-wide text-primary md:text-xl">
+          <span className="font-heading text-lg font-bold tracking-wide text-black md:text-xl">
             ELEVATION
           </span>
         </Link>
@@ -65,8 +65,8 @@ export default function Navbar() {
               <Link
                 to={link.href}
                 className={cn(
-                  'px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:text-primary',
-                  isActive(link.href) && 'border-b-2 border-accent text-primary'
+                  'px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:text-black',
+                  isActive(link.href) && 'border-b-2 border-accent text-black'
                 )}
               >
                 <span className="flex items-center gap-1">
@@ -84,7 +84,7 @@ export default function Navbar() {
                         to={`/products?category=${cat.value}`}
                         className="rounded-lg p-3 text-center hover:bg-gray-50"
                       >
-                        <p className="text-xs font-semibold text-primary">{cat.label}</p>
+                        <p className="text-xs font-semibold text-black">{cat.label}</p>
                       </Link>
                     ))}
                   </div>
@@ -99,7 +99,7 @@ export default function Navbar() {
                       to={`/services/${svc.slug}`}
                       className="block rounded-lg p-3 hover:bg-gray-50"
                     >
-                      <p className="text-sm font-semibold text-primary">{svc.title}</p>
+                      <p className="text-sm font-semibold text-black">{svc.title}</p>
                       <p className="text-xs text-gray-500">{svc.short_description?.slice(0, 60)}</p>
                     </Link>
                   ))}
@@ -110,11 +110,11 @@ export default function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-4 lg:flex">
-          <a href={`tel:${phone.replace(/\s/g, '')}`} className="flex items-center gap-1 text-sm font-medium text-primary">
+          <a href={`tel:${phone.replace(/\s/g, '')}`} className="flex items-center gap-1 text-sm font-medium text-black">
             <Phone className="h-4 w-4" />
             {phone}
           </a>
-          <Button onClick={openModal} className="rounded-full bg-accent px-5 py-2 font-bold text-primary hover:bg-accent-dark">
+          <Button onClick={openModal} className="rounded-full bg-red-600 px-5 py-2 font-bold text-black hover:bg-red-700">
             Get Free Quote
           </Button>
         </div>
@@ -133,7 +133,7 @@ export default function Navbar() {
                   to={link.href}
                   className={cn(
                     'block border-b py-3 text-base font-medium',
-                    isActive(link.href) ? 'text-primary' : 'text-gray-700'
+                    isActive(link.href) ? 'text-black' : 'text-gray-700'
                   )}
                   onClick={() => !link.hasDropdown && setMobileOpen(false)}
                 >
@@ -159,7 +159,7 @@ export default function Navbar() {
                 )}
               </div>
             ))}
-            <Button onClick={() => { openModal(); setMobileOpen(false) }} className="mt-4 bg-accent font-bold text-primary">
+            <Button onClick={() => { openModal(); setMobileOpen(false) }} className="mt-4 bg-red-600 font-bold text-black">
               Get Free Quote
             </Button>
           </nav>

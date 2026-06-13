@@ -51,7 +51,7 @@ export default function ServicesAdminPage() {
     <div>
       <AdminTopbar title="Services" />
       <div className="p-6">
-        <div className="mb-4 flex justify-end"><Button onClick={() => { setForm(empty); setEditId(null); setModalOpen(true) }} className="bg-primary"><Plus className="mr-2 h-4 w-4" />Add Service</Button></div>
+        <div className="mb-4 flex justify-end"><Button onClick={() => { setForm(empty); setEditId(null); setModalOpen(true) }} className="bg-red-600"><Plus className="mr-2 h-4 w-4" />Add Service</Button></div>
         <DataTable columns={columns} data={services} isLoading={isLoading} />
       </div>
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
@@ -62,7 +62,7 @@ export default function ServicesAdminPage() {
             <div><Label>Slug</Label><Input value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })} /></div>
             <div><Label>Short Description</Label><Input value={form.short_description} onChange={(e) => setForm({ ...form, short_description: e.target.value })} /></div>
             <div><Label>Description</Label><Textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} /></div>
-            <Button onClick={handleSave} className="w-full bg-primary">Save</Button>
+            <Button onClick={handleSave} className="w-full bg-red-600">Save</Button>
           </div>
         </DialogContent>
       </Dialog>

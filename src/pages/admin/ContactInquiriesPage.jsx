@@ -36,7 +36,7 @@ export default function ContactInquiriesPage() {
       <div className="p-6">
         <div className="mb-4 flex gap-2">
           {[{ value: 'all', label: 'All' }, ...CONTACT_STATUSES].map((s) => (
-            <button key={s.value} onClick={() => setStatusFilter(s.value)} className={`rounded-full px-4 py-1.5 text-sm ${statusFilter === s.value ? 'bg-primary text-white' : 'bg-gray-100'}`}>{s.label}</button>
+            <button key={s.value} onClick={() => setStatusFilter(s.value)} className={`rounded-full px-4 py-1.5 text-sm ${statusFilter === s.value ? 'bg-red-600 text-white' : 'bg-gray-100'}`}>{s.label}</button>
           ))}
           <Button variant="outline" className="ml-auto" onClick={() => exportToCSV(contacts, 'contacts.csv')}>Export CSV</Button>
         </div>

@@ -45,7 +45,7 @@ export default function QuoteInquiriesPage() {
       <div className="p-6">
         <div className="mb-4 flex flex-wrap gap-2">
           {[{ value: 'all', label: 'All' }, ...QUOTE_STATUSES].map((s) => (
-            <button key={s.value} onClick={() => setStatusFilter(s.value)} className={`rounded-full px-4 py-1.5 text-sm ${statusFilter === s.value ? 'bg-primary text-white' : 'bg-gray-100'}`}>{s.label}</button>
+            <button key={s.value} onClick={() => setStatusFilter(s.value)} className={`rounded-full px-4 py-1.5 text-sm ${statusFilter === s.value ? 'bg-red-600 text-white' : 'bg-gray-100'}`}>{s.label}</button>
           ))}
           <Button variant="outline" className="ml-auto" onClick={() => exportToCSV(quotes, 'quotes.csv')}>Export CSV</Button>
         </div>
@@ -55,7 +55,7 @@ export default function QuoteInquiriesPage() {
       {selected && (
         <div className="fixed inset-y-0 right-0 z-50 w-full max-w-md border-l bg-white p-6 shadow-xl overflow-y-auto">
           <button onClick={() => setSelected(null)} className="mb-4 text-sm text-gray-500">← Close</button>
-          <h2 className="mb-4 font-heading text-xl font-semibold text-primary">{selected.full_name}</h2>
+          <h2 className="mb-4 font-heading text-xl font-semibold text-black">{selected.full_name}</h2>
           <div className="space-y-3 text-sm">
             <p><strong>Email:</strong> {selected.email}</p>
             <p><strong>Phone:</strong> {selected.phone}</p>

@@ -45,7 +45,7 @@ export default function ProjectsAdminPage() {
     <div>
       <AdminTopbar title="Projects" />
       <div className="p-6">
-        <div className="mb-4 flex justify-end"><Button onClick={() => { setForm(empty); setEditId(null); setModalOpen(true) }} className="bg-primary"><Plus className="mr-2 h-4 w-4" />Add Project</Button></div>
+        <div className="mb-4 flex justify-end"><Button onClick={() => { setForm(empty); setEditId(null); setModalOpen(true) }} className="bg-red-600"><Plus className="mr-2 h-4 w-4" />Add Project</Button></div>
         <DataTable columns={columns} data={projects} isLoading={isLoading} />
       </div>
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
@@ -60,7 +60,7 @@ export default function ProjectsAdminPage() {
             </div>
             <div><Label>Description</Label><Textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} /></div>
             <div><Label>Images</Label><MultiImageUpload bucket={STORAGE_BUCKETS.projects} value={form.images || []} onChange={(images) => setForm({ ...form, images })} /></div>
-            <Button onClick={async () => { if (editId) await updateProject.mutateAsync({ id: editId, ...form }); else await createProject.mutateAsync(form); setModalOpen(false); toast({ title: 'Saved' }) }} className="w-full bg-primary">Save</Button>
+            <Button onClick={async () => { if (editId) await updateProject.mutateAsync({ id: editId, ...form }); else await createProject.mutateAsync(form); setModalOpen(false); toast({ title: 'Saved' }) }} className="w-full bg-red-600">Save</Button>
           </div>
         </DialogContent>
       </Dialog>

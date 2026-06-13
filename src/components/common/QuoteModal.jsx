@@ -85,7 +85,7 @@ function QuoteModal({ open, onOpenChange, submitted, setSubmitted }) {
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="font-heading text-2xl text-primary">Get Free Quote</DialogTitle>
+          <DialogTitle className="font-heading text-2xl text-black">Get Free Quote</DialogTitle>
           <DialogDescription>Fill in your details and our team will contact you within 24 hours.</DialogDescription>
         </DialogHeader>
 
@@ -94,9 +94,9 @@ function QuoteModal({ open, onOpenChange, submitted, setSubmitted }) {
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
               <MessageCircle className="h-8 w-8 text-green-600" />
             </div>
-            <h3 className="mb-2 text-xl font-semibold text-primary">Thank you!</h3>
+            <h3 className="mb-2 text-xl font-semibold text-black">Thank you!</h3>
             <p className="mb-6 text-black-600">Our team will contact you within 24 hours.</p>
-            <Button asChild className="bg-accent text-primary hover:bg-accent-dark">
+            <Button asChild className="bg-red-600 text-black hover:bg-red-700">
               <a
                 href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hi%2C+I+submitted+a+quote+request`}
                 target="_blank"
@@ -159,7 +159,7 @@ function QuoteModal({ open, onOpenChange, submitted, setSubmitted }) {
                 <Textarea id="message" rows={3} {...register('message')} />
               </div>
             </div>
-            <Button type="submit" disabled={isSubmitting} className="w-full bg-accent font-bold text-primary hover:bg-accent-dark">
+            <Button type="submit" disabled={isSubmitting} className="w-full bg-red-600 font-bold text-black hover:bg-red-700">
               {isSubmitting ? 'Submitting...' : 'Submit Quote Request'}
             </Button>
           </form>

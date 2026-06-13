@@ -45,7 +45,7 @@ export default function CareerAdminPage() {
     <div>
       <AdminTopbar title="Job Openings" />
       <div className="p-6">
-        <div className="mb-4 flex justify-end"><Button onClick={() => { setForm(empty); setEditId(null); setModalOpen(true) }} className="bg-primary"><Plus className="mr-2 h-4 w-4" />Post Job</Button></div>
+        <div className="mb-4 flex justify-end"><Button onClick={() => { setForm(empty); setEditId(null); setModalOpen(true) }} className="bg-red-600"><Plus className="mr-2 h-4 w-4" />Post Job</Button></div>
         <DataTable columns={columns} data={jobs} isLoading={isLoading} />
       </div>
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
@@ -61,7 +61,7 @@ export default function CareerAdminPage() {
             </div>
             <div><Label>Location</Label><Input value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} /></div>
             <div><Label>Description</Label><Textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} /></div>
-            <Button onClick={async () => { if (editId) await updateJob.mutateAsync({ id: editId, ...form }); else await createJob.mutateAsync(form); setModalOpen(false); toast({ title: 'Saved' }) }} className="w-full bg-primary">Save</Button>
+            <Button onClick={async () => { if (editId) await updateJob.mutateAsync({ id: editId, ...form }); else await createJob.mutateAsync(form); setModalOpen(false); toast({ title: 'Saved' }) }} className="w-full bg-red-600">Save</Button>
           </div>
         </DialogContent>
       </Dialog>

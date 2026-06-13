@@ -53,7 +53,7 @@ export default function HeroSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-10 flex flex-wrap gap-4"
         >
-          <Button onClick={openModal} className="bg-accent px-8 py-3 text-base font-bold text-primary hover:bg-accent-dark">
+          <Button onClick={openModal} className="bg-accent px-8 py-3 text-base font-bold text-white hover:bg-accent-dark">
             Get Free Quote
           </Button>
           <Button asChild variant="outline" className="border-2 border-white bg-transparent px-8 py-3 text-white hover:bg-white hover:text-primary">

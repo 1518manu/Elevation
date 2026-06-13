@@ -19,7 +19,7 @@ export default function ProcessStepsAdminPage() {
           }}
           renderItem={(step) => (
             <div>
-              <p className="font-semibold text-primary">{step.step_number}. {step.title}</p>
+              <p className="font-semibold text-black">{step.step_number}. {step.title}</p>
               <p className="text-sm text-gray-500">{step.description}</p>
             </div>
           )}

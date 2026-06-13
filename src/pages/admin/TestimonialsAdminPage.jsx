@@ -37,7 +37,7 @@ export default function TestimonialsAdminPage() {
     <div>
       <AdminTopbar title="Testimonials" />
       <div className="p-6 space-y-6">
-        <div className="flex justify-end"><Button onClick={() => { setForm(empty); setEditId(null); setModalOpen(true) }} className="bg-primary"><Plus className="mr-2 h-4 w-4" />Add Testimonial</Button></div>
+        <div className="flex justify-end"><Button onClick={() => { setForm(empty); setEditId(null); setModalOpen(true) }} className="bg-red-600"><Plus className="mr-2 h-4 w-4" />Add Testimonial</Button></div>
         <SortableList items={testimonials} onReorder={handleReorder} renderItem={(t) => (
           <div className="flex items-center justify-between w-full">
             <span className="font-medium">{t.name} — {t.company}</span>
@@ -56,7 +56,7 @@ export default function TestimonialsAdminPage() {
             <div><Label>Company</Label><Input value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} /></div>
             <div><Label>Content</Label><Textarea value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} /></div>
             <div><Label>Photo</Label><ImageUpload bucket={STORAGE_BUCKETS.testimonials} value={form.photo_url} onChange={(url) => setForm({ ...form, photo_url: url })} /></div>
-            <Button onClick={async () => { if (editId) await updateTestimonial.mutateAsync({ id: editId, ...form }); else await createTestimonial.mutateAsync(form); setModalOpen(false); toast({ title: 'Saved' }) }} className="w-full bg-primary">Save</Button>
+            <Button onClick={async () => { if (editId) await updateTestimonial.mutateAsync({ id: editId, ...form }); else await createTestimonial.mutateAsync(form); setModalOpen(false); toast({ title: 'Saved' }) }} className="w-full bg-red-600">Save</Button>
           </div>
         </DialogContent>
       </Dialog>

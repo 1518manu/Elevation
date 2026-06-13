@@ -85,7 +85,7 @@ export default function SiteSettingsPage() {
             <div><Label>Default OG Image</Label><ImageUpload bucket={STORAGE_BUCKETS.companyAssets} value={form.seo_defaults?.og_image} onChange={(url) => setForm({ ...form, seo_defaults: { ...form.seo_defaults, og_image: url } })} /></div>
           </TabsContent>
         </Tabs>
-        <Button onClick={handleSave} className="mt-6 bg-primary">Save Settings</Button>
+        <Button onClick={handleSave} className="mt-6 bg-red-600">Save Settings</Button>
       </div>
     </div>
   )

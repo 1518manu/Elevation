@@ -29,7 +29,7 @@ export default function ClientsAdminPage() {
     <div>
       <AdminTopbar title="Clients" />
       <div className="p-6 space-y-6">
-        <div className="flex justify-end"><Button onClick={() => { setForm(empty); setEditId(null); setModalOpen(true) }} className="bg-primary"><Plus className="mr-2 h-4 w-4" />Add Client</Button></div>
+        <div className="flex justify-end"><Button onClick={() => { setForm(empty); setEditId(null); setModalOpen(true) }} className="bg-red-600"><Plus className="mr-2 h-4 w-4" />Add Client</Button></div>
         <SortableList items={clients} onReorder={async (items) => { for (let i = 0; i < items.length; i++) await updateClient.mutateAsync({ id: items[i].id, display_order: i }) }} renderItem={(c) => (
           <div className="flex items-center justify-between w-full">
             <span>{c.name}</span>
@@ -47,7 +47,7 @@ export default function ClientsAdminPage() {
             <div><Label>Name</Label><Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></div>
             <div><Label>Logo</Label><ImageUpload bucket={STORAGE_BUCKETS.clients} value={form.logo_url} onChange={(url) => setForm({ ...form, logo_url: url })} /></div>
             <div><Label>Website</Label><Input value={form.website_url} onChange={(e) => setForm({ ...form, website_url: e.target.value })} /></div>
-            <Button onClick={async () => { if (editId) await updateClient.mutateAsync({ id: editId, ...form }); else await createClient.mutateAsync(form); setModalOpen(false); toast({ title: 'Saved' }) }} className="w-full bg-primary">Save</Button>
+            <Button onClick={async () => { if (editId) await updateClient.mutateAsync({ id: editId, ...form }); else await createClient.mutateAsync(form); setModalOpen(false); toast({ title: 'Saved' }) }} className="w-full bg-red-600">Save</Button>
           </div>
         </DialogContent>
       </Dialog>

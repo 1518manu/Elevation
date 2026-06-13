@@ -55,14 +55,14 @@ export default function DashboardPage() {
                 <kpi.icon className="h-5 w-5 text-gray-400" />
                 {kpi.live && newLeadCount > 0 && <span className="text-xs font-medium text-green-600">● Live ({newLeadCount})</span>}
               </div>
-              <p className="mt-3 text-3xl font-bold text-primary">{kpi.value}</p>
+              <p className="mt-3 text-3xl font-bold text-black">{kpi.value}</p>
               <p className="text-xs uppercase tracking-wide text-gray-500">{kpi.label}</p>
             </div>
           ))}
         </div>
 
         <div className="rounded-xl bg-white p-6 shadow-card">
-          <h2 className="mb-4 font-heading text-lg font-semibold text-primary">Inquiries by Month</h2>
+          <h2 className="mb-4 font-heading text-lg font-semibold text-black">Inquiries by Month</h2>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -77,7 +77,7 @@ export default function DashboardPage() {
         </div>
 
         <div className="rounded-xl bg-white p-6 shadow-card">
-          <h2 className="mb-4 font-heading text-lg font-semibold text-primary">Recent Quote Inquiries</h2>
+          <h2 className="mb-4 font-heading text-lg font-semibold text-black">Recent Quote Inquiries</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead><tr className="border-b text-left text-gray-500"><th className="pb-2">Name</th><th className="pb-2">Type</th><th className="pb-2">City</th><th className="pb-2">Status</th><th className="pb-2">Time</th></tr></thead>
@@ -97,7 +97,7 @@ export default function DashboardPage() {
         </div>
 
         <div className="flex flex-wrap gap-3">
-          <Button asChild className="bg-primary"><Link to="/admin/products"><Plus className="mr-2 h-4 w-4" />Add Product</Link></Button>
+          <Button asChild className="bg-red-600"><Link to="/admin/products"><Plus className="mr-2 h-4 w-4" />Add Product</Link></Button>
           <Button asChild variant="outline"><Link to="/admin/blog"><Plus className="mr-2 h-4 w-4" />Write Blog</Link></Button>
           <Button asChild variant="outline"><Link to="/admin/careers"><Plus className="mr-2 h-4 w-4" />Post Job Opening</Link></Button>
         </div>
