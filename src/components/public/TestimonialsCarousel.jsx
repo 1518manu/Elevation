@@ -8,7 +8,7 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 
 export default function TestimonialsCarousel() {
-  const { data: testimonials = [], isLoading } = useTestimonials({ featured: true })
+  const { data: testimonials = [], isLoading } = useTestimonials({ is_featured: true, is_active: true })
 
   if (isLoading) return <Skeleton className="mx-auto h-64 max-w-3xl rounded-xl" />
 
