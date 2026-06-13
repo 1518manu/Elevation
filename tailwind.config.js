@@ -5,8 +5,21 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: { DEFAULT: '#1A3A5C', dark: '#0F2540', light: '#2A5A8C' },
-        accent: { DEFAULT: '#E8B84B', dark: '#C99B32' },
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
+          dark: '#0F2540',
+          light: '#2A5A8C',
+        },
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+          dark: '#C99B32',
+        },
         alfa: { navy: '#1A3A5C', gold: '#E8B84B' },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
