@@ -75,19 +75,19 @@ export function AuthProvider({ children }) {
 
   const signInWithEmail = useCallback(async (email, password) => {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
-    if (error) throw error
-    return data
+    if (error) return { error }
+    return { data, error: null }
   }, [])
 
   const signInWithGoogle = useCallback(async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/admin`,
+        redirectTo: `${window.location.origin}/auth/callback`,
       },
     })
-    if (error) throw error
-    return data
+    if (error) return { error }
+    return { data, error: null }
   }, [])
 
   const signOut = useCallback(async () => {

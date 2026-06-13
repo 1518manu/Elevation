@@ -1,4 +1,4 @@
-export default function exportToCSV(data, filename = 'export.csv') {
+export function exportToCSV(data, filename = 'export.csv') {
   if (!data?.length) return
 
   const headers = Object.keys(data[0])
