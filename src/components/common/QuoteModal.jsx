@@ -95,7 +95,7 @@ function QuoteModal({ open, onOpenChange, submitted, setSubmitted }) {
               <MessageCircle className="h-8 w-8 text-green-600" />
             </div>
             <h3 className="mb-2 text-xl font-semibold text-primary">Thank you!</h3>
-            <p className="mb-6 text-gray-600">Our team will contact you within 24 hours.</p>
+            <p className="mb-6 text-black-600">Our team will contact you within 24 hours.</p>
             <Button asChild className="bg-accent text-primary hover:bg-accent-dark">
               <a
                 href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hi%2C+I+submitted+a+quote+request`}
@@ -121,7 +121,7 @@ function QuoteModal({ open, onOpenChange, submitted, setSubmitted }) {
               </div>
               <div>
                 <Label htmlFor="phone">Phone (+91)</Label>
-                <Input id="phone" type="tel" placeholder="9876543210" {...register('phone')} aria-describedby={errors.phone ? 'phone-error' : undefined} />
+                <Input id="phone" type="tel" placeholder="7902512987" {...register('phone')} aria-describedby={errors.phone ? 'phone-error' : undefined} />
                 {errors.phone && <p id="phone-error" className="mt-1 text-xs text-red-500">{errors.phone.message}</p>}
               </div>
               <div>

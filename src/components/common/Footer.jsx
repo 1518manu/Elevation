@@ -24,7 +24,7 @@ export default function Footer() {
               <ArrowUpFromLine className="h-8 w-8 text-accent" />
               <span className="font-heading text-xl font-bold">{APP_NAME}</span>
             </div>
-            <p className="mb-4 text-sm text-gray-300">{settings?.tagline || 'Elevating Standards Across India'}</p>
+            <p className="mb-4 text-sm text-gray-300">{settings?.tagline || ' Rise high with us'}</p>
             <div className="flex gap-3">
               {Object.entries(social).map(([key, url]) => {
                 const Icon = socialIcons[key]

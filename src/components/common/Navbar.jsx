@@ -7,6 +7,7 @@ import { useQuoteModal } from './QuoteModal'
 import { useServices } from '@/hooks/useServices'
 import { useSiteSettings } from '@/hooks/useSiteSettings'
 import { Button } from '@/components/ui/button'
+import logo from "../../assets/images/logo.svg";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -37,19 +38,23 @@ export default function Navbar() {
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 border-b border-gray-200 bg-white transition-shadow duration-300',
+        'sticky top-0 z-50 border-b border-gray-200 bg-red-50 transition-shadow duration-300',
         scrolled && 'shadow-md'
       )}
     >
       <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link to="/" className="flex items-center gap-2">
-          <ArrowUpFromLine className="h-8 w-8 text-primary" />
+          <img
+            src={logo}
+            alt="Elevation Logo"
+            className="h-11 w-15"
+          />
           <span className="font-heading text-lg font-bold tracking-wide text-primary md:text-xl">
-            ALFA ELEVATOR
+            ELEVATION
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav className="hidden items-center gap-5 lg:flex">
           {NAV_LINKS.map((link) => (
             <div
               key={link.href}
