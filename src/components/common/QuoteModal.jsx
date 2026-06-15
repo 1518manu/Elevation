@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { MessageCircle, X } from 'lucide-react'
+import { MessageCircle } from 'lucide-react'
 import {
   Dialog,
   DialogContent,

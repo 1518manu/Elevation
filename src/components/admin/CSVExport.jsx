@@ -1,3 +1,4 @@
+// eslint-disable-next-line react-refresh/only-export-components
 export function exportToCSV(data, filename = 'export.csv') {
   if (!data?.length) return
 

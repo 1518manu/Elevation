@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Plus } from 'lucide-react'
 import AdminTopbar from '@/components/admin/AdminTopbar'
-import DataTable from '@/components/admin/DataTable'
 import SortableList from '@/components/admin/SortableList'
 import ImageUpload from '@/components/admin/ImageUpload'
 import ConfirmDialog from '@/components/admin/ConfirmDialog'
@@ -17,7 +16,7 @@ import { useToast } from '@/components/ui/toast'
 const empty = { name: '', company: '', role: '', rating: 5, content: '', is_featured: false, is_active: true, display_order: 0 }
 
 export default function TestimonialsAdminPage() {
-  const { data: testimonials = [], isLoading } = useTestimonials({ is_active: undefined })
+  const { data: testimonials = [] } = useTestimonials({ is_active: undefined })
   const createTestimonial = useCreateTestimonial()
   const updateTestimonial = useUpdateTestimonial()
   const deleteTestimonial = useDeleteTestimonial()

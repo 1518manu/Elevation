@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useParams, Link } from 'react-router-dom'
-import { Upload } from 'lucide-react'
 import SEOHead from '@/components/common/SEOHead'
 import PageLoader from '@/components/common/PageLoader'
 import { useJob } from '@/hooks/useJobs'

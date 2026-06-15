@@ -3,7 +3,6 @@ import { Plus } from 'lucide-react'
 import AdminTopbar from '@/components/admin/AdminTopbar'
 import DataTable from '@/components/admin/DataTable'
 import ConfirmDialog from '@/components/admin/ConfirmDialog'
-import ImageUpload from '@/components/admin/ImageUpload'
 import MultiImageUpload from '@/components/admin/MultiImageUpload'
 import { useProducts, useCreateProduct, useUpdateProduct, useDeleteProduct } from '@/hooks/useProducts'
 import { ProductFormSchema } from '@/lib/validators'
@@ -31,8 +30,6 @@ export default function ProductsAdminPage() {
   const [form, setForm] = useState(emptyProduct)
   const [editId, setEditId] = useState(null)
   const [featureInput, setFeatureInput] = useState('')
-  const [specKey, setSpecKey] = useState('')
-  const [specVal, setSpecVal] = useState('')
 
   const openCreate = () => { setForm(emptyProduct); setEditId(null); setModalOpen(true) }
   const openEdit = (p) => { setForm({ ...p, specifications: p.specifications || {} }); setEditId(p.id); setModalOpen(true) }

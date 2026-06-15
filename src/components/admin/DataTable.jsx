@@ -33,9 +33,10 @@ export default function DataTable({
   const [globalFilter, setGlobalFilter] = useState('')
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: defaultPageSize })
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSetFilter = useCallback(
     debounce((value) => setGlobalFilter(value), 300),
-    []
+    [setGlobalFilter]
   )
 
   const table = useReactTable({

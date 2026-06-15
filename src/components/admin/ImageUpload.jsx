@@ -4,7 +4,6 @@ import { supabase } from '@/lib/supabase'
 import { cn, getImageUrl } from '@/lib/utils'
 import { useToast } from '@/components/ui/toast'
 import { Progress } from '@/components/ui/progress'
-import { Button } from '@/components/ui/button'
 
 export default function ImageUpload({
   bucket,

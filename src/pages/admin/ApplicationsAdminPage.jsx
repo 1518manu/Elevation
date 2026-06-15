@@ -1,6 +1,5 @@
 import AdminTopbar from '@/components/admin/AdminTopbar'
 import DataTable from '@/components/admin/DataTable'
-import StatusBadge from '@/components/admin/StatusBadge'
 import { useApplications, useUpdateApplication } from '@/hooks/useApplications'
 import { APPLICATION_STATUSES } from '@/lib/constants'
 import { formatDate } from '@/lib/utils'

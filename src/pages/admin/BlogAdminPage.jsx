@@ -5,7 +5,7 @@ import AdminTopbar from '@/components/admin/AdminTopbar'
 import DataTable from '@/components/admin/DataTable'
 import RichEditor from '@/components/admin/RichEditor'
 import ImageUpload from '@/components/admin/ImageUpload'
-import { useBlogs, useBlog, useCreateBlog, useUpdateBlog, useDeleteBlog } from '@/hooks/useBlogs'
+import { useBlogs, useCreateBlog, useUpdateBlog, useDeleteBlog } from '@/hooks/useBlogs'
 import { slugify, formatDate } from '@/lib/utils'
 import { STORAGE_BUCKETS } from '@/lib/constants'
 import { Button } from '@/components/ui/button'
@@ -20,7 +20,6 @@ export default function BlogAdminPage() {
   const navigate = useNavigate()
   const { toast } = useToast()
   const { data: blogs = [], isLoading } = useBlogs()
-  const { data: editBlog } = useBlog(id === 'new' ? null : blogs.find((b) => b.id === id)?.slug)
   const createBlog = useCreateBlog()
   const updateBlog = useUpdateBlog()
   const deleteBlog = useDeleteBlog()
