@@ -16,7 +16,7 @@ CREATE TABLE public.users (
 
 -- PRODUCTS
 CREATE TABLE public.products (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   slug TEXT UNIQUE NOT NULL,
   category TEXT NOT NULL
@@ -39,7 +39,7 @@ CREATE TABLE public.products (
 
 -- SERVICES
 CREATE TABLE public.services (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   title TEXT NOT NULL,
   slug TEXT UNIQUE NOT NULL,
   short_description TEXT,
@@ -58,7 +58,7 @@ CREATE TABLE public.services (
 
 -- PROJECTS
 CREATE TABLE public.projects (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   title TEXT NOT NULL,
   slug TEXT UNIQUE NOT NULL,
   client_name TEXT,
@@ -80,7 +80,7 @@ CREATE TABLE public.projects (
 
 -- BLOGS
 CREATE TABLE public.blogs (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   title TEXT NOT NULL,
   slug TEXT UNIQUE NOT NULL,
   category TEXT,
@@ -99,7 +99,7 @@ CREATE TABLE public.blogs (
 
 -- JOBS (Openings)
 CREATE TABLE public.jobs (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   title TEXT NOT NULL,
   department TEXT NOT NULL
     CHECK (department IN ('technical','hr','sales','admin','operations')),
@@ -119,7 +119,7 @@ CREATE TABLE public.jobs (
 
 -- APPLICATIONS
 CREATE TABLE public.applications (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   job_id UUID NOT NULL REFERENCES public.jobs(id) ON DELETE CASCADE,
   full_name TEXT NOT NULL,
   email TEXT NOT NULL,
@@ -136,7 +136,7 @@ CREATE TABLE public.applications (
 
 -- CONTACT INQUIRIES
 CREATE TABLE public.contact_inquiries (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   full_name TEXT NOT NULL,
   email TEXT NOT NULL,
   phone TEXT,
@@ -149,7 +149,7 @@ CREATE TABLE public.contact_inquiries (
 
 -- QUOTE INQUIRIES
 CREATE TABLE public.quote_inquiries (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   full_name TEXT NOT NULL,
   email TEXT NOT NULL,
   phone TEXT NOT NULL,
@@ -169,7 +169,7 @@ CREATE TABLE public.quote_inquiries (
 
 -- TESTIMONIALS
 CREATE TABLE public.testimonials (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   company TEXT,
   role TEXT,
@@ -184,7 +184,7 @@ CREATE TABLE public.testimonials (
 
 -- CLIENTS
 CREATE TABLE public.clients (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   logo_url TEXT,
   website_url TEXT,
@@ -195,7 +195,7 @@ CREATE TABLE public.clients (
 
 -- PROCESS STEPS
 CREATE TABLE public.process_steps (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   step_number INT NOT NULL,
   title TEXT NOT NULL,
   description TEXT,
@@ -206,7 +206,7 @@ CREATE TABLE public.process_steps (
 
 -- SITE SETTINGS (single row)
 CREATE TABLE public.site_settings (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   company_name TEXT DEFAULT 'Alfa Elevator',
   tagline TEXT,
   phones TEXT[] DEFAULT '{}',
@@ -223,7 +223,7 @@ CREATE TABLE public.site_settings (
 
 -- NOTIFICATIONS
 CREATE TABLE public.notifications (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   type TEXT NOT NULL,
   title TEXT NOT NULL,
   message TEXT,
@@ -236,7 +236,7 @@ CREATE TABLE public.notifications (
 
 -- AUDIT LOGS
 CREATE TABLE public.audit_logs (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES public.users(id),
   action TEXT NOT NULL CHECK (action IN ('INSERT','UPDATE','DELETE')),
   table_name TEXT NOT NULL,
