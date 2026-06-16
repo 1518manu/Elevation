@@ -15,8 +15,8 @@ export default function HeroSection() {
   const badges = [
     { icon: Shield, label: 'BIS Certified' },
     { icon: Award, label: 'ISO 9001:2015' },
-    { icon: Clock, label: '15+ Years' },
-    { icon: Building2, label: '2000+ Installations' },
+    { icon: Clock, label: '5+ Years' },
+    { icon: Building2, label: '500+ Installations' },
   ]
 
   return (
