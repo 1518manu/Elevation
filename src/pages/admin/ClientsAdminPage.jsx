@@ -1,57 +1,160 @@
 import { useState } from 'react'
-import { Plus } from 'lucide-react'
-import AdminTopbar from '@/components/admin/AdminTopbar'
-import SortableList from '@/components/admin/SortableList'
-import ImageUpload from '@/components/admin/ImageUpload'
-import ConfirmDialog from '@/components/admin/ConfirmDialog'
+import { Plus, Building2, MoreVertical, Edit, Trash2, ExternalLink, Globe } from 'lucide-react'
 import { useClients, useCreateClient, useUpdateClient, useDeleteClient } from '@/hooks/useClients'
-import { STORAGE_BUCKETS } from '@/lib/constants'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { useToast } from '@/components/ui/toast'
-
-const empty = { name: '', logo_url: '', website_url: '', is_active: true, display_order: 0 }
+import ConfirmDialog from '@/components/admin/ConfirmDialog'
+import ClientFormDrawer from '@/components/admin/ClientFormDrawer'
+import SortableList from '@/components/admin/SortableList'
 
 export default function ClientsAdminPage() {
-  const { data: clients = [] } = useClients({ is_active: undefined })
+  const { data: clients = [], isLoading } = useClients({ is_active: undefined })
   const createClient = useCreateClient()
   const updateClient = useUpdateClient()
   const deleteClient = useDeleteClient()
   const { toast } = useToast()
-  const [modalOpen, setModalOpen] = useState(false)
-  const [form, setForm] = useState(empty)
+  const [drawerOpen, setDrawerOpen] = useState(false)
   const [editId, setEditId] = useState(null)
   const [deleteId, setDeleteId] = useState(null)
 
+  const openCreate = () => { setEditId(null); setDrawerOpen(true) }
+  const openEdit = (id) => { setEditId(id); setDrawerOpen(true) }
+
+  const handleReorder = async (items) => {
+    try {
+      for (let i = 0; i < items.length; i++) {
+        await updateClient.mutateAsync({ id: items[i].id, display_order: i })
+      }
+      toast({ title: 'Order updated successfully' })
+    } catch (error) {
+      toast({ 
+        title: 'Error', 
+        description: error.message || 'Failed to update order',
+        variant: 'destructive' 
+      })
+    }
+  }
+
+  const renderItem = (client) => (
+    <div className="flex items-center gap-4 w-full">
+      <div className="flex-shrink-0">
+        {client.logo_url ? (
+          <img 
+            src={client.logo_url} 
+            alt={client.name}
+            className="h-12 w-12 rounded-lg object-cover"
+          />
+        ) : (
+          <div className="h-12 w-12 rounded-lg bg-[#D42B2B] flex items-center justify-center">
+            <Building2 className="h-6 w-6 text-white" />
+          </div>
+        )}
+      </div>
+      <div className="flex-1">
+        <div className="flex items-center gap-3 mb-1">
+          <p className="font-['DM Sans', 'sans-serif'] text-[14px] font-semibold text-[#0E0E0E]">
+            {client.name}
+          </p>
+          {!client.is_active && (
+            <span className="text-xs font-semibold text-gray-400">Hidden</span>
+          )}
+        </div>
+        {client.website_url && (
+          <a 
+            href={client.website_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-['DM Sans', 'sans-serif'] text-sm text-[#D42B2B] hover:underline flex items-center gap-1"
+          >
+            <Globe className="h-3 w-3" />
+            {client.website_url}
+          </a>
+        )}
+      </div>
+    </div>
+  )
+
   return (
     <div>
-      <AdminTopbar title="Clients" />
-      <div className="p-6 space-y-6">
-        <div className="flex justify-end"><Button onClick={() => { setForm(empty); setEditId(null); setModalOpen(true) }} className="bg-red-600"><Plus className="mr-2 h-4 w-4" />Add Client</Button></div>
-        <SortableList items={clients} onReorder={async (items) => { for (let i = 0; i < items.length; i++) await updateClient.mutateAsync({ id: items[i].id, display_order: i }) }} renderItem={(c) => (
-          <div className="flex items-center justify-between w-full">
-            <span>{c.name}</span>
-            <div className="flex gap-2">
-              <Button size="sm" variant="outline" onClick={() => { setForm(c); setEditId(c.id); setModalOpen(true) }}>Edit</Button>
-              <Button size="sm" variant="destructive" onClick={() => setDeleteId(c.id)}>Delete</Button>
-            </div>
+      {/* Page Header */}
+      <div className="mb-6">
+        <div className="flex items-start justify-between">
+          <div>
+            <p className="font-['Syne', 'sans-serif'] text-[11px] uppercase tracking-wider text-[#9CA3AF] mb-1">
+              CONTENT
+            </p>
+            <h1 className="font-['Syne', 'sans-serif'] text-[24px] font-bold text-[#0E0E0E] mb-1">
+              Clients
+            </h1>
+            <p className="font-['DM Sans', 'sans-serif'] text-[13px] text-gray-500">
+              {clients.length} total · {clients.filter(c => c.is_active).length} visible
+            </p>
           </div>
-        )} />
+          <Button variant="admin-primary" onClick={openCreate}>
+            <Plus className="mr-2 h-4 w-4" /> Add Client
+          </Button>
+        </div>
       </div>
-      <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent>
-          <DialogHeader><DialogTitle>{editId ? 'Edit' : 'Add'} Client</DialogTitle></DialogHeader>
-          <div className="space-y-4">
-            <div><Label>Name</Label><Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></div>
-            <div><Label>Logo</Label><ImageUpload bucket={STORAGE_BUCKETS.clients} value={form.logo_url} onChange={(url) => setForm({ ...form, logo_url: url })} /></div>
-            <div><Label>Website</Label><Input value={form.website_url} onChange={(e) => setForm({ ...form, website_url: e.target.value })} /></div>
-            <Button onClick={async () => { if (editId) await updateClient.mutateAsync({ id: editId, ...form }); else await createClient.mutateAsync(form); setModalOpen(false); toast({ title: 'Saved' }) }} className="w-full bg-red-600">Save</Button>
+
+      {/* Instructions */}
+      <div className="bg-[#F9ECEC] border border-[#D42B2B20] rounded-lg p-4 mb-4">
+        <div className="flex items-start gap-3">
+          <Building2 className="h-5 w-5 text-[#D42B2B] flex-shrink-0 mt-0.5" />
+          <div>
+            <p className="font-['DM Sans', 'sans-serif'] text-sm font-medium text-[#0E0E0E] mb-1">
+              Manage client logos for website display
+            </p>
+            <p className="font-['DM Sans', 'sans-serif'] text-xs text-gray-600">
+              Add client logos with optional website links. The order set here determines how they appear on the website.
+            </p>
           </div>
-        </DialogContent>
-      </Dialog>
-      <ConfirmDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)} title="Delete Client" onConfirm={async () => { await deleteClient.mutateAsync(deleteId); setDeleteId(null) }} />
+        </div>
+      </div>
+
+      {/* Sortable Clients List */}
+      <div className="bg-white rounded-xl border border-[#E5E5E5] p-4">
+        {isLoading ? (
+          <div className="text-center py-12 text-gray-500">Loading clients...</div>
+        ) : clients.length === 0 ? (
+          <div className="text-center py-16">
+            <Building2 className="h-10 w-10 text-[#D42B2B] mx-auto mb-3" />
+            <p className="font-['Syne', 'sans-serif'] text-[18px] font-medium text-[#0E0E0E] mb-1">
+              No clients yet
+            </p>
+            <p className="font-['DM Sans', 'sans-serif'] text-sm text-gray-500 mb-4">
+              Add client logos to showcase partnerships on your website.
+            </p>
+            <Button variant="admin-primary" onClick={openCreate}>
+              <Plus className="mr-2 h-4 w-4" /> Add First Client
+            </Button>
+          </div>
+        ) : (
+          <SortableList
+            items={clients.map((c, i) => ({ ...c, id: c.id || String(i) }))}
+            onReorder={handleReorder}
+            renderItem={renderItem}
+          />
+        )}
+      </div>
+
+      <ClientFormDrawer 
+        open={drawerOpen} 
+        onOpenChange={setDrawerOpen}
+        editId={editId}
+        onSave={() => setDrawerOpen(false)}
+      />
+
+      <ConfirmDialog 
+        open={!!deleteId} 
+        onOpenChange={() => setDeleteId(null)} 
+        title="Delete Client"
+        description="This action cannot be undone. The client will be permanently removed from the website."
+        onConfirm={async () => { 
+          await deleteClient.mutateAsync(deleteId); 
+          setDeleteId(null); 
+          toast({ title: 'Client deleted' }) 
+        }} 
+      />
     </div>
   )
 }

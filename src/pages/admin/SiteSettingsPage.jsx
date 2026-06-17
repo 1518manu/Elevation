@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import AdminTopbar from '@/components/admin/AdminTopbar'
+import { Settings, Save, Building2, Share2, Home, Search } from 'lucide-react'
 import ImageUpload from '@/components/admin/ImageUpload'
 import { useSiteSettings, useUpdateSiteSettings } from '@/hooks/useSiteSettings'
 import { STORAGE_BUCKETS } from '@/lib/constants'
@@ -26,7 +26,7 @@ export default function SiteSettingsPage() {
   const handleSave = async () => {
     try {
       await updateSettings.mutateAsync({ id: form.id, ...form })
-      toast({ title: 'Settings saved' })
+      toast({ title: 'Settings saved successfully' })
     } catch (err) {
       toast({ title: 'Error', description: err.message, variant: 'destructive' })
     }
@@ -38,55 +38,254 @@ export default function SiteSettingsPage() {
     setForm({ ...form, [key]: list })
   }
 
+  const addToList = (key) => {
+    setForm({ ...form, [key]: [...(form[key] || []), ''] })
+  }
+
+  const removeFromList = (key, index) => {
+    setForm({ ...form, [key]: form[key].filter((_, i) => i !== index) })
+  }
+
   return (
     <div>
-      <AdminTopbar title="Site Settings" />
-      <div className="p-6">
-        <Tabs defaultValue="company">
-          <TabsList>
-            <TabsTrigger value="company">Company Info</TabsTrigger>
-            <TabsTrigger value="social">Social Media</TabsTrigger>
-            <TabsTrigger value="homepage">Homepage</TabsTrigger>
-            <TabsTrigger value="seo">SEO Defaults</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="company" className="mt-6 space-y-4 max-w-2xl">
-            <div><Label>Company Name</Label><Input value={form.company_name} onChange={(e) => setForm({ ...form, company_name: e.target.value })} /></div>
-            <div><Label>Tagline</Label><Input value={form.tagline} onChange={(e) => setForm({ ...form, tagline: e.target.value })} /></div>
-            <div><Label>WhatsApp Number</Label><Input value={form.whatsapp_number} onChange={(e) => setForm({ ...form, whatsapp_number: e.target.value })} /></div>
-            {form.phones?.map((p, i) => (
-              <div key={i}><Label>Phone {i + 1}</Label><Input value={p} onChange={(e) => updateList('phones', i, e.target.value)} /></div>
-            ))}
-            <Button variant="outline" onClick={() => setForm({ ...form, phones: [...(form.phones || []), ''] })}>Add Phone</Button>
-            {form.emails?.map((e, i) => (
-              <div key={i}><Label>Email {i + 1}</Label><Input value={e} onChange={(ev) => updateList('emails', i, ev.target.value)} /></div>
-            ))}
-            <Button variant="outline" onClick={() => setForm({ ...form, emails: [...(form.emails || []), ''] })}>Add Email</Button>
-            <div><Label>Google Maps Embed</Label><Textarea value={form.google_maps_embed} onChange={(e) => setForm({ ...form, google_maps_embed: e.target.value })} /></div>
-          </TabsContent>
-
-          <TabsContent value="social" className="mt-6 space-y-4 max-w-2xl">
-            {['facebook', 'instagram', 'linkedin', 'youtube', 'twitter'].map((key) => (
-              <div key={key}><Label className="capitalize">{key}</Label><Input value={form.social_links?.[key] || ''} onChange={(e) => setForm({ ...form, social_links: { ...form.social_links, [key]: e.target.value } })} /></div>
-            ))}
-          </TabsContent>
-
-          <TabsContent value="homepage" className="mt-6 space-y-4 max-w-2xl">
-            <div><Label>Hero Headline</Label><Input value={form.hero_content?.headline || ''} onChange={(e) => setForm({ ...form, hero_content: { ...form.hero_content, headline: e.target.value } })} /></div>
-            <div><Label>Hero Sub-headline</Label><Textarea value={form.hero_content?.subheadline || ''} onChange={(e) => setForm({ ...form, hero_content: { ...form.hero_content, subheadline: e.target.value } })} /></div>
-            {['years', 'projects', 'clients', 'cities'].map((key) => (
-              <div key={key}><Label className="capitalize">{key}</Label><Input type="number" value={form.stats?.[key] || ''} onChange={(e) => setForm({ ...form, stats: { ...form.stats, [key]: Number(e.target.value) } })} /></div>
-            ))}
-          </TabsContent>
-
-          <TabsContent value="seo" className="mt-6 space-y-4 max-w-2xl">
-            <div><Label>Default Site Title</Label><Input value={form.seo_defaults?.title || ''} onChange={(e) => setForm({ ...form, seo_defaults: { ...form.seo_defaults, title: e.target.value } })} /></div>
-            <div><Label>Default Meta Description</Label><Textarea value={form.seo_defaults?.description || ''} onChange={(e) => setForm({ ...form, seo_defaults: { ...form.seo_defaults, description: e.target.value } })} /></div>
-            <div><Label>Default OG Image</Label><ImageUpload bucket={STORAGE_BUCKETS.companyAssets} value={form.seo_defaults?.og_image} onChange={(url) => setForm({ ...form, seo_defaults: { ...form.seo_defaults, og_image: url } })} /></div>
-          </TabsContent>
-        </Tabs>
-        <Button onClick={handleSave} className="mt-6 bg-red-600">Save Settings</Button>
+      {/* Page Header */}
+      <div className="mb-6">
+        <div className="flex items-start justify-between">
+          <div>
+            <p className="font-['Syne', 'sans-serif'] text-[11px] uppercase tracking-wider text-[#9CA3AF] mb-1">
+              SETTINGS
+            </p>
+            <h1 className="font-['Syne', 'sans-serif'] text-[24px] font-bold text-[#0E0E0E] mb-1">
+              Site Settings
+            </h1>
+            <p className="font-['DM Sans', 'sans-serif'] text-[13px] text-gray-500">
+              Manage company information and website configuration
+            </p>
+          </div>
+          <Button variant="admin-primary" onClick={handleSave}>
+            <Save className="mr-2 h-4 w-4" /> Save Settings
+          </Button>
+        </div>
       </div>
+
+      {/* Tabs */}
+      <Tabs defaultValue="company" className="space-y-6">
+        <TabsList className="bg-[#F7F7F7] border border-[#E5E5E5] rounded-lg p-1">
+          <TabsTrigger 
+            value="company" 
+            className="data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#D42B2B]"
+          >
+            <Building2 className="mr-2 h-4 w-4" /> Company Info
+          </TabsTrigger>
+          <TabsTrigger 
+            value="social" 
+            className="data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#D42B2B]"
+          >
+            <Share2 className="mr-2 h-4 w-4" /> Social Media
+          </TabsTrigger>
+          <TabsTrigger 
+            value="homepage" 
+            className="data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#D42B2B]"
+          >
+            <Home className="mr-2 h-4 w-4" /> Homepage
+          </TabsTrigger>
+          <TabsTrigger 
+            value="seo" 
+            className="data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#D42B2B]"
+          >
+            <Search className="mr-2 h-4 w-4" /> SEO Defaults
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="company" className="space-y-6">
+          <div className="bg-white rounded-xl border border-[#E5E5E5] p-6">
+            <h3 className="font-['Syne', 'sans-serif'] text-[16px] font-semibold text-[#0E0E0E] mb-4">
+              Company Information
+            </h3>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="company_name">Company Name</Label>
+                <Input
+                  id="company_name"
+                  value={form.company_name}
+                  onChange={(e) => setForm({ ...form, company_name: e.target.value })}
+                  className="focus:border-[#D42B2B]"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="tagline">Tagline</Label>
+                <Input
+                  id="tagline"
+                  value={form.tagline}
+                  onChange={(e) => setForm({ ...form, tagline: e.target.value })}
+                  className="focus:border-[#D42B2B]"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="whatsapp">WhatsApp Number</Label>
+                <Input
+                  id="whatsapp"
+                  value={form.whatsapp_number}
+                  onChange={(e) => setForm({ ...form, whatsapp_number: e.target.value })}
+                  className="focus:border-[#D42B2B]"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Phone Numbers</Label>
+                {form.phones?.map((p, i) => (
+                  <div key={i} className="flex gap-2">
+                    <Input
+                      value={p}
+                      onChange={(e) => updateList('phones', i, e.target.value)}
+                      className="focus:border-[#D42B2B]"
+                    />
+                    <Button variant="admin-danger" size="admin-sm" onClick={() => removeFromList('phones', i)}>
+                      Remove
+                    </Button>
+                  </div>
+                ))}
+                <Button variant="admin-ghost" onClick={() => addToList('phones')}>
+                  Add Phone
+                </Button>
+              </div>
+              <div className="space-y-2">
+                <Label>Email Addresses</Label>
+                {form.emails?.map((e, i) => (
+                  <div key={i} className="flex gap-2">
+                    <Input
+                      value={e}
+                      onChange={(ev) => updateList('emails', i, ev.target.value)}
+                      className="focus:border-[#D42B2B]"
+                    />
+                    <Button variant="admin-danger" size="admin-sm" onClick={() => removeFromList('emails', i)}>
+                      Remove
+                    </Button>
+                  </div>
+                ))}
+                <Button variant="admin-ghost" onClick={() => addToList('emails')}>
+                  Add Email
+                </Button>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="maps">Google Maps Embed Code</Label>
+                <Textarea
+                  id="maps"
+                  value={form.google_maps_embed}
+                  onChange={(e) => setForm({ ...form, google_maps_embed: e.target.value })}
+                  rows={3}
+                  className="focus:border-[#D42B2B]"
+                />
+              </div>
+            </div>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="social" className="space-y-6">
+          <div className="bg-white rounded-xl border border-[#E5E5E5] p-6">
+            <h3 className="font-['Syne', 'sans-serif'] text-[16px] font-semibold text-[#0E0E0E] mb-4">
+              Social Media Links
+            </h3>
+            <div className="space-y-4">
+              {['facebook', 'instagram', 'linkedin', 'youtube', 'twitter'].map((key) => (
+                <div key={key} className="space-y-2">
+                  <Label className="capitalize">{key}</Label>
+                  <Input
+                    value={form.social_links?.[key] || ''}
+                    onChange={(e) => setForm({ ...form, social_links: { ...form.social_links, [key]: e.target.value } })}
+                    placeholder={`https://${key}.com/your-handle`}
+                    className="focus:border-[#D42B2B]"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="homepage" className="space-y-6">
+          <div className="bg-white rounded-xl border border-[#E5E5E5] p-6">
+            <h3 className="font-['Syne', 'sans-serif'] text-[16px] font-semibold text-[#0E0E0E] mb-4">
+              Homepage Hero Section
+            </h3>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="headline">Hero Headline</Label>
+                <Input
+                  id="headline"
+                  value={form.hero_content?.headline || ''}
+                  onChange={(e) => setForm({ ...form, hero_content: { ...form.hero_content, headline: e.target.value } })}
+                  className="focus:border-[#D42B2B]"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="subheadline">Hero Sub-headline</Label>
+                <Textarea
+                  id="subheadline"
+                  value={form.hero_content?.subheadline || ''}
+                  onChange={(e) => setForm({ ...form, hero_content: { ...form.hero_content, subheadline: e.target.value } })}
+                  rows={2}
+                  className="focus:border-[#D42B2B]"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl border border-[#E5E5E5] p-6">
+            <h3 className="font-['Syne', 'sans-serif'] text-[16px] font-semibold text-[#0E0E0E] mb-4">
+              Statistics
+            </h3>
+            <div className="grid grid-cols-2 gap-4">
+              {['years', 'projects', 'clients', 'cities'].map((key) => (
+                <div key={key} className="space-y-2">
+                  <Label className="capitalize">{key}</Label>
+                  <Input
+                    type="number"
+                    value={form.stats?.[key] || ''}
+                    onChange={(e) => setForm({ ...form, stats: { ...form.stats, [key]: Number(e.target.value) } })}
+                    className="focus:border-[#D42B2B]"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="seo" className="space-y-6">
+          <div className="bg-white rounded-xl border border-[#E5E5E5] p-6">
+            <h3 className="font-['Syne', 'sans-serif'] text-[16px] font-semibold text-[#0E0E0E] mb-4">
+              SEO Defaults
+            </h3>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="seo_title">Default Site Title</Label>
+                <Input
+                  id="seo_title"
+                  value={form.seo_defaults?.title || ''}
+                  onChange={(e) => setForm({ ...form, seo_defaults: { ...form.seo_defaults, title: e.target.value } })}
+                  className="focus:border-[#D42B2B]"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="seo_description">Default Meta Description</Label>
+                <Textarea
+                  id="seo_description"
+                  value={form.seo_defaults?.description || ''}
+                  onChange={(e) => setForm({ ...form, seo_defaults: { ...form.seo_defaults, description: e.target.value } })}
+                  rows={3}
+                  className="focus:border-[#D42B2B]"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Default OG Image</Label>
+                <ImageUpload 
+                  bucket={STORAGE_BUCKETS.companyAssets} 
+                  value={form.seo_defaults?.og_image} 
+                  onChange={(url) => setForm({ ...form, seo_defaults: { ...form.seo_defaults, og_image: url } })} 
+                />
+              </div>
+            </div>
+          </div>
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }

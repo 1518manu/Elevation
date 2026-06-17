@@ -18,12 +18,22 @@ const buttonVariants = cva(
           'bg-secondary text-secondary-foreground hover:bg-secondary/80',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
+        // Admin-specific variants with Red·Black·White design system
+        'admin-primary': 'bg-[#D42B2B] text-white font-semibold hover:bg-[#B01F1F] shadow-[0_4px_16px_rgba(212,43,43,0.24)] hover:shadow-[0_6px_20px_rgba(212,43,43,0.32)] hover:-translate-y-px active:translate-y-0 transition-all duration-150',
+        'admin-secondary': 'bg-white text-[#D42B2B] border-[1.5px] border-[#D42B2B] font-semibold hover:bg-[#F9ECEC]',
+        'admin-ghost': 'bg-transparent text-gray-500 border-[1.5px] border-gray-200 hover:bg-[#F7F7F7] hover:text-gray-700 hover:border-gray-300',
+        'admin-danger': 'bg-[#D42B2B] text-white font-semibold hover:bg-[#B01F1F]',
+        'admin-icon': 'bg-transparent text-gray-500 border-[1.5px] border-gray-200 hover:bg-[#F7F7F7] hover:text-gray-700 hover:border-gray-300 p-2',
       },
       size: {
         default: 'h-10 px-4 py-2',
         sm: 'h-9 rounded-md px-3',
         lg: 'h-11 rounded-md px-8',
         icon: 'h-10 w-10',
+        // Admin-specific sizes
+        'admin-sm': 'h-8 px-3 py-1.5 text-xs',
+        'admin-md': 'h-9 px-4 py-1.5 text-xs',
+        'admin-lg': 'h-11 px-6 text-sm',
       },
     },
     defaultVariants: {

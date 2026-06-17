@@ -1,71 +1,237 @@
 import { useState } from 'react'
-import { Plus } from 'lucide-react'
-import AdminTopbar from '@/components/admin/AdminTopbar'
-import DataTable from '@/components/admin/DataTable'
-import ConfirmDialog from '@/components/admin/ConfirmDialog'
+import { Plus, MoreVertical, Edit, Trash2, Clock, AlertCircle, CheckCircle, XCircle, Briefcase } from 'lucide-react'
 import { useJobs, useCreateJob, useUpdateJob, useDeleteJob } from '@/hooks/useJobs'
+import { useApplications } from '@/hooks/useApplications'
 import { JOB_DEPARTMENTS } from '@/lib/constants'
-import { formatDate } from '@/lib/utils'
+import { formatDate, getDaysUntilDeadline } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
+import { Badge } from '@/components/ui/badge'
 import { useToast } from '@/components/ui/toast'
-
-const empty = { title: '', department: 'technical', location: '', job_type: 'full_time', description: '', requirements: [], is_active: true }
+import ConfirmDialog from '@/components/admin/ConfirmDialog'
+import JobFormDrawer from '@/components/admin/JobFormDrawer'
 
 export default function CareerAdminPage() {
   const { data: jobs = [], isLoading } = useJobs({ is_active: undefined })
+  const { data: applications = [] } = useApplications()
   const createJob = useCreateJob()
   const updateJob = useUpdateJob()
   const deleteJob = useDeleteJob()
   const { toast } = useToast()
-  const [modalOpen, setModalOpen] = useState(false)
-  const [form, setForm] = useState(empty)
-  const [editId, setEditId] = useState(null)
+  const [drawerOpen, setDrawerOpen] = useState(false)
   const [deleteId, setDeleteId] = useState(null)
+  const [editId, setEditId] = useState(null)
+
+  const openCreate = () => { setEditId(null); setDrawerOpen(true) }
+  const openEdit = (id) => { setEditId(id); setDrawerOpen(true) }
+
+  const getApplicationCount = (jobId) => {
+    return applications.filter(app => app.job_id === jobId).length
+  }
+
+  const getDeadlineStatus = (deadline) => {
+    if (!deadline) return 'normal'
+    const daysUntil = getDaysUntilDeadline(deadline)
+    if (daysUntil < 0) return 'past-due'
+    if (daysUntil <= 7) return 'urgent'
+    return 'normal'
+  }
+
+  const getDeadlineBadge = (deadline) => {
+    const status = getDeadlineStatus(deadline)
+    if (status === 'past-due') {
+      return <Badge variant="admin-lost">Past Due</Badge>
+    }
+    if (status === 'urgent') {
+      return <Badge variant="admin-contacted">Closing Soon</Badge>
+    }
+    return <Badge variant="admin-draft">{deadline ? formatDate(deadline) : 'No deadline'}</Badge>
+  }
 
   const columns = [
-    { accessorKey: 'title', header: 'Title' },
-    { accessorKey: 'department', header: 'Department', cell: ({ row }) => <span className="capitalize">{row.original.department}</span> },
-    { accessorKey: 'location', header: 'Location' },
-    { accessorKey: 'is_active', header: 'Active', cell: ({ row }) => row.original.is_active ? 'Yes' : 'No' },
-    { accessorKey: 'created_at', header: 'Posted', cell: ({ row }) => formatDate(row.original.created_at) },
-    { id: 'actions', header: 'Actions', cell: ({ row }) => (
-      <div className="flex gap-2">
-        <Button size="sm" variant="outline" onClick={() => { setForm(row.original); setEditId(row.original.id); setModalOpen(true) }}>Edit</Button>
-        <Button size="sm" variant="destructive" onClick={() => setDeleteId(row.original.id)}>Delete</Button>
-      </div>
-    )},
+    { 
+      accessorKey: 'title', 
+      header: 'TITLE', 
+      cell: ({ row }) => (
+        <div className="font-['DM Sans', 'sans-serif'] text-[14px] font-semibold text-[#0E0E0E]">
+          {row.original.title}
+        </div>
+      )
+    },
+    { 
+      accessorKey: 'department', 
+      header: 'DEPARTMENT', 
+      cell: ({ row }) => (
+        <Badge variant="admin-draft" className="capitalize">
+          {row.original.department}
+        </Badge>
+      )
+    },
+    { 
+      accessorKey: 'location', 
+      header: 'LOCATION', 
+      cell: ({ row }) => (
+        <span className="font-['DM Sans', 'sans-serif'] text-sm text-gray-600">
+          {row.original.location}
+        </span>
+      )
+    },
+    { 
+      accessorKey: 'job_type', 
+      header: 'TYPE', 
+      cell: ({ row }) => (
+        <span className="font-['DM Sans', 'sans-serif'] text-sm capitalize">
+          {row.original.job_type.replace('_', ' ')}
+        </span>
+      )
+    },
+    { 
+      accessorKey: 'deadline', 
+      header: 'DEADLINE', 
+      cell: ({ row }) => getDeadlineBadge(row.original.deadline)
+    },
+    { 
+      accessorKey: 'applications', 
+      header: 'APPLICATIONS', 
+      cell: ({ row }) => {
+        const count = getApplicationCount(row.original.id)
+        return count > 0 ? (
+          <Badge variant="admin-new" className="font-['JetBrains Mono', 'monospace']">
+            {count} new
+          </Badge>
+        ) : (
+          <span className="font-['DM Sans', 'sans-serif'] text-sm text-gray-500">
+            0
+          </span>
+        )
+      }
+    },
+    { 
+      accessorKey: 'is_active', 
+      header: 'STATUS', 
+      cell: ({ row }) => (
+        <Badge variant={row.original.is_active ? 'admin-active' : 'admin-inactive'}>
+          {row.original.is_active ? 'Active' : 'Inactive'}
+        </Badge>
+      )
+    },
+    { 
+      id: 'actions', 
+      header: 'ACTIONS', 
+      cell: ({ row }) => (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="p-2 hover:bg-gray-100 rounded-md">
+              <MoreVertical className="h-4 w-4" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={() => openEdit(row.original.id)}>
+              <Edit className="mr-2 h-4 w-4" /> Edit
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem 
+              className="text-[#D42B2B]"
+              onClick={() => setDeleteId(row.original.id)}
+            >
+              <Trash2 className="mr-2 h-4 w-4" /> Delete
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )
+    },
   ]
+
+  const activeCount = jobs.filter(j => j.is_active).length
 
   return (
     <div>
-      <AdminTopbar title="Job Openings" />
-      <div className="p-6">
-        <div className="mb-4 flex justify-end"><Button onClick={() => { setForm(empty); setEditId(null); setModalOpen(true) }} className="bg-red-600"><Plus className="mr-2 h-4 w-4" />Post Job</Button></div>
-        <DataTable columns={columns} data={jobs} isLoading={isLoading} />
-      </div>
-      <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent>
-          <DialogHeader><DialogTitle>{editId ? 'Edit' : 'Post'} Job</DialogTitle></DialogHeader>
-          <div className="space-y-4">
-            <div><Label>Title</Label><Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} /></div>
-            <div><Label>Department</Label>
-              <Select value={form.department} onValueChange={(v) => setForm({ ...form, department: v })}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
-                <SelectContent>{JOB_DEPARTMENTS.map((d) => <SelectItem key={d.value} value={d.value}>{d.label}</SelectItem>)}</SelectContent>
-              </Select>
-            </div>
-            <div><Label>Location</Label><Input value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} /></div>
-            <div><Label>Description</Label><Textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} /></div>
-            <Button onClick={async () => { if (editId) await updateJob.mutateAsync({ id: editId, ...form }); else await createJob.mutateAsync(form); setModalOpen(false); toast({ title: 'Saved' }) }} className="w-full bg-red-600">Save</Button>
+      {/* Page Header */}
+      <div className="mb-6">
+        <div className="flex items-start justify-between">
+          <div>
+            <p className="font-['Syne', 'sans-serif'] text-[11px] uppercase tracking-wider text-[#9CA3AF] mb-1">
+              HR
+            </p>
+            <h1 className="font-['Syne', 'sans-serif'] text-[24px] font-bold text-[#0E0E0E] mb-1">
+              Job Openings
+            </h1>
+            <p className="font-['DM Sans', 'sans-serif'] text-[13px] text-gray-500">
+              {jobs.length} total · {activeCount} active · {applications.length} total applications
+            </p>
           </div>
-        </DialogContent>
-      </Dialog>
-      <ConfirmDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)} title="Delete Job" onConfirm={async () => { await deleteJob.mutateAsync(deleteId); setDeleteId(null) }} />
+          <Button variant="admin-primary" onClick={openCreate}>
+            <Plus className="mr-2 h-4 w-4" /> Post Job
+          </Button>
+        </div>
+      </div>
+
+      {/* Jobs Table */}
+      <div className="bg-white rounded-xl border border-[#E5E5E5] overflow-hidden">
+        <table className="w-full">
+          <thead>
+            <tr className="bg-[#F7F7F7] border-b border-[#E5E5E5]">
+              {columns.map(col => (
+                <th key={col.header} className="font-['Syne', 'sans-serif'] text-[11px] font-semibold uppercase tracking-[0.08em] text-[#9CA3AF] px-4 py-3 text-left">
+                  {col.header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {isLoading ? (
+              <tr>
+                <td colSpan={columns.length} className="px-4 py-8 text-center text-gray-500">
+                  Loading job openings...
+                </td>
+              </tr>
+            ) : jobs.length === 0 ? (
+              <tr>
+                <td colSpan={columns.length} className="px-4 py-16 text-center">
+                  <div className="flex flex-col items-center gap-3">
+                    <Briefcase className="h-10 w-10 text-[#D42B2B]" />
+                    <p className="font-['Syne', 'sans-serif'] text-[18px] font-medium text-[#0E0E0E]">
+                      No job openings yet
+                    </p>
+                    <p className="font-['DM Sans', 'sans-serif'] text-sm text-gray-500">
+                      Create your first job opening to start hiring.
+                    </p>
+                  </div>
+                </td>
+              </tr>
+            ) : (
+              jobs.map((job) => (
+                <tr key={job.id} className="hover:bg-[#FAFAFA]">
+                  {columns.map(col => (
+                    <td key={col.header} className="px-4 py-4 border-b border-[#F0F0F0]">
+                      {col.cell ? col.cell({ row: { original: job } }) : job[col.accessorKey]}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      <JobFormDrawer 
+        open={drawerOpen} 
+        onOpenChange={setDrawerOpen}
+        editId={editId}
+        onSave={() => setDrawerOpen(false)}
+      />
+
+      <ConfirmDialog 
+        open={!!deleteId} 
+        onOpenChange={() => setDeleteId(null)} 
+        title="Delete Job Opening"
+        description="This action cannot be undone. The job opening will be permanently removed from the website."
+        onConfirm={async () => { 
+          await deleteJob.mutateAsync(deleteId); 
+          setDeleteId(null); 
+          toast({ title: 'Job opening deleted' }) 
+        }} 
+      />
     </div>
   )
 }

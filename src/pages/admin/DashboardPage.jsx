@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
-import { FileText, Mail, Briefcase, BookOpen, Plus } from 'lucide-react'
+import { FileText, Mail, Briefcase, BookOpen, Plus, Inbox, ArrowUp } from 'lucide-react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts'
-import AdminTopbar from '@/components/admin/AdminTopbar'
 import StatusBadge from '@/components/admin/StatusBadge'
 import { useQuoteInquiries } from '@/hooks/useQuoteInquiries'
 import { useContactInquiries } from '@/hooks/useContactInquiries'
@@ -21,6 +20,11 @@ export default function DashboardPage() {
   const thisMonth = new Date().getMonth()
   const quotesThisMonth = quotes.filter((q) => new Date(q.created_at).getMonth() === thisMonth)
   const newContacts = contacts.filter((c) => c.status === 'new')
+  
+  // Calculate trends (comparing with previous month)
+  const lastMonth = thisMonth === 0 ? 11 : thisMonth - 1
+  const quotesLastMonth = quotes.filter((q) => new Date(q.created_at).getMonth() === lastMonth)
+  const quoteTrend = quotesThisMonth.length - quotesLastMonth.length
 
   const chartData = Array.from({ length: 6 }, (_, i) => {
     const d = new Date()
@@ -38,68 +42,230 @@ export default function DashboardPage() {
   })
 
   const kpis = [
-    { label: 'Quote Inquiries (This Month)', value: quotesThisMonth.length, icon: FileText, color: 'border-blue-500', live: true },
-    { label: 'New Unread Contacts', value: newContacts.length, icon: Mail, color: 'border-amber-500' },
-    { label: 'Active Job Openings', value: jobs.length, icon: Briefcase, color: 'border-green-500' },
-    { label: 'Published Blog Posts', value: blogs.length, icon: BookOpen, color: 'border-purple-500' },
+    { 
+      label: 'Quote Inquiries (This Month)', 
+      value: quotesThisMonth.length, 
+      icon: FileText, 
+      bg: '#EFF6FF',
+      color: '#2563EB',
+      live: true,
+      trend: quoteTrend 
+    },
+    { 
+      label: 'New Unread Contacts', 
+      value: newContacts.length, 
+      icon: Mail, 
+      bg: '#FFF7ED',
+      color: '#C2410C',
+      live: false 
+    },
+    { 
+      label: 'Active Job Openings', 
+      value: jobs.length, 
+      icon: Briefcase, 
+      bg: '#F0FDF4',
+      color: '#15803D',
+      live: false 
+    },
+    { 
+      label: 'Published Blog Posts', 
+      value: blogs.length, 
+      icon: BookOpen, 
+      bg: '#F5F3FF',
+      color: '#6D28D9',
+      live: false 
+    },
   ]
 
   return (
     <div>
-      <AdminTopbar title="Dashboard" />
-      <div className="p-6 space-y-6">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {kpis.map((kpi) => (
-            <div key={kpi.label} className={`rounded-xl border-l-4 bg-white p-5 shadow-card ${kpi.color}`}>
-              <div className="flex items-center justify-between">
-                <kpi.icon className="h-5 w-5 text-gray-400" />
-                {kpi.live && newLeadCount > 0 && <span className="text-xs font-medium text-green-600">● Live ({newLeadCount})</span>}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {kpis.map((kpi, index) => (
+          <div 
+            key={kpi.label} 
+            className="bg-white rounded-xl p-6 shadow-sm border border-[#E5E5E5] flex flex-col gap-3 hover:shadow-md transition-shadow duration-200"
+          >
+            <div className="flex items-center justify-between">
+              <div 
+                className="w-11 h-11 rounded-lg flex items-center justify-center"
+                style={{ background: kpi.bg }}
+              >
+                <kpi.icon size={22} style={{ color: kpi.color }} />
               </div>
-              <p className="mt-3 text-3xl font-bold text-black">{kpi.value}</p>
-              <p className="text-xs uppercase tracking-wide text-gray-500">{kpi.label}</p>
+              {kpi.live && (
+                <span className="font-mono text-[10px] font-semibold text-[#D42B2B] animate-pulse">
+                  ● LIVE
+                </span>
+              )}
             </div>
-          ))}
-        </div>
+            <div className="font-['DM Sans', 'sans-serif'] font-bold text-[28px] text-[#0E0E0E]">
+              {kpi.value}
+            </div>
+            <div className="font-['Syne', 'sans-serif'] text-[12px] uppercase tracking-wider text-[#6B6B6B]">
+              {kpi.label}
+            </div>
+            {kpi.trend !== undefined && (
+              <div className="flex items-center gap-1 text-xs">
+                <ArrowUp size={14} className={kpi.trend >= 0 ? 'text-[#16A34A]' : 'text-[#D42B2B]'} />
+                <span className={kpi.trend >= 0 ? 'text-[#16A34A]' : 'text-[#D42B2B]'}>
+                  {Math.abs(kpi.trend)} this week
+                </span>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
 
-        <div className="rounded-xl bg-white p-6 shadow-card">
-          <h2 className="mb-4 font-heading text-lg font-semibold text-black">Inquiries by Month</h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="quotes" fill="#1A3A5C" name="Quotes" />
-              <Bar dataKey="contacts" fill="#E8B84B" name="Contacts" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-
-        <div className="rounded-xl bg-white p-6 shadow-card">
-          <h2 className="mb-4 font-heading text-lg font-semibold text-black">Recent Quote Inquiries</h2>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead><tr className="border-b text-left text-gray-500"><th className="pb-2">Name</th><th className="pb-2">Type</th><th className="pb-2">City</th><th className="pb-2">Status</th><th className="pb-2">Time</th></tr></thead>
-              <tbody>
-                {quotes.slice(0, 10).map((q) => (
-                  <tr key={q.id} className="border-b last:border-0">
-                    <td className="py-3">{q.full_name}</td>
-                    <td>{q.elevator_type}</td>
-                    <td>{q.city}</td>
-                    <td><StatusBadge status={q.status} /></td>
-                    <td className="text-gray-500">{timeAgo(q.created_at)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+      <div className="mt-6 bg-white rounded-xl p-6 shadow-sm border border-[#E5E5E5] h-[400px]">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="font-['Syne', 'sans-serif'] text-[16px] font-bold text-[#0E0E0E]">
+            Inquiries by Month
+          </h2>
+          <div className="flex gap-1">
+            <Button variant="admin-ghost" size="admin-sm" className="rounded-r-none">
+              6M
+            </Button>
+            <Button variant="admin-ghost" size="admin-sm" className="rounded-l-none border-l-0">
+              1Y
+            </Button>
           </div>
         </div>
+        <ResponsiveContainer width="100%" height={320}>
+          <BarChart data={chartData}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#F0F0F0" horizontal={true} vertical={false} />
+            <XAxis 
+              dataKey="month" 
+              tick={{ fontFamily: 'DM Sans', fontSize: 12, fill: '#9CA3AF' }}
+              axisLine={false}
+              tickLine={false}
+            />
+            <YAxis 
+              tick={{ fontFamily: 'DM Sans', fontSize: 12, fill: '#9CA3AF' }}
+              axisLine={false}
+              tickLine={false}
+            />
+            <Tooltip 
+              contentStyle={{ 
+                backgroundColor: 'white', 
+                border: '1px solid #E5E5E5',
+                borderRadius: '8px',
+                boxShadow: '0 4px 16px rgba(0,0,0,0.10)'
+              }}
+            />
+            <Legend 
+              wrapperStyle={{ 
+                fontFamily: 'DM Sans', 
+                fontSize: 12, 
+                color: '#6B6B6B'
+              }}
+              iconType="circle"
+            />
+            <Bar dataKey="quotes" fill="#D42B2B" name="Quotes" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="contacts" fill="#E5E5E5" name="Contacts" radius={[4, 4, 0, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
 
-        <div className="flex flex-wrap gap-3">
-          <Button asChild className="bg-red-600"><Link to="/admin/products"><Plus className="mr-2 h-4 w-4" />Add Product</Link></Button>
-          <Button asChild variant="outline"><Link to="/admin/blog"><Plus className="mr-2 h-4 w-4" />Write Blog</Link></Button>
-          <Button asChild variant="outline"><Link to="/admin/careers"><Plus className="mr-2 h-4 w-4" />Post Job Opening</Link></Button>
+      <div className="mt-6 bg-white rounded-xl p-6 shadow-sm border border-[#E5E5E5]">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="font-['Syne', 'sans-serif'] text-[16px] font-bold text-[#0E0E0E]">
+            Recent Inquiries
+          </h2>
+          <Link to="/admin/quotes" className="font-['DM Sans', 'sans-serif'] text-sm text-[#D42B2B] hover:underline">
+            View All →
+          </Link>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr>
+                <th className="font-['Syne', 'sans-serif'] text-[11px] font-semibold uppercase tracking-[0.08em] text-[#9CA3AF] bg-[#F7F7F7] pb-3 pl-4 pr-2">
+                  Name
+                </th>
+                <th className="font-['Syne', 'sans-serif'] text-[11px] font-semibold uppercase tracking-[0.08em] text-[#9CA3AF] bg-[#F7F7F7] pb-3 px-2">
+                  Elevator Type
+                </th>
+                <th className="font-['Syne', 'sans-serif'] text-[11px] font-semibold uppercase tracking-[0.08em] text-[#9CA3AF] bg-[#F7F7F7] pb-3 px-2">
+                  City
+                </th>
+                <th className="font-['Syne', 'sans-serif'] text-[11px] font-semibold uppercase tracking-[0.08em] text-[#9CA3AF] bg-[#F7F7F7] pb-3 px-2">
+                  Floors
+                </th>
+                <th className="font-['Syne', 'sans-serif'] text-[11px] font-semibold uppercase tracking-[0.08em] text-[#9CA3AF] bg-[#F7F7F7] pb-3 px-2">
+                  Status
+                </th>
+                <th className="font-['Syne', 'sans-serif'] text-[11px] font-semibold uppercase tracking-[0.08em] text-[#9CA3AF] bg-[#F7F7F7] pb-3 px-2">
+                  Time
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {quotes.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="text-center py-16">
+                    <div className="flex flex-col items-center gap-3">
+                      <Inbox size={40} className="text-[#D42B2B]" />
+                      <p className="font-['Syne', 'sans-serif'] text-[18px] font-medium text-[#0E0E0E]">
+                        No inquiries yet
+                      </p>
+                      <p className="font-['DM Sans', 'sans-serif'] text-sm text-gray-500">
+                        Quote requests will appear here in real time.
+                      </p>
+                    </div>
+                  </td>
+                </tr>
+              ) : (
+                quotes.slice(0, 10).map((q) => (
+                  <tr key={q.id} className="hover:bg-[#FAFAFA]">
+                    <td className="py-4 pl-4 pr-2">
+                      <p className="font-['DM Sans', 'sans-serif'] text-[14px] font-semibold text-[#0E0E0E]">
+                        {q.full_name}
+                      </p>
+                    </td>
+                    <td className="py-4 px-2">
+                      <StatusBadge status={q.elevator_type} />
+                    </td>
+                    <td className="py-4 px-2 font-['DM Sans', 'sans-serif'] text-sm text-gray-600">
+                      {q.city}
+                    </td>
+                    <td className="py-4 px-2 font-['DM Sans', 'sans-serif'] text-sm text-gray-600">
+                      {q.floors}fl
+                    </td>
+                    <td className="py-4 px-2">
+                      <StatusBadge status={q.status} />
+                    </td>
+                    <td className="py-4 px-2 font-['DM Sans', 'sans-serif'] text-sm text-[#9CA3AF]">
+                      {timeAgo(q.created_at)}
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div className="mt-6 bg-white rounded-xl p-6 shadow-sm border border-[#E5E5E5]">
+        <div className="flex items-center gap-4">
+          <span className="font-['Syne', 'sans-serif'] text-[13px] font-semibold text-[#6B6B6B] uppercase tracking-wider">
+            Quick Add
+          </span>
+          <div className="flex-1" />
+          <Button variant="admin-primary" asChild>
+            <Link to="/admin/products/new">
+              <Plus size={16} /> Add Product
+            </Link>
+          </Button>
+          <Button variant="admin-secondary" asChild>
+            <Link to="/admin/blog/new">
+              <Plus size={16} /> Write Blog
+            </Link>
+          </Button>
+          <Button variant="admin-ghost" asChild>
+            <Link to="/admin/careers/new">
+              <Plus size={16} /> Post Job
+            </Link>
+          </Button>
         </div>
       </div>
     </div>

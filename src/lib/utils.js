@@ -92,3 +92,14 @@ export function debounce(fn, delay = 300) {
     timer = setTimeout(() => fn(...args), delay)
   }
 }
+
+export function getDaysUntilDeadline(deadline) {
+  if (!deadline) return null
+  const d = typeof deadline === 'string' ? new Date(deadline) : deadline
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const deadlineDate = new Date(d)
+  deadlineDate.setHours(0, 0, 0, 0)
+  const diffTime = deadlineDate - today
+  return Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+}

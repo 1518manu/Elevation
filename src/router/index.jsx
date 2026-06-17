@@ -1,8 +1,9 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useState } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import PageLoader from '@/components/common/PageLoader'
 import ProtectedRoute from '@/components/common/ProtectedRoute'
 import AdminSidebar from '@/components/admin/AdminSidebar'
+import AdminTopbar from '@/components/admin/AdminTopbar'
 
 const HomePage = lazy(() => import('@/pages/public/HomePage'))
 const AboutPage = lazy(() => import('@/pages/public/AboutPage'))
@@ -41,12 +42,19 @@ function PublicLayout({ children }) {
 }
 
 function AdminLayout({ children }) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
   return (
     <ProtectedRoute>
-      <div className="flex h-screen overflow-hidden">
-        <AdminSidebar />
-        <main className="flex-1 overflow-y-auto bg-gray-50">
-          <Suspense fallback={<PageLoader />}>{children}</Suspense>
+      <div className="flex h-screen overflow-hidden" data-admin>
+        <AdminSidebar mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
+        <main className="flex-1 flex flex-col overflow-hidden">
+          <AdminTopbar mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
+          <div className="flex-1 overflow-y-auto bg-[#F7F7F7]">
+            <div className="p-[32px]">
+              <Suspense fallback={<PageLoader />}>{children}</Suspense>
+            </div>
+          </div>
         </main>
       </div>
     </ProtectedRoute>

@@ -3,7 +3,7 @@ import { cva } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const badgeVariants = cva(
-  'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+  'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 font-mono uppercase tracking-wider',
   {
     variants: {
       variant: {
@@ -14,6 +14,17 @@ const badgeVariants = cva(
         destructive:
           'border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80',
         outline: 'text-foreground',
+        // Admin-specific status badges
+        'admin-new': 'bg-[#EFF6FF] text-[#1D4ED8]',
+        'admin-contacted': 'bg-[#FFF7ED] text-[#C2410C]',
+        'admin-quoted': 'bg-[#F5F3FF] text-[#6D28D9]',
+        'admin-closed': 'bg-[#F0FDF4] text-[#15803D]',
+        'admin-lost': 'bg-[#FEF2F2] text-[#B01F1F]',
+        'admin-published': 'bg-[#F0FDF4] text-[#15803D]',
+        'admin-draft': 'bg-[#F7F7F7] text-gray-600',
+        'admin-active': 'bg-[#F0FDF4] text-[#15803D]',
+        'admin-inactive': 'bg-[#F7F7F7] text-gray-500',
+        'admin-role': 'bg-[#F9ECEC] text-[#B01F1F]',
       },
     },
     defaultVariants: {

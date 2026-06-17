@@ -79,3 +79,132 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Admin Responsive Design */
+@media (max-width: 1024px) {
+  [data-admin] {
+    @apply pl-0;
+  }
+  
+  [data-admin] .admin-sidebar {
+    @apply fixed left-0 top-0 h-full z-50 transform -translate-x-full transition-transform;
+  }
+  
+  [data-admin] .admin-sidebar.open {
+    @apply translate-x-0;
+  }
+  
+  [data-admin] .admin-content {
+    @apply w-full;
+  }
+}
+
+@media (max-width: 768px) {
+  [data-admin] .admin-header {
+    @apply px-4;
+  }
+  
+  [data-admin] .admin-content {
+    @apply px-4 py-4;
+  }
+  
+  [data-admin] table {
+    @apply text-xs;
+  }
+  
+  [data-admin] .page-header h1 {
+    @apply text-xl;
+  }
+}
+
+@media (max-width: 640px) {
+  [data-admin] .admin-header-actions {
+    @apply hidden;
+  }
+  
+  [data-admin] .admin-mobile-menu {
+    @apply block;
+  }
+  
+  [data-admin] .drawer-content {
+    @apply max-w-full;
+  }
+  
+  [data-admin] .stats-grid {
+    @apply grid-cols-1;
+  }
+  
+  [data-admin] .filter-bar {
+    @apply flex-col;
+  }
+  
+  [data-admin] .filter-bar > * {
+    @apply w-full;
+  }
+}
+
+/* Admin-specific globals */
+[data-admin] {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: #0E0E0E;
+  background: #F7F7F7;
+}
+
+/* Scrollbar styling */
+[data-admin] ::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+[data-admin] ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+[data-admin] ::-webkit-scrollbar-thumb {
+  background: #D0D0D0;
+  border-radius: 10px;
+}
+
+[data-admin] ::-webkit-scrollbar-thumb:hover {
+  background: #B0B0B0;
+}
+
+/* Table resets */
+[data-admin] table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+[data-admin] thead th {
+  background: #F7F7F7;
+  padding: 10px 16px;
+  text-align: left;
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9CA3AF;
+  border-bottom: 1px solid #E5E5E5;
+}
+
+[data-admin] tbody td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #F0F0F0;
+}
+
+[data-admin] tbody tr:last-child td {
+  border-bottom: none;
+}
+
+[data-admin] tbody tr:hover {
+  background: #FAFAFA;
+}
+
+/* Focus ring — override browser default */
+[data-admin] *:focus-visible {
+  outline: 2px solid #D42B2B;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
