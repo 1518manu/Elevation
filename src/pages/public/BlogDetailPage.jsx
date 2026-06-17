@@ -27,7 +27,7 @@ export default function BlogDetailPage() {
   return (
     <>
       <SEOHead title={blog.seo_title || blog.title} description={blog.seo_description} image={blog.cover_image} url={`${APP_URL}/blog/${slug}`} type="article" jsonLd={jsonLd} />
-      <article className="mx-auto max-w-4xl px-4 py-12">
+      <article className="mx-16 max-w-4xl px-4 py-32">
         <nav className="mb-6 text-sm text-gray-500"><Link to="/blog">Blog</Link> / {blog.title}</nav>
         {blog.cover_image && <img src={getImageUrl(blog.cover_image, 1200, 85)} alt={blog.title} className="mb-8 aspect-video w-full rounded-xl object-cover" />}
         {blog.category && <Badge className="mb-4">{blog.category}</Badge>}

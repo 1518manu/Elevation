@@ -63,7 +63,7 @@ export default function JobDetailPage() {
   return (
     <>
       <SEOHead title={job.title} description={job.description?.slice(0, 160)} url={`${APP_URL}/careers/${id}`} jsonLd={jsonLd} />
-      <div className="mx-auto max-w-7xl px-4 py-12">
+      <div className="mx-auto max-w-7xl px-4 py-32">
         <nav className="mb-6 text-sm text-gray-500"><Link to="/careers">Careers</Link> / {job.title}</nav>
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
           <div className="lg:col-span-2">

@@ -26,14 +26,14 @@ export default function HomePage() {
     '@graph': [
       {
         '@type': 'Organization',
-        name: settings?.company_name || 'Alfa Elevator',
+        name: settings?.company_name || 'ALFAFUJI Elevator',
         url: APP_URL,
         logo: `${APP_URL}/og-image.jpg`,
         description: settings?.tagline,
       },
       {
         '@type': 'LocalBusiness',
-        name: settings?.company_name || 'Alfa Elevator',
+        name: settings?.company_name || 'ALFAFUJI Elevator',
         url: APP_URL,
         telephone: settings?.phones?.[0],
         address: settings?.addresses?.[0],
@@ -44,7 +44,7 @@ export default function HomePage() {
   return (
     <>
       <SEOHead
-        title="Premium Elevator Solutions in India"
+        title="ALFAFUJI Elevator India Pvt Ltd"
         description={settings?.seo_defaults?.description || 'Leading elevator manufacturer in India. Passenger lifts, home elevators, freight lifts, escalators.'}
         jsonLd={jsonLd}
       />

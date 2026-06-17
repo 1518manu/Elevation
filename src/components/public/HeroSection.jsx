@@ -20,7 +20,7 @@ export default function HeroSection() {
   ]
 
   return (
-    <section className="relative flex min-h-[80vh] items-center md:min-h-screen">
+    <section className="relative flex min-h-[100svh] items-center overflow-hidden">
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
@@ -28,7 +28,7 @@ export default function HeroSection() {
         }}
       />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 py-30 sm:px-6 lg:px-8">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

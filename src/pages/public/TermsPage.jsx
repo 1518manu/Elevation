@@ -4,7 +4,7 @@ export default function TermsPage() {
   return (
     <>
       <SEOHead title="Terms of Service" description="Alfa Elevator terms and conditions of service." noIndex />
-      <div className="mx-auto max-w-4xl px-4 py-16">
+      <div className="mx-auto mt-10 max-w-7xl px-4 py-10 md:ml-32 md:mt-12 md:py-4">
         <h1 className="mb-8 font-heading text-3xl font-bold text-black">Terms of Service</h1>
         <div className="prose max-w-none space-y-4 text-gray-600">
           <p>Last updated: June 2026</p>

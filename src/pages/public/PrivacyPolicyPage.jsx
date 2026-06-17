@@ -4,7 +4,7 @@ export default function PrivacyPolicyPage() {
   return (
     <>
       <SEOHead title="Privacy Policy" description="Alfa Elevator privacy policy and data protection practices." noIndex />
-      <div className="mx-auto max-w-4xl px-4 py-16">
+      <div className="mx-auto max-w-4xl px-4 py-32">
         <h1 className="mb-8 font-heading text-3xl font-bold text-black">Privacy Policy</h1>
         <div className="prose max-w-none space-y-4 text-gray-600">
           <p>Last updated: June 2026</p>

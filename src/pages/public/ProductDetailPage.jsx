@@ -39,7 +39,7 @@ export default function ProductDetailPage() {
   return (
     <>
       <SEOHead title={product.seo_title || product.name} description={product.seo_description || product.short_description} image={product.images?.[0]} url={`${APP_URL}/products/${slug}`} jsonLd={jsonLd} />
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto mt-10 max-w-7xl px-4 py-10 md:ml-32 md:mt-12 md:py-4">
         <nav className="mb-6 text-sm text-gray-500"><Link to="/products">Products</Link> / {product.name}</nav>
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-5">
           <div className="lg:col-span-3">

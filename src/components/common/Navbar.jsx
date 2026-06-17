@@ -7,7 +7,7 @@ import { useQuoteModal } from './QuoteModal'
 import { useServices } from '@/hooks/useServices'
 import { useSiteSettings } from '@/hooks/useSiteSettings'
 import { Button } from '@/components/ui/button'
-import logo from "../../assets/images/logo.svg";
+import logo from "../../assets/images/logo.png";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -57,17 +57,17 @@ export default function Navbar() {
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 border-b border-gray-200 bg-white transition-shadow duration-300',
-        scrolled && 'shadow-md'
-      )}
+        "fixed top-10 left-1/2 z-50 w-[calc(100%-1rem)] max-w-7xl -translate-x-1/2 rounded-2xl bg-white/95 backdrop-blur-md transition-all duration-300",
+        scrolled && "shadow-xl"
+      )} 
     >
-      <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 lg:px-8">
+      <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-10 lg:px-8">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt="Elevation Logo" className="h-12 w-auto" />
-          <span className="font-heading text-lg font-bold tracking-wide text-black md:text-xl">
-            ELEVATION
-          </span>
+        <Link to="/" className="flex items-center p-2">
+          <img src={logo} alt="Elevation Logo" className="h-14 w-auto" />
+          {/* <span className="hidden md:block font-heading text-sm font-bold tracking-wide text-black p-2">
+            ALFAFUJI ELEVATOR <br /> INDIA PVT LTD.
+          </span> */}
         </Link>
 
         {/* Desktop Nav */}
@@ -128,7 +128,7 @@ export default function Navbar() {
         </nav>
 
         {/* Desktop Right Actions */}
-        <div className="hidden lg:flex items-center gap-5">
+        <div className="hidden lg:flex items-center gap-5 p-5">
           <a
             href={`tel:${phone.replace(/\s/g, '')}`}
             className="flex items-center gap-1 text-sm font-medium text-black"

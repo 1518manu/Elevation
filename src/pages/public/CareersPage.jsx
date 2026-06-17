@@ -16,7 +16,7 @@ export default function CareersPage() {
     <>
       <SEOHead title="Careers" description="Join Alfa Elevator team. Open positions in technical, sales, HR and operations across India." />
       <section className="bg-black py-16 text-white">
-        <div className="mx-auto max-w-7xl px-4">
+        <div className="mx-auto mt-10 max-w-7xl px-4 py-10 md:ml-32 md:mt-12 md:py-4">
           <nav className="mb-4 text-sm text-white/70">Home / Careers</nav>
           <h1 className="font-heading text-4xl font-bold">Join Our Team</h1>
           <p className="mt-4 text-white/80">Build your career with India&apos;s leading elevator company.</p>

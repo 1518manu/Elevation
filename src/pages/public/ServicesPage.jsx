@@ -7,8 +7,8 @@ export default function ServicesPage() {
   return (
     <>
       <SEOHead title="Our Services" description="Elevator installation, maintenance AMC, and modernization services across India." />
-      <section className="bg-black py-16 text-white">
-        <div className="mx-auto max-w-7xl px-4">
+      <section className="bg-black py-20 text-white">
+        <div className="mx-auto mt-10 max-w-7xl px-4 py-8 md:ml-32 md:mt-12 md:py-4">
           <nav className="mb-4 text-sm text-white/70">Home / Services</nav>
           <h1 className="font-heading text-4xl font-bold">Our Services</h1>
           <p className="mt-4 max-w-2xl text-white/80">Complete elevator lifecycle services from installation to modernization.</p>
