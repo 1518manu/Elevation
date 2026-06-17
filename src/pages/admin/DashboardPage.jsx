@@ -11,11 +11,14 @@ import { timeAgo } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 
 export default function DashboardPage() {
-  const { data: quotes = [] } = useQuoteInquiries()
-  const { data: contacts = [] } = useContactInquiries()
-  const { data: jobs = [] } = useJobs({ is_active: true })
-  const { data: blogs = [] } = useBlogs({ is_published: true })
+  const { data: quotes = [], isLoading: quotesLoading, error: quotesError } = useQuoteInquiries()
+  const { data: contacts = [], isLoading: contactsLoading, error: contactsError } = useContactInquiries()
+  const { data: jobs = [], isLoading: jobsLoading, error: jobsError } = useJobs({ is_active: true })
+  const { data: blogs = [], isLoading: blogsLoading, error: blogsError } = useBlogs({ is_published: true })
   const { newLeadCount } = useRealtimeLeads()
+
+  const isLoading = quotesLoading || contactsLoading || jobsLoading || blogsLoading
+  const error = quotesError || contactsError || jobsError || blogsError
 
   const thisMonth = new Date().getMonth()
   const quotesThisMonth = quotes.filter((q) => new Date(q.created_at).getMonth() === thisMonth)
@@ -76,6 +79,28 @@ export default function DashboardPage() {
       live: false 
     },
   ]
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#D42B2B] mx-auto mb-4"></div>
+          <p className="font-['DM Sans', 'sans-serif'] text-gray-500">Loading dashboard...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <div className="text-center max-w-md">
+          <p className="font-['DM Sans', 'sans-serif'] text-[#D42B2B] mb-2">Error loading dashboard</p>
+          <p className="font-['DM Sans', 'sans-serif'] text-gray-500 text-sm">{error.message || 'Failed to fetch dashboard data'}</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div>

@@ -8,14 +8,13 @@ import { useAuth } from '@/hooks/useAuth'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { UserRole } from '@/contexts/AuthContext'
 
 export default function AdminSidebar({ mobileMenuOpen, setMobileMenuOpen }) {
   const [collapsed, setCollapsed] = useState(false)
   const { user, signOut } = useAuth()
   const location = useLocation()
   const navigate = useNavigate()
-  const navItems = ADMIN_NAV[user?.role] || ADMIN_NAV.editor
+  const navItems = ADMIN_NAV[user?.role] || ADMIN_NAV.admin
 
   const handleLogout = async () => {
     await signOut()
@@ -35,19 +34,19 @@ export default function AdminSidebar({ mobileMenuOpen, setMobileMenuOpen }) {
 
   // Group navigation items by category
   const navGroups = {
-    OVERVIEW: [navItems.find(item => item.href === '/admin')],
-    CONTENT: navItems.filter(item => 
-      ['/admin/products', '/admin/services', '/admin/projects', '/admin/blog', '/admin/testimonials', '/admin/clients', '/admin/process-steps'].includes(item.href)
-    ),
-    LEADS: navItems.filter(item => 
+    OVERVIEW: [navItems?.find(item => item.href === '/admin')],
+    CONTENT: navItems?.filter(item => 
+      ['/admin/products', '/admin/projects', '/admin/blog', '/admin/testimonials', '/admin/clients'].includes(item.href)
+    ) || [],
+    LEADS: navItems?.filter(item => 
       ['/admin/quotes', '/admin/contacts'].includes(item.href)
-    ),
-    HR: navItems.filter(item => 
+    ) || [],
+    HR: navItems?.filter(item => 
       ['/admin/careers', '/admin/applications'].includes(item.href)
-    ),
-    SETTINGS: navItems.filter(item => 
+    ) || [],
+    SETTINGS: navItems?.filter(item => 
       ['/admin/settings', '/admin/users'].includes(item.href)
-    ),
+    ) || [],
   }
 
   return (
@@ -97,48 +96,54 @@ export default function AdminSidebar({ mobileMenuOpen, setMobileMenuOpen }) {
 
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto py-4 px-2">
-        {Object.entries(navGroups).map(([groupName, items]) => {
-          if (!items || items.length === 0) return null
-          
-          const groupLabels = {
-            OVERVIEW: 'OVERVIEW',
-            CONTENT: 'CONTENT',
-            LEADS: 'LEADS',
-            HR: 'HR',
-            SETTINGS: 'SETTINGS',
-          }
+        {!navItems ? (
+          <div className="px-4 py-8 text-center text-gray-500">
+            Loading navigation...
+          </div>
+        ) : (
+          Object.entries(navGroups).map(([groupName, items]) => {
+            if (!items || items.length === 0) return null
+            
+            const groupLabels = {
+              OVERVIEW: 'OVERVIEW',
+              CONTENT: 'CONTENT',
+              LEADS: 'LEADS',
+              HR: 'HR',
+              SETTINGS: 'SETTINGS',
+            }
 
-          return (
-            <div key={groupName} className="mb-6">
-              {!collapsed && (
-                <p className="px-4 mb-2 font-['Syne', 'sans-serif'] text-[10px] font-medium text-gray-500 uppercase tracking-wider">
-                  {groupLabels[groupName]}
-                </p>
-              )}
-              {items.map((item) => {
-                const Icon = LucideIcons[item.icon] || LucideIcons.Circle
-                const active = location.pathname === item.href || (item.href !== '/admin' && location.pathname.startsWith(item.href))
-                
-                return (
-                  <Link
-                    key={item.href}
-                    to={item.href}
-                    className={cn(
-                      'flex items-center gap-3 px-4 py-3 rounded-md transition-all duration-150',
-                      'text-sm',
-                      !active && 'text-gray-500 hover:bg-[#1A1A1A] hover:text-gray-300',
-                      active && 'bg-[rgba(212,43,43,0.10)] text-white border-l-[3px] border-[#D42B2B] font-medium'
-                    )}
-                    title={collapsed ? item.label : undefined}
-                  >
-                    <Icon className={cn('h-5 w-5 flex-shrink-0', !active && 'text-gray-400')} />
-                    {!collapsed && <span>{item.label}</span>}
-                  </Link>
-                )
-              })}
-            </div>
-          )
-        })}
+            return (
+              <div key={groupName} className="mb-6">
+                {!collapsed && (
+                  <p className="px-4 mb-2 font-['Syne', 'sans-serif'] text-[10px] font-medium text-gray-500 uppercase tracking-wider">
+                    {groupLabels[groupName]}
+                  </p>
+                )}
+                {items.map((item) => {
+                  const Icon = LucideIcons[item.icon] || LucideIcons.Circle
+                  const active = location.pathname === item.href || (item.href !== '/admin' && location.pathname.startsWith(item.href))
+                  
+                  return (
+                    <Link
+                      key={item.href}
+                      to={item.href}
+                      className={cn(
+                        'flex items-center gap-3 px-4 py-3 rounded-md transition-all duration-150',
+                        'text-sm',
+                        !active && 'text-gray-500 hover:bg-[#1A1A1A] hover:text-gray-300',
+                        active && 'bg-[rgba(212,43,43,0.10)] text-white border-l-[3px] border-[#D42B2B] font-medium'
+                      )}
+                      title={collapsed ? item.label : undefined}
+                    >
+                      <Icon className={cn('h-5 w-5 flex-shrink-0', !active && 'text-gray-400')} />
+                      {!collapsed && <span>{item.label}</span>}
+                    </Link>
+                  )
+                })}
+              </div>
+            )
+          })
+        )}
       </nav>
 
       {/* Sidebar Footer */}

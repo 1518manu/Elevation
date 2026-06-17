@@ -1,4 +1,4 @@
-export const USER_ROLES = ['super_admin', 'admin', 'hr', 'sales', 'editor']
+export const USER_ROLES = ['super_admin', 'admin']
 
 export const PRODUCT_CATEGORIES = [
   { value: 'passenger', label: 'Passenger', icon: 'Users' },
@@ -119,42 +119,24 @@ export const STORAGE_BUCKETS = {
 }
 
 export const ADMIN_NAV = {
-  super_admin: [
-    { label: 'Dashboard', href: '/admin', icon: 'LayoutDashboard' },
-    { label: 'Products', href: '/admin/products', icon: 'Package' },
-    { label: 'Services', href: '/admin/services', icon: 'Wrench' },
-    { label: 'Projects', href: '/admin/projects', icon: 'Building2' },
-    { label: 'Blog', href: '/admin/blog', icon: 'BookOpen' },
-    { label: 'Testimonials', href: '/admin/testimonials', icon: 'MessageSquare' },
-    { label: 'Clients', href: '/admin/clients', icon: 'Users' },
-    { label: 'Process Steps', href: '/admin/process-steps', icon: 'ListOrdered' },
-    { label: 'Site Settings', href: '/admin/settings', icon: 'Settings' },
-    { label: 'User Management', href: '/admin/users', icon: 'UserCog' },
-  ],
   admin: [
     { label: 'Dashboard', href: '/admin', icon: 'LayoutDashboard' },
     { label: 'Products', href: '/admin/products', icon: 'Package' },
-    { label: 'Services', href: '/admin/services', icon: 'Wrench' },
     { label: 'Projects', href: '/admin/projects', icon: 'Building2' },
     { label: 'Blog', href: '/admin/blog', icon: 'BookOpen' },
     { label: 'Testimonials', href: '/admin/testimonials', icon: 'MessageSquare' },
     { label: 'Clients', href: '/admin/clients', icon: 'Users' },
-    { label: 'Process Steps', href: '/admin/process-steps', icon: 'ListOrdered' },
     { label: 'Site Settings', href: '/admin/settings', icon: 'Settings' },
   ],
-  hr: [
+  super_admin: [
     { label: 'Dashboard', href: '/admin', icon: 'LayoutDashboard' },
-    { label: 'Job Openings', href: '/admin/careers', icon: 'Briefcase' },
-    { label: 'Applications', href: '/admin/applications', icon: 'FileText' },
-  ],
-  sales: [
-    { label: 'Dashboard', href: '/admin', icon: 'LayoutDashboard' },
-    { label: 'Quote Inquiries', href: '/admin/quotes', icon: 'FileText' },
-    { label: 'Contact Inquiries', href: '/admin/contacts', icon: 'Mail' },
-  ],
-  editor: [
-    { label: 'Dashboard', href: '/admin', icon: 'LayoutDashboard' },
+    { label: 'Products', href: '/admin/products', icon: 'Package' },
+    { label: 'Projects', href: '/admin/projects', icon: 'Building2' },
     { label: 'Blog', href: '/admin/blog', icon: 'BookOpen' },
+    { label: 'Testimonials', href: '/admin/testimonials', icon: 'MessageSquare' },
+    { label: 'Clients', href: '/admin/clients', icon: 'Users' },
+    { label: 'Site Settings', href: '/admin/settings', icon: 'Settings' },
+    { label: 'User Management', href: '/admin/users', icon: 'UserCog' },
   ],
 }
 

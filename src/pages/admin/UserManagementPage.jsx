@@ -54,8 +54,6 @@ export default function UserManagementPage() {
     const colors = {
       super_admin: 'bg-[#D42B2B] text-white',
       admin: 'bg-purple-100 text-purple-600',
-      editor: 'bg-blue-100 text-blue-600',
-      sales: 'bg-green-100 text-green-600',
     }
     return colors[role] || 'bg-gray-100 text-gray-600'
   }

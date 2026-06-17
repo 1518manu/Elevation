@@ -73,7 +73,7 @@ export function useDeleteClient() {
     mutationFn: async (id) => {
       const { data, error } = await supabase
         .from('clients')
-        .update({ is_active: false })
+        .delete()
         .eq('id', id)
         .select()
         .single()

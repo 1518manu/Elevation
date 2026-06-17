@@ -24,7 +24,6 @@ const LoginPage = lazy(() => import('@/pages/auth/LoginPage'))
 const AuthCallbackPage = lazy(() => import('@/pages/auth/AuthCallbackPage'))
 const DashboardPage = lazy(() => import('@/pages/admin/DashboardPage'))
 const ProductsAdminPage = lazy(() => import('@/pages/admin/ProductsAdminPage'))
-const ServicesAdminPage = lazy(() => import('@/pages/admin/ServicesAdminPage'))
 const ProjectsAdminPage = lazy(() => import('@/pages/admin/ProjectsAdminPage'))
 const BlogAdminPage = lazy(() => import('@/pages/admin/BlogAdminPage'))
 const CareerAdminPage = lazy(() => import('@/pages/admin/CareerAdminPage'))
@@ -33,7 +32,6 @@ const ContactInquiriesPage = lazy(() => import('@/pages/admin/ContactInquiriesPa
 const QuoteInquiriesPage = lazy(() => import('@/pages/admin/QuoteInquiriesPage'))
 const TestimonialsAdminPage = lazy(() => import('@/pages/admin/TestimonialsAdminPage'))
 const ClientsAdminPage = lazy(() => import('@/pages/admin/ClientsAdminPage'))
-const ProcessStepsAdminPage = lazy(() => import('@/pages/admin/ProcessStepsAdminPage'))
 const SiteSettingsPage = lazy(() => import('@/pages/admin/SiteSettingsPage'))
 const UserManagementPage = lazy(() => import('@/pages/admin/UserManagementPage'))
 
@@ -82,20 +80,18 @@ export default function AppRouter() {
       <Route path="/login" element={<PublicLayout><LoginPage /></PublicLayout>} />
       <Route path="/auth/callback" element={<PublicLayout><AuthCallbackPage /></PublicLayout>} />
 
-      <Route path="/admin" element={<AdminLayout><DashboardPage /></AdminLayout>} />
-      <Route path="/admin/products" element={<AdminLayout><ProductsAdminPage /></AdminLayout>} />
-      <Route path="/admin/services" element={<AdminLayout><ServicesAdminPage /></AdminLayout>} />
-      <Route path="/admin/projects" element={<AdminLayout><ProjectsAdminPage /></AdminLayout>} />
-      <Route path="/admin/blog" element={<AdminLayout><BlogAdminPage /></AdminLayout>} />
-      <Route path="/admin/blog/:id" element={<AdminLayout><BlogAdminPage /></AdminLayout>} />
-      <Route path="/admin/careers" element={<AdminLayout><CareerAdminPage /></AdminLayout>} />
-      <Route path="/admin/applications" element={<AdminLayout><ApplicationsAdminPage /></AdminLayout>} />
-      <Route path="/admin/contacts" element={<AdminLayout><ContactInquiriesPage /></AdminLayout>} />
-      <Route path="/admin/quotes" element={<AdminLayout><QuoteInquiriesPage /></AdminLayout>} />
-      <Route path="/admin/testimonials" element={<AdminLayout><TestimonialsAdminPage /></AdminLayout>} />
-      <Route path="/admin/clients" element={<AdminLayout><ClientsAdminPage /></AdminLayout>} />
-      <Route path="/admin/process-steps" element={<AdminLayout><ProcessStepsAdminPage /></AdminLayout>} />
-      <Route path="/admin/settings" element={<AdminLayout><SiteSettingsPage /></AdminLayout>} />
+      <Route path="/admin" element={<AdminLayout><ProtectedRoute requiredRoles={['admin', 'super_admin']}><DashboardPage /></ProtectedRoute></AdminLayout>} />
+      <Route path="/admin/products" element={<AdminLayout><ProtectedRoute requiredRoles={['admin', 'super_admin']}><ProductsAdminPage /></ProtectedRoute></AdminLayout>} />
+      <Route path="/admin/projects" element={<AdminLayout><ProtectedRoute requiredRoles={['admin', 'super_admin']}><ProjectsAdminPage /></ProtectedRoute></AdminLayout>} />
+      <Route path="/admin/blog" element={<AdminLayout><ProtectedRoute requiredRoles={['admin', 'super_admin']}><BlogAdminPage /></ProtectedRoute></AdminLayout>} />
+      <Route path="/admin/blog/:id" element={<AdminLayout><ProtectedRoute requiredRoles={['admin', 'super_admin']}><BlogAdminPage /></ProtectedRoute></AdminLayout>} />
+      <Route path="/admin/careers" element={<AdminLayout><ProtectedRoute requiredRoles={['admin', 'super_admin']}><CareerAdminPage /></ProtectedRoute></AdminLayout>} />
+      <Route path="/admin/applications" element={<AdminLayout><ProtectedRoute requiredRoles={['admin', 'super_admin']}><ApplicationsAdminPage /></ProtectedRoute></AdminLayout>} />
+      <Route path="/admin/contacts" element={<AdminLayout><ProtectedRoute requiredRoles={['admin', 'super_admin']}><ContactInquiriesPage /></ProtectedRoute></AdminLayout>} />
+      <Route path="/admin/quotes" element={<AdminLayout><ProtectedRoute requiredRoles={['admin', 'super_admin']}><QuoteInquiriesPage /></ProtectedRoute></AdminLayout>} />
+      <Route path="/admin/testimonials" element={<AdminLayout><ProtectedRoute requiredRoles={['admin', 'super_admin']}><TestimonialsAdminPage /></ProtectedRoute></AdminLayout>} />
+      <Route path="/admin/clients" element={<AdminLayout><ProtectedRoute requiredRoles={['admin', 'super_admin']}><ClientsAdminPage /></ProtectedRoute></AdminLayout>} />
+      <Route path="/admin/settings" element={<AdminLayout><ProtectedRoute requiredRoles={['admin', 'super_admin']}><SiteSettingsPage /></ProtectedRoute></AdminLayout>} />
       <Route path="/admin/users" element={<AdminLayout><ProtectedRoute requiredRoles={['super_admin']}><UserManagementPage /></ProtectedRoute></AdminLayout>} />
 
       <Route path="*" element={<Navigate to="/" replace />} />

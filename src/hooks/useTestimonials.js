@@ -80,7 +80,7 @@ export function useDeleteTestimonial() {
     mutationFn: async (id) => {
       const { data, error } = await supabase
         .from('testimonials')
-        .update({ is_active: false })
+        .delete()
         .eq('id', id)
         .select()
         .single()

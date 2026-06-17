@@ -2,14 +2,11 @@
 import { createContext, useContext, useEffect, useState, useCallback, useMemo } from 'react'
 import { supabase } from '@/lib/supabase'
 
-/** @typedef {'super_admin' | 'admin' | 'hr' | 'sales' | 'editor'} UserRole */
+/** @typedef {'super_admin' | 'admin'} UserRole */
 
 export const UserRole = {
   SUPER_ADMIN: 'super_admin',
   ADMIN: 'admin',
-  HR: 'hr',
-  SALES: 'sales',
-  EDITOR: 'editor',
 }
 
 const AuthContext = createContext(null)
@@ -67,10 +64,12 @@ export function AuthProvider({ children }) {
 
   const user = useMemo(() => {
     if (!session?.user) return null
+    const userRole = profile?.role ?? UserRole.ADMIN
+    
     return {
       ...session.user,
       ...profile,
-      role: profile?.role ?? UserRole.EDITOR,
+      role: userRole,
     }
   }, [session, profile])
 

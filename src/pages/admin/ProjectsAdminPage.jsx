@@ -1,20 +1,14 @@
 import { useState } from 'react'
-import { Plus } from 'lucide-react'
-import AdminTopbar from '@/components/admin/AdminTopbar'
-import DataTable from '@/components/admin/DataTable'
-import MultiImageUpload from '@/components/admin/MultiImageUpload'
-import ConfirmDialog from '@/components/admin/ConfirmDialog'
+import { Plus, Building, MoreVertical, Edit, Trash2, Star } from 'lucide-react'
 import { useProjects, useCreateProject, useUpdateProject, useDeleteProject } from '@/hooks/useProjects'
-import { slugify, formatDate } from '@/lib/utils'
-import { STORAGE_BUCKETS } from '@/lib/constants'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
+import { Badge } from '@/components/ui/badge'
 import { useToast } from '@/components/ui/toast'
-
-const empty = { title: '', slug: '', client_name: '', city: '', state: '', short_description: '', description: '', images: [], is_featured: false, is_active: true }
+import ConfirmDialog from '@/components/admin/ConfirmDialog'
+import ProjectFormDrawer from '@/components/admin/ProjectFormDrawer'
+import ImageUpload from '@/components/admin/ImageUpload'
+import { STORAGE_BUCKETS } from '@/lib/constants'
 
 export default function ProjectsAdminPage() {
   const { data: projects = [], isLoading } = useProjects({ is_active: undefined })
@@ -22,49 +16,179 @@ export default function ProjectsAdminPage() {
   const updateProject = useUpdateProject()
   const deleteProject = useDeleteProject()
   const { toast } = useToast()
-  const [modalOpen, setModalOpen] = useState(false)
-  const [form, setForm] = useState(empty)
+  const [drawerOpen, setDrawerOpen] = useState(false)
   const [editId, setEditId] = useState(null)
   const [deleteId, setDeleteId] = useState(null)
 
+  const openCreate = () => { setEditId(null); setDrawerOpen(true) }
+  const openEdit = (id) => { setEditId(id); setDrawerOpen(true) }
+
   const columns = [
-    { accessorKey: 'title', header: 'Title' },
-    { accessorKey: 'client_name', header: 'Client' },
-    { accessorKey: 'city', header: 'City' },
-    { accessorKey: 'is_featured', header: 'Featured', cell: ({ row }) => row.original.is_featured ? 'Yes' : 'No' },
-    { accessorKey: 'updated_at', header: 'Updated', cell: ({ row }) => formatDate(row.original.updated_at) },
-    { id: 'actions', header: 'Actions', cell: ({ row }) => (
-      <div className="flex gap-2">
-        <Button size="sm" variant="outline" onClick={() => { setForm(row.original); setEditId(row.original.id); setModalOpen(true) }}>Edit</Button>
-        <Button size="sm" variant="destructive" onClick={() => setDeleteId(row.original.id)}>Delete</Button>
-      </div>
-    )},
+    { 
+      accessorKey: 'title', 
+      header: 'TITLE', 
+      cell: ({ row }) => (
+        <div className="font-['DM Sans', 'sans-serif'] text-[14px] font-semibold text-[#0E0E0E]">
+          {row.original.title}
+        </div>
+      )
+    },
+    { 
+      accessorKey: 'client_name', 
+      header: 'CLIENT', 
+      cell: ({ row }) => (
+        <span className="font-['DM Sans', 'sans-serif'] text-sm text-gray-600">
+          {row.original.client_name}
+        </span>
+      )
+    },
+    { 
+      accessorKey: 'location', 
+      header: 'LOCATION', 
+      cell: ({ row }) => (
+        <span className="font-['DM Sans', 'sans-serif'] text-sm text-gray-500">
+          {row.original.city}, {row.original.state}
+        </span>
+      )
+    },
+    { 
+      accessorKey: 'is_featured', 
+      header: 'FEATURED', 
+      cell: ({ row }) => (
+        row.original.is_featured ? (
+          <Badge variant="admin-active" className="flex items-center gap-1">
+            <Star className="h-3 w-3" />
+            Featured
+          </Badge>
+        ) : (
+          <Badge variant="admin-draft">Standard</Badge>
+        )
+      )
+    },
+    { 
+      accessorKey: 'is_active', 
+      header: 'STATUS', 
+      cell: ({ row }) => (
+        <Badge variant={row.original.is_active ? 'admin-active' : 'admin-inactive'}>
+          {row.original.is_active ? 'Active' : 'Inactive'}
+        </Badge>
+      )
+    },
+    { 
+      id: 'actions', 
+      header: 'ACTIONS', 
+      cell: ({ row }) => (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="p-2 hover:bg-gray-100 rounded-md">
+              <MoreVertical className="h-4 w-4" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={() => openEdit(row.original.id)}>
+              <Edit className="mr-2 h-4 w-4" /> Edit
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem 
+              className="text-[#D42B2B]"
+              onClick={() => setDeleteId(row.original.id)}
+            >
+              <Trash2 className="mr-2 h-4 w-4" /> Delete
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )
+    },
   ]
 
   return (
     <div>
-      <AdminTopbar title="Projects" />
-      <div className="p-6">
-        <div className="mb-4 flex justify-end"><Button onClick={() => { setForm(empty); setEditId(null); setModalOpen(true) }} className="bg-red-600"><Plus className="mr-2 h-4 w-4" />Add Project</Button></div>
-        <DataTable columns={columns} data={projects} isLoading={isLoading} />
-      </div>
-      <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
-          <DialogHeader><DialogTitle>{editId ? 'Edit' : 'Add'} Project</DialogTitle></DialogHeader>
-          <div className="space-y-4">
-            <div><Label>Title</Label><Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value, slug: slugify(e.target.value) })} /></div>
-            <div><Label>Client</Label><Input value={form.client_name} onChange={(e) => setForm({ ...form, client_name: e.target.value })} /></div>
-            <div className="grid grid-cols-2 gap-4">
-              <div><Label>City</Label><Input value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} /></div>
-              <div><Label>State</Label><Input value={form.state} onChange={(e) => setForm({ ...form, state: e.target.value })} /></div>
-            </div>
-            <div><Label>Description</Label><Textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} /></div>
-            <div><Label>Images</Label><MultiImageUpload bucket={STORAGE_BUCKETS.projects} value={form.images || []} onChange={(images) => setForm({ ...form, images })} /></div>
-            <Button onClick={async () => { if (editId) await updateProject.mutateAsync({ id: editId, ...form }); else await createProject.mutateAsync(form); setModalOpen(false); toast({ title: 'Saved' }) }} className="w-full bg-red-600">Save</Button>
+      {/* Page Header */}
+      <div className="mb-6">
+        <div className="flex items-start justify-between">
+          <div>
+            <p className="font-['Syne', 'sans-serif'] text-[11px] uppercase tracking-wider text-[#9CA3AF] mb-1">
+              CONTENT
+            </p>
+            <h1 className="font-['Syne', 'sans-serif'] text-[24px] font-bold text-[#0E0E0E] mb-1">
+              Projects
+            </h1>
+            <p className="font-['DM Sans', 'sans-serif'] text-[13px] text-gray-500">
+              {projects.length} total · {projects.filter(p => p.is_active).length} active
+            </p>
           </div>
-        </DialogContent>
-      </Dialog>
-      <ConfirmDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)} title="Delete Project" onConfirm={async () => { await deleteProject.mutateAsync(deleteId); setDeleteId(null) }} />
+          <Button variant="admin-primary" onClick={openCreate}>
+            <Plus className="mr-2 h-4 w-4" /> Add Project
+          </Button>
+        </div>
+      </div>
+
+      {/* Projects Table */}
+      <div className="bg-white rounded-xl border border-[#E5E5E5] overflow-hidden">
+        <table className="w-full">
+          <thead>
+            <tr className="bg-[#F7F7F7] border-b border-[#E5E5E5]">
+              {columns.map(col => (
+                <th key={col.header} className="font-['Syne', 'sans-serif'] text-[11px] font-semibold uppercase tracking-[0.08em] text-[#9CA3AF] px-4 py-3 text-left">
+                  {col.header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {isLoading ? (
+              <tr>
+                <td colSpan={columns.length} className="px-4 py-8 text-center text-gray-500">
+                  Loading projects...
+                </td>
+              </tr>
+            ) : projects.length === 0 ? (
+              <tr>
+                <td colSpan={columns.length} className="px-4 py-16 text-center">
+                  <div className="flex flex-col items-center gap-3">
+                    <Building className="h-10 w-10 text-[#D42B2B]" />
+                    <p className="font-['Syne', 'sans-serif'] text-[18px] font-medium text-[#0E0E0E]">
+                      No projects yet
+                    </p>
+                    <p className="font-['DM Sans', 'sans-serif'] text-sm text-gray-500">
+                      Add project case studies to showcase your work.
+                    </p>
+                  </div>
+                </td>
+              </tr>
+            ) : (
+              projects.map((project) => (
+                <tr key={project.id} className="hover:bg-[#FAFAFA]">
+                  {columns.map(col => (
+                    <td key={col.header} className="px-4 py-4 border-b border-[#F0F0F0]">
+                      {col.cell ? col.cell({ row: { original: project } }) : project[col.accessorKey]}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      <ProjectFormDrawer 
+        open={drawerOpen} 
+        onOpenChange={setDrawerOpen}
+        editId={editId}
+        onSave={() => setDrawerOpen(false)}
+      />
+
+      <ConfirmDialog 
+        open={!!deleteId} 
+        onOpenChange={() => setDeleteId(null)} 
+        title="Delete Project"
+        description="This action cannot be undone. The project will be permanently removed from the website."
+        onConfirm={async () => { 
+          await deleteProject.mutateAsync(deleteId); 
+          setDeleteId(null); 
+          toast({ title: 'Project deleted' }) 
+        }} 
+      />
     </div>
   )
 }
