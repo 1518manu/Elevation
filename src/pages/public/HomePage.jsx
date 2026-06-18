@@ -17,7 +17,7 @@ import { APP_URL } from '@/lib/constants'
 import { Button } from '@/components/ui/button'
 
 export default function HomePage() {
-  const { data: products = [] } = useProducts({ is_featured: true })
+  const { data: products = [] } = useProducts({ is_featured: true, is_active: true })
   const { data: blogs = [] } = useBlogs({ is_published: true })
   const { data: settings } = useSiteSettings()
 

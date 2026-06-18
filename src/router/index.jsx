@@ -1,5 +1,5 @@
-import { lazy, Suspense, useState } from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { lazy, Suspense, useState, useEffect } from 'react'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import PageLoader from '@/components/common/PageLoader'
 import ProtectedRoute from '@/components/common/ProtectedRoute'
 import AdminSidebar from '@/components/admin/AdminSidebar'
@@ -35,8 +35,24 @@ const ClientsAdminPage = lazy(() => import('@/pages/admin/ClientsAdminPage'))
 const SiteSettingsPage = lazy(() => import('@/pages/admin/SiteSettingsPage'))
 const UserManagementPage = lazy(() => import('@/pages/admin/UserManagementPage'))
 
+// Component to reset scroll to top on route change
+function ScrollToTop() {
+  const location = useLocation()
+  
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+  }, [location.pathname])
+  
+  return null
+}
+
 function PublicLayout({ children }) {
-  return <Suspense fallback={<PageLoader />}>{children}</Suspense>
+  return (
+    <>
+      <ScrollToTop />
+      <Suspense fallback={<PageLoader />}>{children}</Suspense>
+    </>
+  )
 }
 
 function AdminLayout({ children }) {

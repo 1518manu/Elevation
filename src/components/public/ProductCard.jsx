@@ -23,6 +23,10 @@ export default function ProductCard({ product, index = 0 }) {
             alt={product.name}
             loading="lazy"
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            onError={(e) => {
+              // Fallback to original URL if transformed version fails
+              e.target.src = image
+            }}
           />
         ) : (
           <div className="flex h-full items-center justify-center bg-gray-100 text-gray-400">No image</div>
@@ -33,8 +37,18 @@ export default function ProductCard({ product, index = 0 }) {
         <h3 className="mb-2 font-heading text-lg font-semibold text-black">{product.name}</h3>
         <p className="mb-4 line-clamp-2 text-sm text-gray-600">{product.short_description}</p>
         <div className="flex gap-2">
-          <Button asChild size="sm" variant="outline" className="flex-1 border-red-600 text-red-600">
-            <Link to={`/products/${product.slug}`}>View Details</Link>
+          <Button 
+            asChild 
+            size="sm" 
+            variant="outline" 
+            className="flex-1 border-red-600 text-red-600"
+            disabled={!product.slug}
+          >
+            {product.slug ? (
+              <Link to={`/products/${product.slug}`}>View Details</Link>
+            ) : (
+              <span>View Details</span>
+            )}
           </Button>
           <Button size="sm" onClick={openModal} className="flex-1 bg-red-600 text-white hover:bg-red-700">
             Get Quote

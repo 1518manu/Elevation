@@ -8,7 +8,16 @@ export default function BlogCard({ blog }) {
     <Link to={`/blog/${blog.slug}`} className="group block overflow-hidden rounded-xl bg-white shadow-card transition-all hover:-translate-y-1 hover:shadow-card-hover">
       <div className="aspect-video overflow-hidden">
         {blog.cover_image ? (
-          <img src={getImageUrl(blog.cover_image)} alt={blog.title} loading="lazy" className="h-full w-full object-cover transition-transform group-hover:scale-105" />
+          <img 
+            src={getImageUrl(blog.cover_image)} 
+            alt={blog.title} 
+            loading="lazy" 
+            className="h-full w-full object-cover transition-transform group-hover:scale-105"
+            onError={(e) => {
+              // Fallback to original URL if transformed version fails
+              e.target.src = blog.cover_image
+            }}
+          />
         ) : (
           <div className="flex h-full items-center justify-center bg-gray-100 text-gray-400">No cover</div>
         )}
