@@ -6,12 +6,12 @@
   :root {
     --background: 0 0% 90%;
     --foreground: 0 0% 0%;
-    --card: 0 0% 100%;
+    --card: 0 0% 30%;
     --card-foreground: 0 0% 0%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 0%;
     --primary: 0 72% 50%;
-    --primary-foreground: 0 0% 100%;
+    --primary-foreground: 0 0% 50%;
     --secondary: 0 0% 95%;
     --secondary-foreground: 0 0% 0%;
     --muted: 0 0% 95%;

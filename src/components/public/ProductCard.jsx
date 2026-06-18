@@ -14,43 +14,62 @@ export default function ProductCard({ product, index = 0 }) {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.08, duration: 0.4 }}
-      className="group overflow-hidden rounded-xl bg-white shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover"
+      className="group relative overflow-hidden rounded-xl bg-white/50 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover"
     >
+      
       <div className="relative aspect-video overflow-hidden">
         {image ? (
           <img
             src={getImageUrl(image)}
             alt={product.name}
             loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            className="h-full w-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
             onError={(e) => {
-              // Fallback to original URL if transformed version fails
               e.target.src = image
             }}
           />
         ) : (
-          <div className="flex h-full items-center justify-center bg-gray-100 text-gray-400">No image</div>
+          <div className="flex h-full items-center justify-center bg-gray-100 text-gray-400">
+            No image
+          </div>
         )}
-        <Badge className="absolute left-3 top-3 bg-red-600/90 capitalize text-white">{product.category}</Badge>
+
+        <Badge className="absolute left-5 top-5 z-30 bg-red-600/90 capitalize text-white">
+          {product.category}
+        </Badge>
       </div>
-      <div className="p-5">
-        <h3 className="mb-2 font-heading text-lg font-semibold text-black">{product.name}</h3>
-        <p className="mb-4 line-clamp-2 text-sm text-gray-600">{product.short_description}</p>
+
+      <div className="relative z-10 p-5">
+        <h3 className="mb-2 font-heading text-lg font-semibold text-black">
+          {product.name}
+        </h3>
+
+        <p className="mb-4 line-clamp-2 text-sm text-gray-600">
+          {product.short_description}
+        </p>
+
         <div className="flex gap-2">
-          <Button 
-            asChild 
-            size="sm" 
-            variant="outline" 
+          <Button
+            asChild
+            size="sm"
+            variant="outline"
             className="flex-1 border-red-600 text-red-600"
             disabled={!product.slug}
           >
             {product.slug ? (
-              <Link to={`/products/${product.slug}`}>View Details</Link>
+              <Link to={`/products/${product.slug}`}>
+                View Details
+              </Link>
             ) : (
               <span>View Details</span>
             )}
           </Button>
-          <Button size="sm" onClick={openModal} className="flex-1 bg-red-600 text-white hover:bg-red-700">
+
+          <Button
+            size="sm"
+            onClick={openModal}
+            className="flex-1 bg-red-600 text-white hover:bg-red-700"
+          >
             Get Quote
           </Button>
         </div>

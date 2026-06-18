@@ -18,28 +18,37 @@ export default function ServicesGrid() {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-3 items-stretch">
       {services.map((service, i) => {
         const Icon = iconMap[service.icon] || Wrench
+
         return (
           <motion.div
             key={service.id}
+            className="h-full"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
+            whileHover={{ y: -8 }}
             viewport={{ once: true }}
-            transition={{ delay: i * 0.1 }}
+            transition={{ delay: i * 0.1, duration: 0.5, ease: 'easeOut' }}
           >
             <Link
               to={`/services/${service.slug}`}
-              className="group block rounded-xl bg-white p-6 shadow-card transition-all hover:-translate-y-1 hover:shadow-card-hover"
+              className="group flex flex-col h-full rounded-xl bg-white p-6 shadow-card transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:shadow-card-hover"
             >
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-black/10">
-                <Icon className="h-6 w-6 text-black" />
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-black/10 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:bg-red-50">
+                <Icon className="h-6 w-6 text-black transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110 group-hover:text-red-600" />
               </div>
-              <h3 className="mb-2 font-heading text-xl font-semibold text-black group-hover:text-red-700">
+
+              <h3 className="mb-2 font-heading text-xl font-semibold text-black transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:text-red-700">
                 {service.title}
               </h3>
-              <p className="text-sm text-gray-600">{service.short_description}</p>
+
+              <p className="text-sm text-gray-600 transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:text-gray-800 flex-1">
+                {service.short_description}
+              </p>
+
+              <div className="mt-5 h-[2px] w-0 bg-red-600 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:w-full"></div>
             </Link>
           </motion.div>
         )

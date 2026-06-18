@@ -26,14 +26,14 @@ export default function HomePage() {
     '@graph': [
       {
         '@type': 'Organization',
-        name: settings?.company_name || 'ALFAFUJI Elevator',
+        name: settings?.company_name || 'ALFAFUJI Elevator India Pvt Ltd.',
         url: APP_URL,
         logo: `${APP_URL}/og-image.jpg`,
         description: settings?.tagline,
       },
       {
         '@type': 'LocalBusiness',
-        name: settings?.company_name || 'ALFAFUJI Elevator',
+        name: settings?.company_name || 'ALFAFUJI Elevator India Pvt Ltd.',
         url: APP_URL,
         telephone: settings?.phones?.[0],
         address: settings?.addresses?.[0],
@@ -55,7 +55,9 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mb-12 text-center">
             <h2 className="mb-3 font-heading text-3xl font-semibold text-black md:text-4xl">Our Services</h2>
-            <div className="mx-auto h-1 w-10 bg-red-600" />
+            <div className="mx-auto mb-8 h-1 w-10 bg-red-600" />
+            <h3 className="font-bold text-base md:text-lg">Built to Last. Maintained to Perform. Modernized to Transform.<br/><br/></h3>
+            <h3>From expert elevator installation and proactive maintenance to complete modernization solutions, ALFAFUJI delivers reliable performance at every stage of your elevator’s journey. We ensure safety, efficiency, and seamless mobility for residential, commercial, and industrial buildings.</h3>
           </motion.div>
           <ServicesGrid />
         </div>
@@ -82,7 +84,7 @@ export default function HomePage() {
             <h2 className="mb-3 font-heading text-3xl font-semibold text-black md:text-4xl">Our Process</h2>
             <br/>
             <div className="mx-auto mb-8 h-1 w-10 bg-red-600" />
-            <h3>At ALFA ELEVATOR CONTRACTING LLC, we believe that every project deserves meticulous attention, expert guidance, and seamless execution. Here’s how we efficiently manage every lift enquiry — from initial consultation to project handover:</h3>
+            <h3>At ALFAFUJI Elevator India Pvt Ltd , we believe that every project deserves meticulous attention, expert guidance, and seamless execution. Here’s how we efficiently manage every lift enquiry — from initial consultation to project handover:</h3>
           </div>
           <ProcessStepper />
         </div>
@@ -98,9 +100,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="py-12">
+      <section className="py-12 bg-white">
         <div className="mx-auto max-w-7xl px-4">
-          <p className="mb-6 text-center text-sm uppercase tracking-wide text-gray-500">Trusted by leading brands</p>
+          <p className="mb-6 text-center text-lg font-bold uppercase tracking-wide text-gray-900">Trusted by leading brands</p>
           <ClientLogoMarquee />
         </div>
       </section>
