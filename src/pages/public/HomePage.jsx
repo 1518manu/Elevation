@@ -80,7 +80,9 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
             <h2 className="mb-3 font-heading text-3xl font-semibold text-black md:text-4xl">Our Process</h2>
-            <div className="mx-auto h-1 w-10 bg-red-600" />
+            <br/>
+            <div className="mx-auto mb-8 h-1 w-10 bg-red-600" />
+            <h3>At ALFA ELEVATOR CONTRACTING LLC, we believe that every project deserves meticulous attention, expert guidance, and seamless execution. Here’s how we efficiently manage every lift enquiry — from initial consultation to project handover:</h3>
           </div>
           <ProcessStepper />
         </div>
