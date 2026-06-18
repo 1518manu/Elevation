@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Plus, Download, Search, Grid, List, Star, MoreVertical, Edit, Trash2 } from 'lucide-react'
 import DataTable from '@/components/admin/DataTable'
 import ConfirmDialog from '@/components/admin/ConfirmDialog'
@@ -12,6 +13,7 @@ import { Badge } from '@/components/ui/badge'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 
 export default function ProductsAdminPage() {
+  const navigate = useNavigate()
   const { data: products = [], isLoading } = useProducts({ is_active: undefined })
   const deleteProduct = useDeleteProduct()
   const [drawerOpen, setDrawerOpen] = useState(false)
@@ -27,6 +29,16 @@ export default function ProductsAdminPage() {
   const handleDelete = async (id) => {
     await deleteProduct.mutateAsync(id)
     setDeleteId(null)
+  }
+
+  const handleSave = (savedProduct) => {
+    if (savedProduct && !editId && savedProduct.slug) {
+      // Navigate to detail page if it's a new product
+      navigate(`/products/${savedProduct.slug}`)
+    } else {
+      // Just close the drawer for edits
+      setDrawerOpen(false)
+    }
   }
 
   const filteredProducts = products.filter(p => {
@@ -211,7 +223,7 @@ export default function ProductsAdminPage() {
         open={drawerOpen} 
         onOpenChange={setDrawerOpen}
         editId={editId}
-        onSave={() => setDrawerOpen(false)}
+        onSave={handleSave}
       />
 
       <ConfirmDialog 

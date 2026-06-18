@@ -74,7 +74,7 @@ export function getImageUrl(url, width = 800, quality = 80) {
   if (!url) return ''
   if (url.includes('supabase.co')) {
     const separator = url.includes('?') ? '&' : '?'
-    return `${url}${separator}width=${width}&quality=${quality}&format=webp`
+    return `${url}${separator}width=${width}&quality=${quality}`
   }
   return url
 }

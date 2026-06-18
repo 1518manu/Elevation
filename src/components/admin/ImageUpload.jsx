@@ -56,9 +56,17 @@ export default function ImageUpload({
   return (
     <div className="space-y-3">
       {value ? (
-        <div className="relative inline-block">
-          <img src={getImageUrl(value, 200)} alt="Preview" className="h-32 w-32 rounded-lg object-cover" />
-          <button type="button" onClick={handleRemove} className="absolute -right-2 -top-2 rounded-full bg-red-500 p-1 text-white">
+        <div className="relative inline-block w-full">
+          <img 
+            src={getImageUrl(value, 800, 90)} 
+            alt="Preview" 
+            className="h-32 w-32 rounded-lg object-cover"
+            onError={(e) => {
+              // Fallback to original URL if transformed version fails
+              e.target.src = value
+            }}
+          />
+          <button type="button" onClick={handleRemove} className="absolute -right-2 -top-2 rounded-full bg-red-500 p-1 text-white hover:bg-red-600">
             <X className="h-4 w-4" />
           </button>
         </div>

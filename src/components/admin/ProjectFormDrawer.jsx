@@ -44,14 +44,15 @@ export default function ProjectFormDrawer({ open, onOpenChange, editId, onSave }
 
   const handleSave = async () => {
     try {
+      let savedProject
       if (editId) {
-        await updateProject.mutateAsync({ id: editId, ...form })
+        savedProject = await updateProject.mutateAsync({ id: editId, ...form })
         toast({ title: 'Project updated successfully' })
       } else {
-        await createProject.mutateAsync(form)
+        savedProject = await createProject.mutateAsync(form)
         toast({ title: 'Project added successfully' })
       }
-      onSave()
+      onSave(savedProject)
     } catch (error) {
       toast({ 
         title: 'Error', 

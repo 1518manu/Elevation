@@ -56,14 +56,15 @@ export default function ProductFormDrawer({ open, onOpenChange, editId, onSave }
 
   const handleSave = async () => {
     try {
+      let savedProduct
       if (editId) {
-        await updateProduct.mutateAsync({ id: editId, ...form })
+        savedProduct = await updateProduct.mutateAsync({ id: editId, ...form })
         toast({ title: 'Product updated successfully' })
       } else {
-        await createProduct.mutateAsync(form)
+        savedProduct = await createProduct.mutateAsync(form)
         toast({ title: 'Product created successfully' })
       }
-      onSave()
+      onSave(savedProduct)
     } catch (error) {
       toast({ 
         title: 'Error', 

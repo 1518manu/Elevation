@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Plus, Building, MoreVertical, Edit, Trash2, Star } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { Plus, Building, MoreVertical, Edit, Trash2, Star, FileText } from 'lucide-react'
 import { useProjects, useDeleteProject } from '@/hooks/useProjects'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
@@ -7,8 +8,10 @@ import { Badge } from '@/components/ui/badge'
 import { useToast } from '@/components/ui/toast'
 import ConfirmDialog from '@/components/admin/ConfirmDialog'
 import ProjectFormDrawer from '@/components/admin/ProjectFormDrawer'
+import { getImageUrl } from '@/lib/utils'
 
 export default function ProjectsAdminPage() {
+  const navigate = useNavigate()
   const { data: projects = [], isLoading } = useProjects({ is_active: undefined })
   const deleteProject = useDeleteProject()
   const { toast } = useToast()
@@ -19,7 +22,32 @@ export default function ProjectsAdminPage() {
   const openCreate = () => { setEditId(null); setDrawerOpen(true) }
   const openEdit = (id) => { setEditId(id); setDrawerOpen(true) }
 
+  const handleSave = (savedProject) => {
+    if (savedProject && !editId && savedProject.slug) {
+      // Navigate to detail page if it's a new project
+      navigate(`/projects/${savedProject.slug}`)
+    } else {
+      // Just close the drawer for edits
+      setDrawerOpen(false)
+    }
+  }
+
   const columns = [
+    { 
+      accessorKey: 'images', 
+      header: '', 
+      cell: ({ row }) => row.original.images?.[0] ? (
+        <img 
+          src={getImageUrl(row.original.images[0])} 
+          alt="" 
+          className="h-12 w-12 rounded-md object-cover"
+        />
+      ) : (
+        <div className="h-12 w-12 rounded-md bg-gray-200 flex items-center justify-center">
+          <FileText className="h-4 w-4 text-gray-400" />
+        </div>
+      )
+    },
     { 
       accessorKey: 'title', 
       header: 'TITLE', 
@@ -171,7 +199,7 @@ export default function ProjectsAdminPage() {
         open={drawerOpen} 
         onOpenChange={setDrawerOpen}
         editId={editId}
-        onSave={() => setDrawerOpen(false)}
+        onSave={handleSave}
       />
 
       <ConfirmDialog 

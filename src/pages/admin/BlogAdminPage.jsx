@@ -24,7 +24,6 @@ const emptyBlog = {
   tags: [], 
   content: '', 
   cover_image: '', 
-  excerpt: '',
   is_published: false, 
   seo_title: '', 
   seo_description: '',
@@ -75,9 +74,9 @@ export default function BlogAdminPage() {
           <p className="font-['DM Sans', 'sans-serif'] text-[14px] font-semibold text-[#0E0E0E] mb-1">
             {row.original.title}
           </p>
-          {row.original.excerpt && (
+          {row.original.content && (
             <p className="font-['DM Sans', 'sans-serif'] text-[12px] text-gray-500 line-clamp-2">
-              {row.original.excerpt.substring(0, 100)}
+              {row.original.content.substring(0, 100)}
             </p>
           )}
         </div>
@@ -165,15 +164,18 @@ export default function BlogAdminPage() {
         author_id: form.author_id || user?.id
       }
       
+      let savedBlog
       if (id === 'new') {
-        await createBlog.mutateAsync(payload)
+        savedBlog = await createBlog.mutateAsync(payload)
         toast({ title: 'Article created successfully' })
       } else {
-        await updateBlog.mutateAsync({ id, ...payload })
+        savedBlog = await updateBlog.mutateAsync({ id, ...payload })
         toast({ title: 'Article updated successfully' })
       }
       
-      if (publish) {
+      if (publish && id === 'new' && savedBlog?.slug) {
+        navigate(`/blog/${savedBlog.slug}`)
+      } else if (publish) {
         navigate('/admin/blog')
       }
     } catch (error) {
@@ -214,6 +216,11 @@ export default function BlogAdminPage() {
     const blog = id === 'new' ? form : blogs.find((b) => b.id === id) || form
     const current = id === 'new' ? { ...emptyBlog, author_id: user?.id } : { ...blog, ...form }
     const readTime = calculateReadTime(current.content || '')
+
+    // Update form when blog data loads
+    if (id !== 'new' && blog && blog.id && form.id !== blog.id) {
+      setForm({ ...emptyBlog, ...blog })
+    }
 
     return (
       <div className="h-full flex flex-col">
@@ -283,7 +290,7 @@ export default function BlogAdminPage() {
               <Input
                 placeholder="Enter category (e.g. Technology, Industry News)"
                 value={current.category}
-                onChange={(e) => setForm({ ...current, category: e.target.value })}
+                onChange={(e) => setForm({ ...form, category: e.target.value })}
                 className="mb-4 text-sm bg-transparent border-none focus:ring-0 px-0 placeholder-gray-400"
               />
               
@@ -291,7 +298,7 @@ export default function BlogAdminPage() {
               <Input
                 placeholder="Article headline..."
                 value={current.title}
-                onChange={(e) => setForm({ ...current, title: e.target.value, slug: slugify(e.target.value) })}
+                onChange={(e) => setForm({ ...form, title: e.target.value, slug: slugify(e.target.value) })}
                 className="text-[32px] font-bold font-['Syne', 'sans-serif'] text-[#0E0E0E] border-none focus:ring-0 px-0 placeholder-gray-300"
               />
               
@@ -304,7 +311,7 @@ export default function BlogAdminPage() {
                   >
                     #{tag}
                     <button 
-                      onClick={() => setForm({ ...current, tags: current.tags.filter((_, i) => i !== index) })}
+                      onClick={() => setForm({ ...form, tags: current.tags.filter((_, i) => i !== index) })}
                       className="text-[#D42B2B] hover:text-[#B01F1F]"
                     >
                       ×
@@ -317,8 +324,8 @@ export default function BlogAdminPage() {
             {/* Rich Editor */}
             <div className="flex-1 overflow-y-auto px-6">
               <RichEditor
-                content={current.content}
-                onChange={(content) => setForm({ ...current, content })}
+                value={current.content}
+                onChange={(content) => setForm({ ...form, content })}
               />
             </div>
           </div>
@@ -333,7 +340,7 @@ export default function BlogAdminPage() {
               <ImageUpload 
                 bucket={STORAGE_BUCKETS.blogs} 
                 value={current.cover_image} 
-                onChange={(url) => setForm({ ...current, cover_image: url })} 
+                onChange={(url) => setForm({ ...form, cover_image: url })} 
               />
             </div>
 
@@ -349,7 +356,7 @@ export default function BlogAdminPage() {
                   <Label className="text-xs text-gray-500">Title ({current.seo_title?.length || 0}/60)</Label>
                   <Input
                     value={current.seo_title}
-                    onChange={(e) => setForm({ ...current, seo_title: e.target.value })}
+                    onChange={(e) => setForm({ ...form, seo_title: e.target.value })}
                     placeholder="SEO title"
                     maxLength={60}
                     className="text-sm"
@@ -359,7 +366,7 @@ export default function BlogAdminPage() {
                   <Label className="text-xs text-gray-500">Description ({current.seo_description?.length || 0}/160)</Label>
                   <Input
                     value={current.seo_description}
-                    onChange={(e) => setForm({ ...current, seo_description: e.target.value })}
+                    onChange={(e) => setForm({ ...form, seo_description: e.target.value })}
                     placeholder="Meta description"
                     maxLength={160}
                     className="text-sm"
