@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Users, Shield, MoreVertical, Edit, Trash2, Check, X } from 'lucide-react'
+import { Users, Shield, Check, X } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'

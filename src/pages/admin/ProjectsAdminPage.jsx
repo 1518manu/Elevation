@@ -1,19 +1,15 @@
 import { useState } from 'react'
 import { Plus, Building, MoreVertical, Edit, Trash2, Star } from 'lucide-react'
-import { useProjects, useCreateProject, useUpdateProject, useDeleteProject } from '@/hooks/useProjects'
+import { useProjects, useDeleteProject } from '@/hooks/useProjects'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
 import { Badge } from '@/components/ui/badge'
 import { useToast } from '@/components/ui/toast'
 import ConfirmDialog from '@/components/admin/ConfirmDialog'
 import ProjectFormDrawer from '@/components/admin/ProjectFormDrawer'
-import ImageUpload from '@/components/admin/ImageUpload'
-import { STORAGE_BUCKETS } from '@/lib/constants'
 
 export default function ProjectsAdminPage() {
   const { data: projects = [], isLoading } = useProjects({ is_active: undefined })
-  const createProject = useCreateProject()
-  const updateProject = useUpdateProject()
   const deleteProject = useDeleteProject()
   const { toast } = useToast()
   const [drawerOpen, setDrawerOpen] = useState(false)

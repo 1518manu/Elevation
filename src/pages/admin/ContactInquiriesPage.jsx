@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { MessageSquare, MoreVertical, Check, X, AlertCircle } from 'lucide-react'
+import { MessageSquare, MoreVertical } from 'lucide-react'
 import { useContactInquiries, useUpdateContactInquiry } from '@/hooks/useContactInquiries'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
@@ -11,7 +11,6 @@ import { timeAgo } from '@/lib/utils'
 
 export default function ContactInquiriesPage() {
   const [statusFilter, setStatusFilter] = useState('all')
-  const [selectedId, setSelectedId] = useState(null)
   const { data: contacts = [], isLoading } = useContactInquiries(statusFilter !== 'all' ? { status: statusFilter } : {})
   const updateContact = useUpdateContactInquiry()
   const { toast } = useToast()
@@ -173,7 +172,6 @@ export default function ContactInquiriesPage() {
               filteredContacts.map((contact) => (
                 <tr 
                   key={contact.id} 
-                  onClick={() => setSelectedId(contact.id)}
                   className="hover:bg-[#FAFAFA] cursor-pointer"
                 >
                   {columns.map(col => (

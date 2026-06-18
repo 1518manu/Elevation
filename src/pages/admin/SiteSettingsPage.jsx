@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Settings, Save, Building2, Share2, Home, Search } from 'lucide-react'
+import { Save, Building2, Share2, Home, Search, Eye } from 'lucide-react'
 import ImageUpload from '@/components/admin/ImageUpload'
 import { useSiteSettings, useUpdateSiteSettings } from '@/hooks/useSiteSettings'
 import { STORAGE_BUCKETS } from '@/lib/constants'
@@ -95,6 +95,12 @@ export default function SiteSettingsPage() {
           >
             <Search className="mr-2 h-4 w-4" /> SEO Defaults
           </TabsTrigger>
+          <TabsTrigger 
+            value="visibility" 
+            className="data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#D42B2B]"
+          >
+            <Eye className="mr-2 h-4 w-4" /> Visibility
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="company" className="space-y-6">
@@ -107,7 +113,7 @@ export default function SiteSettingsPage() {
                 <Label htmlFor="company_name">Company Name</Label>
                 <Input
                   id="company_name"
-                  value={form.company_name}
+                  value={form.company_name || ''}
                   onChange={(e) => setForm({ ...form, company_name: e.target.value })}
                   className="focus:border-[#D42B2B]"
                 />
@@ -116,7 +122,7 @@ export default function SiteSettingsPage() {
                 <Label htmlFor="tagline">Tagline</Label>
                 <Input
                   id="tagline"
-                  value={form.tagline}
+                  value={form.tagline || ''}
                   onChange={(e) => setForm({ ...form, tagline: e.target.value })}
                   className="focus:border-[#D42B2B]"
                 />
@@ -125,7 +131,7 @@ export default function SiteSettingsPage() {
                 <Label htmlFor="whatsapp">WhatsApp Number</Label>
                 <Input
                   id="whatsapp"
-                  value={form.whatsapp_number}
+                  value={form.whatsapp_number || ''}
                   onChange={(e) => setForm({ ...form, whatsapp_number: e.target.value })}
                   className="focus:border-[#D42B2B]"
                 />
@@ -135,7 +141,7 @@ export default function SiteSettingsPage() {
                 {form.phones?.map((p, i) => (
                   <div key={i} className="flex gap-2">
                     <Input
-                      value={p}
+                      value={p || ''}
                       onChange={(e) => updateList('phones', i, e.target.value)}
                       className="focus:border-[#D42B2B]"
                     />
@@ -153,7 +159,7 @@ export default function SiteSettingsPage() {
                 {form.emails?.map((e, i) => (
                   <div key={i} className="flex gap-2">
                     <Input
-                      value={e}
+                      value={e || ''}
                       onChange={(ev) => updateList('emails', i, ev.target.value)}
                       className="focus:border-[#D42B2B]"
                     />
@@ -170,7 +176,7 @@ export default function SiteSettingsPage() {
                 <Label htmlFor="maps">Google Maps Embed Code</Label>
                 <Textarea
                   id="maps"
-                  value={form.google_maps_embed}
+                  value={form.google_maps_embed || ''}
                   onChange={(e) => setForm({ ...form, google_maps_embed: e.target.value })}
                   rows={3}
                   className="focus:border-[#D42B2B]"
@@ -280,6 +286,33 @@ export default function SiteSettingsPage() {
                   bucket={STORAGE_BUCKETS.companyAssets} 
                   value={form.seo_defaults?.og_image} 
                   onChange={(url) => setForm({ ...form, seo_defaults: { ...form.seo_defaults, og_image: url } })} 
+                />
+              </div>
+            </div>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="visibility" className="space-y-6">
+          <div className="bg-white rounded-xl border border-[#E5E5E5] p-6">
+            <h3 className="font-['Syne', 'sans-serif'] text-[16px] font-semibold text-[#0E0E0E] mb-4">
+              Section Visibility
+            </h3>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between py-2 border-b border-[#F0F0F0]">
+                <div>
+                  <Label htmlFor="careers_visible" className="font-['DM Sans', 'sans-serif'] font-medium cursor-pointer">
+                    Careers Section
+                  </Label>
+                  <p className="text-sm text-gray-500">
+                    Show/hide the careers section on the public website
+                  </p>
+                </div>
+                <input
+                  id="careers_visible"
+                  type="checkbox"
+                  checked={form.careers_visible ?? true}
+                  onChange={(e) => setForm({ ...form, careers_visible: e.target.checked })}
+                  className="w-5 h-5 rounded focus:ring-2 focus:ring-[#D42B2B]"
                 />
               </div>
             </div>

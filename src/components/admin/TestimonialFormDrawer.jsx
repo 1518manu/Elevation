@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
-import { X, Star, Image as ImageIcon } from 'lucide-react'
+import { X, Star } from 'lucide-react'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { useTestimonials, useCreateTestimonial, useUpdateTestimonial } from '@/hooks/useTestimonials'
 import { STORAGE_BUCKETS } from '@/lib/constants'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
 import ImageUpload from '@/components/admin/ImageUpload'
 import RichEditor from '@/components/admin/RichEditor'
 import { useToast } from '@/components/ui/toast'
@@ -91,7 +90,7 @@ export default function TestimonialFormDrawer({ open, onOpenChange, editId, onSa
               </Label>
               <ImageUpload 
                 bucket={STORAGE_BUCKETS.testimonials}
-                value={form.photo_url}
+                value={form.photo_url || ''}
                 onChange={(url) => setForm({ ...form, photo_url: url })}
               />
             </div>
@@ -106,7 +105,7 @@ export default function TestimonialFormDrawer({ open, onOpenChange, editId, onSa
                 <Label htmlFor="name">Full Name <span className="text-[#D42B2B]">*</span></Label>
                 <Input
                   id="name"
-                  value={form.name}
+                  value={form.name || ''}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                   placeholder="Enter customer name"
                   className="focus:border-[#D42B2B]"
@@ -117,7 +116,7 @@ export default function TestimonialFormDrawer({ open, onOpenChange, editId, onSa
                 <Label htmlFor="company">Company <span className="text-[#D42B2B]">*</span></Label>
                 <Input
                   id="company"
-                  value={form.company}
+                  value={form.company || ''}
                   onChange={(e) => setForm({ ...form, company: e.target.value })}
                   placeholder="Enter company name"
                   className="focus:border-[#D42B2B]"
@@ -128,7 +127,7 @@ export default function TestimonialFormDrawer({ open, onOpenChange, editId, onSa
                 <Label htmlFor="role">Role/Position</Label>
                 <Input
                   id="role"
-                  value={form.role}
+                  value={form.role || ''}
                   onChange={(e) => setForm({ ...form, role: e.target.value })}
                   placeholder="e.g. CEO, Manager, Director"
                   className="focus:border-[#D42B2B]"

@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { Phone, MessageSquare, Mail } from 'lucide-react'
+import { Phone } from 'lucide-react'
 import StatusBadge from '@/components/admin/StatusBadge'
-import { useQuoteInquiries, useUpdateQuoteInquiry } from '@/hooks/useQuoteInquiries'
+import { useQuoteInquiries } from '@/hooks/useQuoteInquiries'
 import { useRealtimeLeads } from '@/hooks/useRealtimeLeads'
 import { QUOTE_STATUSES } from '@/lib/constants'
 import { timeAgo } from '@/lib/utils'
@@ -168,7 +168,7 @@ export default function QuoteInquiriesPage() {
                 </td>
               </tr>
             ) : (
-              filteredQuotes.map((quote, index) => (
+              filteredQuotes.map((quote, _index) => (
                 <tr 
                   key={quote.id} 
                   onClick={() => setSelectedId(quote.id)}

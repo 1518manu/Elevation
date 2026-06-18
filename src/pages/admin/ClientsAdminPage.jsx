@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Plus, Building2, MoreVertical, Edit, Trash2, ExternalLink, Globe } from 'lucide-react'
-import { useClients, useCreateClient, useUpdateClient, useDeleteClient } from '@/hooks/useClients'
+import { Plus, Building2, Globe } from 'lucide-react'
+import { useClients, useUpdateClient, useDeleteClient } from '@/hooks/useClients'
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/toast'
 import ConfirmDialog from '@/components/admin/ConfirmDialog'
@@ -9,7 +9,6 @@ import SortableList from '@/components/admin/SortableList'
 
 export default function ClientsAdminPage() {
   const { data: clients = [], isLoading } = useClients({ is_active: undefined })
-  const createClient = useCreateClient()
   const updateClient = useUpdateClient()
   const deleteClient = useDeleteClient()
   const { toast } = useToast()
@@ -18,7 +17,6 @@ export default function ClientsAdminPage() {
   const [deleteId, setDeleteId] = useState(null)
 
   const openCreate = () => { setEditId(null); setDrawerOpen(true) }
-  const openEdit = (id) => { setEditId(id); setDrawerOpen(true) }
 
   const handleReorder = async (items) => {
     try {

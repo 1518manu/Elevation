@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { X, Phone, MessageSquare, Mail, AlertTriangle } from 'lucide-react'
+import { X, Phone, MessageSquare, Mail } from 'lucide-react'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { useQuoteInquiries, useUpdateQuoteInquiry } from '@/hooks/useQuoteInquiries'
 import { timeAgo } from '@/lib/utils'

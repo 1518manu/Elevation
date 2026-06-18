@@ -19,7 +19,13 @@ export default function Navbar() {
   const { data: services = [] } = useServices()
   const { data: settings } = useSiteSettings()
   const phone = settings?.phones?.[0] || '+91 98765 43210'
+  const careersVisible = settings?.careers_visible ?? true
   const popupRef = useRef(null)
+
+  // Filter navigation links based on visibility settings
+  const visibleNavLinks = NAV_LINKS.filter(link => 
+    link.href !== '/careers' || careersVisible
+  )
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -72,7 +78,7 @@ export default function Navbar() {
 
         {/* Desktop Nav */}
         <nav className="hidden items-center gap-5 lg:flex xl:gap-5">
-          {NAV_LINKS.map((link) => (
+          {visibleNavLinks.map((link) => (
             <div
               key={link.href}
               className="relative"
@@ -174,7 +180,7 @@ export default function Navbar() {
               <div className="absolute -top-[7px] right-4 h-3.5 w-3.5 rotate-45 border-l border-t border-gray-100 bg-white" />
 
               <nav className="flex flex-col py-2">
-                {NAV_LINKS.map((link, index) => (
+                {visibleNavLinks.map((link, index) => (
                   <div key={link.href}>
                     {link.hasDropdown ? (
                       <>

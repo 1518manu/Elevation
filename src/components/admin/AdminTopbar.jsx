@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Bell, Search, ChevronDown, User, LogOut, Settings, User as UserIcon, Menu } from 'lucide-react'
+import { Bell, Search, ChevronDown, LogOut, Settings, User as UserIcon, Menu } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -49,7 +49,7 @@ export default function AdminTopbar({ title, breadcrumb, mobileMenuOpen, setMobi
     // Subscribe to notifications for realtime updates
     const subscription = supabase
       .channel('notifications')
-      .on('INSERT', (payload) => {
+      .on('INSERT', (_payload) => {
         setNotificationCount(prev => prev + 1)
       })
       .on('UPDATE', (payload) => {

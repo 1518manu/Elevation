@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
-import { Plus, ArrowLeft, Save, ExternalLink, ChevronDown, MoreVertical, Edit, Trash2, FileText, Clock, User, Calendar } from 'lucide-react'
-import AdminTopbar from '@/components/admin/AdminTopbar'
+import { Plus, ArrowLeft, Save, ExternalLink, MoreVertical, Edit, Trash2, FileText, Clock, User, Calendar } from 'lucide-react'
 import DataTable from '@/components/admin/DataTable'
 import RichEditor from '@/components/admin/RichEditor'
 import ImageUpload from '@/components/admin/ImageUpload'

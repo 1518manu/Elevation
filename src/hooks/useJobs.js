@@ -100,7 +100,7 @@ export function useDeleteJob() {
     mutationFn: async (id) => {
       const { data, error } = await supabase
         .from('jobs')
-        .update({ is_active: false })
+        .delete()
         .eq('id', id)
         .select()
         .single()

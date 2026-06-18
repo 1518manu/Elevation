@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import { Plus, MoreVertical, Edit, Trash2, Clock, AlertCircle, CheckCircle, XCircle, Briefcase } from 'lucide-react'
-import { useJobs, useCreateJob, useUpdateJob, useDeleteJob } from '@/hooks/useJobs'
+import { Plus, MoreVertical, Edit, Trash2, Briefcase } from 'lucide-react'
+import { useJobs, useDeleteJob } from '@/hooks/useJobs'
 import { useApplications } from '@/hooks/useApplications'
-import { JOB_DEPARTMENTS } from '@/lib/constants'
 import { formatDate, getDaysUntilDeadline } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
@@ -14,8 +13,6 @@ import JobFormDrawer from '@/components/admin/JobFormDrawer'
 export default function CareerAdminPage() {
   const { data: jobs = [], isLoading } = useJobs({ is_active: undefined })
   const { data: applications = [] } = useApplications()
-  const createJob = useCreateJob()
-  const updateJob = useUpdateJob()
   const deleteJob = useDeleteJob()
   const { toast } = useToast()
   const [drawerOpen, setDrawerOpen] = useState(false)

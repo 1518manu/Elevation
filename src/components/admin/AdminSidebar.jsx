@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import * as LucideIcons from 'lucide-react'
-import { ChevronLeft, ChevronRight, LogOut, LayoutDashboard, Package, Wrench, Building2, BookOpen, MessageSquare, Users, ListOrdered, Settings, UserCog, FileText, Mail, Briefcase, FileText as FileTextIcon, X, Menu } from 'lucide-react'
+import { ChevronLeft, ChevronRight, LogOut, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { ADMIN_NAV } from '@/lib/constants'
 import { useAuth } from '@/hooks/useAuth'

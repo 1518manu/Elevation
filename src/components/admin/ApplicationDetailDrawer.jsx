@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { X, Download, FileText, User, Calendar, Phone, Mail, AlertCircle } from 'lucide-react'
+import { X, Download } from 'lucide-react'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { useApplications, useUpdateApplication } from '@/hooks/useApplications'
 import { useJobs } from '@/hooks/useJobs'
@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Badge } from '@/components/ui/badge'
 import { useToast } from '@/components/ui/toast'
 import { useAuth } from '@/hooks/useAuth'
 import { APPLICATION_STATUSES } from '@/lib/constants'
@@ -67,7 +66,7 @@ export default function ApplicationDetailDrawer({ applicationId, open, onOpenCha
         if (error) throw error
         
         window.open(data.signedUrl, '_blank')
-      } catch (error) {
+      } catch {
         toast({ 
           title: 'Error', 
           description: 'Failed to generate download link',

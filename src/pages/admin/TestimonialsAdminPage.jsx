@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Plus, Star, MoreVertical, Edit, Trash2, Quote } from 'lucide-react'
-import { useTestimonials, useCreateTestimonial, useUpdateTestimonial, useDeleteTestimonial } from '@/hooks/useTestimonials'
+import { Plus, Star, Quote } from 'lucide-react'
+import { useTestimonials, useUpdateTestimonial, useDeleteTestimonial } from '@/hooks/useTestimonials'
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/toast'
 import ConfirmDialog from '@/components/admin/ConfirmDialog'
@@ -9,7 +9,6 @@ import SortableList from '@/components/admin/SortableList'
 
 export default function TestimonialsAdminPage() {
   const { data: testimonials = [], isLoading } = useTestimonials({ is_active: undefined })
-  const createTestimonial = useCreateTestimonial()
   const updateTestimonial = useUpdateTestimonial()
   const deleteTestimonial = useDeleteTestimonial()
   const { toast } = useToast()
@@ -18,7 +17,6 @@ export default function TestimonialsAdminPage() {
   const [deleteId, setDeleteId] = useState(null)
 
   const openCreate = () => { setEditId(null); setDrawerOpen(true) }
-  const openEdit = (id) => { setEditId(id); setDrawerOpen(true) }
 
   const handleReorder = async (items) => {
     try {

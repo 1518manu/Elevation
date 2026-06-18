@@ -3,8 +3,8 @@ import { Plus, Download, Search, Grid, List, Star, MoreVertical, Edit, Trash2 } 
 import DataTable from '@/components/admin/DataTable'
 import ConfirmDialog from '@/components/admin/ConfirmDialog'
 import ProductFormDrawer from '@/components/admin/ProductFormDrawer'
-import { useProducts, useCreateProduct, useUpdateProduct, useDeleteProduct } from '@/hooks/useProducts'
-import { slugify, formatDate, getImageUrl } from '@/lib/utils'
+import { useProducts, useDeleteProduct } from '@/hooks/useProducts'
+import { formatDate, getImageUrl } from '@/lib/utils'
 import { PRODUCT_CATEGORIES } from '@/lib/constants'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -13,8 +13,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 
 export default function ProductsAdminPage() {
   const { data: products = [], isLoading } = useProducts({ is_active: undefined })
-  const createProduct = useCreateProduct()
-  const updateProduct = useUpdateProduct()
   const deleteProduct = useDeleteProduct()
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [deleteId, setDeleteId] = useState(null)
@@ -45,7 +43,7 @@ export default function ProductsAdminPage() {
     { 
       accessorKey: 'select', 
       header: () => <input type="checkbox" className="rounded" />,
-      cell: ({ row }) => <input type="checkbox" className="rounded" />
+      cell: ({ _row }) => <input type="checkbox" className="rounded" />
     },
     { 
       accessorKey: 'images', 

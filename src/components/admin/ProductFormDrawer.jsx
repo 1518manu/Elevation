@@ -173,7 +173,7 @@ export default function ProductFormDrawer({ open, onOpenChange, editId, onSave }
                 <Label htmlFor="short_description">Short Description</Label>
                 <Textarea
                   id="short_description"
-                  value={form.short_description}
+                  value={form.short_description || ''}
                   onChange={(e) => setForm({ ...form, short_description: e.target.value })}
                   placeholder="Brief product description (2-3 sentences)"
                   rows={3}
@@ -379,7 +379,7 @@ export default function ProductFormDrawer({ open, onOpenChange, editId, onSave }
                     <Label htmlFor="seo_description">SEO Description <span className="text-gray-400">({form.seo_description?.length || 0}/160)</span></Label>
                     <Textarea
                       id="seo_description"
-                      value={form.seo_description}
+                      value={form.seo_description || ''}
                       onChange={(e) => setForm({ ...form, seo_description: e.target.value })}
                       placeholder="Meta description for search engines"
                       rows={3}

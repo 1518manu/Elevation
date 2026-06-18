@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { X, Building2, Globe } from 'lucide-react'
+import { X } from 'lucide-react'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { useClients, useCreateClient, useUpdateClient } from '@/hooks/useClients'
 import { STORAGE_BUCKETS } from '@/lib/constants'
@@ -81,7 +81,7 @@ export default function ClientFormDrawer({ open, onOpenChange, editId, onSave })
               </Label>
               <ImageUpload 
                 bucket={STORAGE_BUCKETS.clients}
-                value={form.logo_url}
+                value={form.logo_url || ''}
                 onChange={(url) => setForm({ ...form, logo_url: url })}
               />
               <p className="font-['DM Sans', 'sans-serif'] text-xs text-gray-500 mt-2">
@@ -99,7 +99,7 @@ export default function ClientFormDrawer({ open, onOpenChange, editId, onSave })
                 <Label htmlFor="name">Company Name <span className="text-[#D42B2B]">*</span></Label>
                 <Input
                   id="name"
-                  value={form.name}
+                  value={form.name || ''}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                   placeholder="Enter company name"
                   className="focus:border-[#D42B2B]"
@@ -110,7 +110,7 @@ export default function ClientFormDrawer({ open, onOpenChange, editId, onSave })
                 <Label htmlFor="website">Website URL</Label>
                 <Input
                   id="website"
-                  value={form.website_url}
+                  value={form.website_url || ''}
                   onChange={(e) => setForm({ ...form, website_url: e.target.value })}
                   placeholder="https://www.example.com"
                   className="focus:border-[#D42B2B]"

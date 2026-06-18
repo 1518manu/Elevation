@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react'
-import { X, Building } from 'lucide-react'
+import { X } from 'lucide-react'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { useProjects, useCreateProject, useUpdateProject } from '@/hooks/useProjects'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
 import RichEditor from '@/components/admin/RichEditor'
 import MultiImageUpload from '@/components/admin/MultiImageUpload'
 import { STORAGE_BUCKETS } from '@/lib/constants'
@@ -91,7 +90,7 @@ export default function ProjectFormDrawer({ open, onOpenChange, editId, onSave }
                 <Label htmlFor="title">Project Title <span className="text-[#D42B2B]">*</span></Label>
                 <Input
                   id="title"
-                  value={form.title}
+                  value={form.title || ''}
                   onChange={(e) => setForm({ ...form, title: e.target.value })}
                   placeholder="Enter project title"
                   className="focus:border-[#D42B2B]"
@@ -102,7 +101,7 @@ export default function ProjectFormDrawer({ open, onOpenChange, editId, onSave }
                 <Label htmlFor="client">Client Name</Label>
                 <Input
                   id="client"
-                  value={form.client_name}
+                  value={form.client_name || ''}
                   onChange={(e) => setForm({ ...form, client_name: e.target.value })}
                   placeholder="Enter client company name"
                   className="focus:border-[#D42B2B]"
@@ -114,7 +113,7 @@ export default function ProjectFormDrawer({ open, onOpenChange, editId, onSave }
                   <Label htmlFor="city">City</Label>
                   <Input
                     id="city"
-                    value={form.city}
+                    value={form.city || ''}
                     onChange={(e) => setForm({ ...form, city: e.target.value })}
                     placeholder="e.g. Bengaluru"
                     className="focus:border-[#D42B2B]"
@@ -124,7 +123,7 @@ export default function ProjectFormDrawer({ open, onOpenChange, editId, onSave }
                   <Label htmlFor="state">State</Label>
                   <Input
                     id="state"
-                    value={form.state}
+                    value={form.state || ''}
                     onChange={(e) => setForm({ ...form, state: e.target.value })}
                     placeholder="e.g. Karnataka"
                     className="focus:border-[#D42B2B]"
@@ -136,7 +135,7 @@ export default function ProjectFormDrawer({ open, onOpenChange, editId, onSave }
                 <Label htmlFor="short_description">Short Description</Label>
                 <Input
                   id="short_description"
-                  value={form.short_description}
+                  value={form.short_description || ''}
                   onChange={(e) => setForm({ ...form, short_description: e.target.value })}
                   placeholder="Brief description for cards"
                   className="focus:border-[#D42B2B]"

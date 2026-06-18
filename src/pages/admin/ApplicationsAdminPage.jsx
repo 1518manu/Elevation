@@ -1,23 +1,17 @@
 import { useState } from 'react'
-import { User, MoreVertical, FileText, Download, Eye } from 'lucide-react'
-import { useApplications, useUpdateApplication } from '@/hooks/useApplications'
+import { User, MoreVertical, Download, Eye } from 'lucide-react'
+import { useApplications } from '@/hooks/useApplications'
 import { useJobs } from '@/hooks/useJobs'
-import { APPLICATION_STATUSES } from '@/lib/constants'
 import { timeAgo } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
-import { useToast } from '@/components/ui/toast'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import ApplicationDetailDrawer from '@/components/admin/ApplicationDetailDrawer'
-import { supabase } from '@/lib/supabase'
 
 export default function ApplicationsAdminPage() {
   const { data: applications = [], isLoading } = useApplications()
   const { data: jobs = [] } = useJobs()
-  const updateApplication = useUpdateApplication()
-  const { toast } = useToast()
   const [selectedJobId, setSelectedJobId] = useState('all')
   const [selectedId, setSelectedId] = useState(null)
 

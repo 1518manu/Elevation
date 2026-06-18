@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom'
-import { FileText, Mail, Briefcase, BookOpen, Plus, Inbox, ArrowUp } from 'lucide-react'
+import { FileText, Mail, Briefcase, BookOpen, Inbox, ArrowUp } from 'lucide-react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts'
 import StatusBadge from '@/components/admin/StatusBadge'
 import { useQuoteInquiries } from '@/hooks/useQuoteInquiries'
 import { useContactInquiries } from '@/hooks/useContactInquiries'
 import { useJobs } from '@/hooks/useJobs'
 import { useBlogs } from '@/hooks/useBlogs'
-import { useRealtimeLeads } from '@/hooks/useRealtimeLeads'
 import { timeAgo } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 
@@ -15,7 +14,6 @@ export default function DashboardPage() {
   const { data: contacts = [], isLoading: contactsLoading, error: contactsError } = useContactInquiries()
   const { data: jobs = [], isLoading: jobsLoading, error: jobsError } = useJobs({ is_active: true })
   const { data: blogs = [], isLoading: blogsLoading, error: blogsError } = useBlogs({ is_published: true })
-  const { newLeadCount } = useRealtimeLeads()
 
   const isLoading = quotesLoading || contactsLoading || jobsLoading || blogsLoading
   const error = quotesError || contactsError || jobsError || blogsError
@@ -105,7 +103,7 @@ export default function DashboardPage() {
   return (
     <div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {kpis.map((kpi, index) => (
+        {kpis.map((kpi, _index) => (
           <div 
             key={kpi.label} 
             className="bg-white rounded-xl p-6 shadow-sm border border-[#E5E5E5] flex flex-col gap-3 hover:shadow-md transition-shadow duration-200"
@@ -267,30 +265,6 @@ export default function DashboardPage() {
               )}
             </tbody>
           </table>
-        </div>
-      </div>
-
-      <div className="mt-6 bg-white rounded-xl p-6 shadow-sm border border-[#E5E5E5]">
-        <div className="flex items-center gap-4">
-          <span className="font-['Syne', 'sans-serif'] text-[13px] font-semibold text-[#6B6B6B] uppercase tracking-wider">
-            Quick Add
-          </span>
-          <div className="flex-1" />
-          <Button variant="admin-primary" asChild>
-            <Link to="/admin/products/new">
-              <Plus size={16} /> Add Product
-            </Link>
-          </Button>
-          <Button variant="admin-secondary" asChild>
-            <Link to="/admin/blog/new">
-              <Plus size={16} /> Write Blog
-            </Link>
-          </Button>
-          <Button variant="admin-ghost" asChild>
-            <Link to="/admin/careers/new">
-              <Plus size={16} /> Post Job
-            </Link>
-          </Button>
         </div>
       </div>
     </div>

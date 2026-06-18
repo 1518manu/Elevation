@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
-import { X, Plus, Trash2 } from 'lucide-react'
+import { X } from 'lucide-react'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { useJobs, useCreateJob, useUpdateJob } from '@/hooks/useJobs'
 import { JOB_DEPARTMENTS } from '@/lib/constants'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import RichEditor from '@/components/admin/RichEditor'
 import { useToast } from '@/components/ui/toast'
@@ -120,7 +119,7 @@ export default function JobFormDrawer({ open, onOpenChange, editId, onSave }) {
                 <Label htmlFor="title">Job Title <span className="text-[#D42B2B]">*</span></Label>
                 <Input
                   id="title"
-                  value={form.title}
+                  value={form.title || ''}
                   onChange={(e) => setForm({ ...form, title: e.target.value })}
                   placeholder="Enter job title"
                   className="focus:border-[#D42B2B]"
@@ -129,7 +128,7 @@ export default function JobFormDrawer({ open, onOpenChange, editId, onSave }) {
 
               <div className="space-y-2">
                 <Label htmlFor="department">Department <span className="text-[#D42B2B]">*</span></Label>
-                <Select value={form.department} onValueChange={(v) => setForm({ ...form, department: v })}>
+                <Select value={form.department || 'technical'} onValueChange={(v) => setForm({ ...form, department: v })}>
                   <SelectTrigger id="department" className="focus:border-[#D42B2B]">
                     <SelectValue />
                   </SelectTrigger>
@@ -147,7 +146,7 @@ export default function JobFormDrawer({ open, onOpenChange, editId, onSave }) {
                 <Label htmlFor="location">Location <span className="text-[#D42B2B]">*</span></Label>
                 <Input
                   id="location"
-                  value={form.location}
+                  value={form.location || ''}
                   onChange={(e) => setForm({ ...form, location: e.target.value })}
                   placeholder="e.g. Bengaluru, Remote"
                   className="focus:border-[#D42B2B]"
@@ -156,7 +155,7 @@ export default function JobFormDrawer({ open, onOpenChange, editId, onSave }) {
 
               <div className="space-y-2">
                 <Label htmlFor="job_type">Job Type <span className="text-[#D42B2B]">*</span></Label>
-                <Select value={form.job_type} onValueChange={(v) => setForm({ ...form, job_type: v })}>
+                <Select value={form.job_type || 'full_time'} onValueChange={(v) => setForm({ ...form, job_type: v })}>
                   <SelectTrigger id="job_type" className="focus:border-[#D42B2B]">
                     <SelectValue />
                   </SelectTrigger>
@@ -180,7 +179,7 @@ export default function JobFormDrawer({ open, onOpenChange, editId, onSave }) {
                 <Label htmlFor="experience">Experience Required</Label>
                 <Input
                   id="experience"
-                  value={form.experience_required}
+                  value={form.experience_required || ''}
                   onChange={(e) => setForm({ ...form, experience_required: e.target.value })}
                   placeholder="e.g. 2-4 years"
                   className="focus:border-[#D42B2B]"
@@ -191,7 +190,7 @@ export default function JobFormDrawer({ open, onOpenChange, editId, onSave }) {
                 <Label htmlFor="salary">Salary Range</Label>
                 <Input
                   id="salary"
-                  value={form.salary_range}
+                  value={form.salary_range || ''}
                   onChange={(e) => setForm({ ...form, salary_range: e.target.value })}
                   placeholder="e.g. ₹4L – ₹6L"
                   className="focus:border-[#D42B2B]"
@@ -203,7 +202,7 @@ export default function JobFormDrawer({ open, onOpenChange, editId, onSave }) {
                 <Input
                   id="deadline"
                   type="date"
-                  value={form.application_deadline}
+                  value={form.application_deadline || ''}
                   onChange={(e) => setForm({ ...form, application_deadline: e.target.value })}
                   className="focus:border-[#D42B2B]"
                 />
