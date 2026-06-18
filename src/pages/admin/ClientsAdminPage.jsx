@@ -17,6 +17,7 @@ export default function ClientsAdminPage() {
   const [deleteId, setDeleteId] = useState(null)
 
   const openCreate = () => { setEditId(null); setDrawerOpen(true) }
+  const openEdit = (id) => { setEditId(id); setDrawerOpen(true) }
 
   const handleReorder = async (items) => {
     try {
@@ -131,6 +132,8 @@ export default function ClientsAdminPage() {
             items={clients.map((c, i) => ({ ...c, id: c.id || String(i) }))}
             onReorder={handleReorder}
             renderItem={renderItem}
+            onEdit={openEdit}
+            onDelete={setDeleteId}
           />
         )}
       </div>

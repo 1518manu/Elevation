@@ -10,7 +10,7 @@ export default function SEOHead({
   noIndex = false,
   jsonLd,
 }) {
-  const fullTitle = title ? `${title} | Alfa Elevator India` : 'Alfa Elevator India — Premium Elevator Solutions'
+  const fullTitle = title ? `${title} | AlfaFuji Elevator India Pvt Ltd.` : 'Rise high with us.'
   const ogImage = image || `${APP_URL}${DEFAULT_OG_IMAGE}`
   const canonical = url || APP_URL
 
