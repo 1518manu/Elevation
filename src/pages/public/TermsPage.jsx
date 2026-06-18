@@ -4,8 +4,24 @@ export default function TermsPage() {
   return (
     <>
       <SEOHead title="Terms of Service" description="Alfa Elevator terms and conditions of service." noIndex />
-      <div className="mx-auto mt-10 max-w-7xl px-4 py-10 md:ml-32 md:mt-12 md:py-4">
-        <h1 className="mb-8 font-heading text-3xl font-bold text-black">Terms of Service</h1>
+     <section className="bg-black py-12 text-white">
+  <div className="mx-auto mt-16 py-4 max-w-7xl px-4 sm:px-6 lg:px-8">
+    <nav className="flex items-center gap-1 text-sm text-white/70">
+      <a href="/" className="hover:text-white">
+        Home
+      </a>
+
+      <span>/</span>
+
+      <span className="text-white">
+        Terms of Service
+      </span>
+    </nav>
+  </div>
+</section>
+<section className="py-12 lg:py-16">
+  <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <h1 className="mb-8 font-heading text-3xl font-bold text-gray-900 md:text-4xl"> Terms of Service</h1>
         <div className="prose max-w-none space-y-4 text-gray-600">
           <p>Last updated: June 2026</p>
           <p>By accessing and using the Alfa Elevator website, you agree to be bound by these Terms of Service.</p>
@@ -19,6 +35,7 @@ export default function TermsPage() {
           <p>Alfa Elevator shall not be liable for any indirect, incidental, or consequential damages arising from the use of this website.</p>
         </div>
       </div>
+</section>
     </>
   )
 }

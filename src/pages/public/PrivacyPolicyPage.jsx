@@ -4,8 +4,25 @@ export default function PrivacyPolicyPage() {
   return (
     <>
       <SEOHead title="Privacy Policy" description="Alfa Elevator privacy policy and data protection practices." noIndex />
-      <div className="mx-auto max-w-4xl px-4 py-32">
-        <h1 className="mb-8 font-heading text-3xl font-bold text-black">Privacy Policy</h1>
+    <section className="bg-black py-12 text-white">
+  <div className="mx-auto mt-16 py-4 max-w-7xl px-4 sm:px-6 lg:px-8">
+    <nav className="flex items-center gap-1 text-sm text-white/70">
+      <a href="/" className="hover:text-white">
+        Home
+      </a>
+
+      <span>/</span>
+
+      <span className="text-white">
+        Privacy Policy
+      </span>
+    </nav>
+  </div>
+</section>
+
+<section className="py-12 lg:py-16">
+  <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+    <h1 className="mb-8 font-heading text-3xl font-bold text-gray-900 md:text-4xl">Privacy Policy</h1>
         <div className="prose max-w-none space-y-4 text-gray-600">
           <p>Last updated: June 2026</p>
           <p>Alfa Elevator (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website or use our services.</p>
@@ -19,6 +36,7 @@ export default function PrivacyPolicyPage() {
           <p>For privacy-related questions, contact us at info@alfaelevator.in</p>
         </div>
       </div>
+      </section>
     </>
   )
 }

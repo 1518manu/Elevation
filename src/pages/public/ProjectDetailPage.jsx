@@ -19,23 +19,87 @@ export default function ProjectDetailPage() {
   return (
     <>
       <SEOHead title={project.seo_title || project.title} description={project.seo_description || project.short_description} url={`${APP_URL}/projects/${slug}`} />
-      <div className="mx-auto max-w-7xl px-4 py-32">
-        <nav className="mb-6 text-sm text-gray-500"><Link to="/projects">Projects</Link> / {project.title}</nav>
-        <h1 className="mb-4 font-heading text-3xl font-bold text-black">{project.title}</h1>
-        <div className="mb-6 flex flex-wrap gap-4 text-sm text-gray-600">
-          {project.client_name && <span>Client: {project.client_name}</span>}
-          {project.city && <span>{project.city}, {project.state}</span>}
-          {project.completion_date && <span>Completed: {formatDate(project.completion_date)}</span>}
+     <>
+  <SEOHead
+    title={project.seo_title || project.title}
+    description={project.seo_description || project.short_description}
+    url={`${APP_URL}/projects/${slug}`}
+  />
+
+      <section className="bg-black py-12 text-white">
+        <div className="mx-auto mt-16 py-4 max-w-7xl px-4 sm:px-6 lg:px-8">
+          <nav className="flex items-center gap-1 text-sm text-white/70">
+            <Link to="/" className="hover:text-white">
+              Home
+            </Link>
+
+            <span>/</span>
+
+            <Link to="/projects" className="hover:text-white">
+              Projects
+            </Link>
+
+            <span>/</span>
+
+            <span className="text-white">
+              {project.title}
+            </span>
+          </nav>
         </div>
-        {project.images?.length > 0 && (
-          <Swiper modules={[Navigation]} navigation className="mb-8 rounded-xl overflow-hidden">
-            {project.images.map((img, i) => (
-              <SwiperSlide key={i}><img src={getImageUrl(img, 1200, 85)} alt={`${project.title} ${i + 1}`} className="aspect-video w-full object-cover" /></SwiperSlide>
-            ))}
-          </Swiper>
-        )}
-        <p className="text-gray-600 leading-relaxed">{project.description || project.short_description}</p>
-      </div>
+      </section>
+
+      <section className="py-12 lg:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+          <h1 className="mb-4 font-heading text-3xl font-bold text-gray-900 md:text-4xl">
+            {project.title}
+          </h1>
+
+          <div className="mb-6 flex flex-wrap gap-4 text-sm text-gray-600">
+            {project.client_name && (
+              <span>
+                Client: {project.client_name}
+              </span>
+            )}
+
+            {project.city && (
+              <span>
+                {project.city}, {project.state}
+              </span>
+            )}
+
+            {project.completion_date && (
+              <span>
+                Completed: {formatDate(project.completion_date)}
+              </span>
+            )}
+          </div>
+
+          {project.images?.length > 0 && (
+            <Swiper
+              modules={[Navigation]}
+              navigation
+              className="mb-8 overflow-hidden rounded-xl"
+            >
+              {project.images.map((img, i) => (
+                <SwiperSlide key={i}>
+                  <img
+                    src={getImageUrl(img, 1200, 85)}
+                    alt={`${project.title} ${i + 1}`}
+                    className="aspect-video w-full object-cover"
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          )}
+
+          <p className="leading-relaxed text-gray-600">
+            {project.description || project.short_description}
+          </p>
+
+        </div>
+      </section>
+    </>   
     </>
   )
 }

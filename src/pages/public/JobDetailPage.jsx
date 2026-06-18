@@ -62,9 +62,64 @@ export default function JobDetailPage() {
 
   return (
     <>
-      <SEOHead title={job.title} description={job.description?.slice(0, 160)} url={`${APP_URL}/careers/${id}`} jsonLd={jsonLd} />
-      <div className="mx-auto max-w-7xl px-4 py-32">
-        <nav className="mb-6 text-sm text-gray-500"><Link to="/careers">Careers</Link> / {job.title}</nav>
+        <SEOHead
+          title={job.title}
+          description={job.description?.slice(0, 160)}
+          url={`${APP_URL}/careers/${id}`}
+          jsonLd={jsonLd}
+        />
+
+        {/* Black Breadcrumb Header */}
+        <section className="bg-black py-12 text-white">
+          <div className="mx-auto mt-16 py-4 max-w-7xl px-4 sm:px-6 lg:px-8">
+            <nav className="flex items-center gap-1 text-sm text-white/70">
+              <Link to="/" className="hover:text-white">
+                Home
+              </Link>
+
+              <span>/</span>
+
+              <Link to="/careers" className="hover:text-white">
+                Careers
+              </Link>
+
+              <span>/</span>
+
+              <span className="text-white">
+                {job.title}
+              </span>
+            </nav>
+          </div>
+        </section>
+
+        {/* Main Content */}
+        <section className="py-12 lg:py-16">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-10">
+          <Badge className="mb-4 capitalize bg-red-600 text-white">
+            {job.department}
+          </Badge>
+
+          <h1 className="font-heading text-3xl font-bold text-gray-900 md:text-4xl lg:text-5xl">
+            {job.title}
+          </h1>
+
+          <div className="mt-4 flex flex-wrap gap-4 text-sm text-gray-600">
+            {job.location && (
+              <span>{job.location}</span>
+            )}
+
+            <span className="capitalize">
+              {job.job_type?.replace('_', ' ')}
+            </span>
+
+            {job.deadline && (
+              <span>
+                Apply by: {fmtDate(job.deadline)}
+              </span>
+            )}
+          </div>
+        </div>
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <Badge className="mb-3 capitalize">{job.department}</Badge>
@@ -126,6 +181,7 @@ export default function JobDetailPage() {
           </div>
         </div>
       </div>
+    </section>
     </>
   )
 }

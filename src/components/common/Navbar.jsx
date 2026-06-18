@@ -51,6 +51,30 @@ export default function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [mobileOpen])
 
+  const [showNavbar, setShowNavbar] = useState(true)
+const [lastScrollY, setLastScrollY] = useState(0)
+  useEffect(() => {
+  const handleScroll = () => {
+    const currentScrollY = window.scrollY
+
+    if (currentScrollY < 50) {
+      setShowNavbar(true)
+    } else if (currentScrollY > lastScrollY) {
+      // scrolling down
+      setShowNavbar(false)
+    } else {
+      // scrolling up
+      setShowNavbar(true)
+    }
+
+    setLastScrollY(currentScrollY)
+  }
+
+  window.addEventListener('scroll', handleScroll)
+
+  return () => window.removeEventListener('scroll', handleScroll)
+}, [lastScrollY])
+
   const isActive = (href) => {
     if (href === '/') return location.pathname === '/'
     return location.pathname.startsWith(href)
@@ -63,9 +87,10 @@ export default function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-10 left-1/2 z-50 w-[calc(100%-1rem)] max-w-7xl -translate-x-1/2 rounded-2xl bg-white/95 backdrop-blur-md transition-all duration-300",
-        scrolled && "shadow-xl"
-      )} 
+  "fixed left-1/2 z-50 w-[calc(100%-1rem)] max-w-7xl -translate-x-1/2 rounded-2xl bg-white/95 backdrop-blur-md transition-all duration-300",
+  showNavbar ? "top-10 opacity-100" : "-top-32 opacity-0",
+  scrolled && "shadow-xl"
+)}
     >
       <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-10 lg:px-8">
         {/* Logo */}
