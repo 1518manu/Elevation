@@ -32,7 +32,7 @@ playwright-report/
 test-results/
 
 # Supabase
-.supabase/
+supabase/
 
 # Misc
 *.local
