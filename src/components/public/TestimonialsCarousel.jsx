@@ -100,7 +100,7 @@ export default function TestimonialsCarousel() {
               {/* Content — grows to fill space */}
               {content ? (
                 <p className="flex-1 text-[15px] leading-relaxed text-gray-900">
-                  "{content}"
+                  &ldquo;{content}&rdquo;
                 </p>
               ) : null}
 
