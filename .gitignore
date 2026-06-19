@@ -36,3 +36,4 @@ supabase/
 
 # Misc
 *.local
+src/components/public/ProcessBackground.jsx

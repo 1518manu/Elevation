@@ -51,16 +51,47 @@ export default function HomePage() {
       <HeroSection />
       <StatsCounter />
 
-      <section className="py-16 md:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mb-12 text-center">
-            <h2 className="mb-3 font-heading text-3xl font-semibold text-black md:text-4xl">Our Services</h2>
-            <div className="mx-auto mb-8 h-1 w-10 bg-red-600" />
-            <h3 className="font-bold text-base md:text-lg">Built to Last. Maintained to Perform. Modernized to Transform.<br/><br/></h3>
-            <h3>From expert elevator installation and proactive maintenance to complete modernization solutions, ALFAFUJI delivers reliable performance at every stage of your elevator’s journey. We ensure safety, efficiency, and seamless mobility for residential, commercial, and industrial buildings.</h3>
+      <section className="relative py-16 md:py-24 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80"
+            alt=""
+            aria-hidden="true"
+            className="h-full w-full object-cover object-center"
+            loading="lazy"
+          />
+           <div
+              className="absolute inset-0 "
+              style={{
+                background:
+                  'linear-gradient(1deg, rgba(158, 152, 152, 0.88) 0%, rgba(171, 160, 160, 0.7) 60%, rgba(158, 152, 152, 0.88) 100%)',
+              }}
+            />
+        </div>
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="mb-12 text-center"
+          >
+            <h2 className="mb-3 font-heading text-3xl font-semibold text-black md:text-4xl">
+              Our Services
+            </h2>
+            <div className="mx-auto mb-8 h-1 w-10 bg-red-500" />
+            <p className="mb-4 text-base font-bold text-black md:text-lg">
+              Built to Last. Maintained to Perform. Modernized to Transform.
+            </p>
+            <p className="mx-auto max-w-3xl text-sm leading-relaxed text-Black/80 md:text-base">
+              From expert elevator installation and proactive maintenance to complete
+              modernization solutions, ALFAFUJI delivers reliable performance at every
+              stage of your elevator&apos;s journey. We ensure safety, efficiency, and
+              seamless mobility for residential, commercial, and industrial buildings.
+            </p>
           </motion.div>
           <ServicesGrid />
         </div>
+
       </section>
 
       <section className="bg-gray-50 py-16 md:py-24">
@@ -78,16 +109,41 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="py-16 md:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+     <section className="relative py-16 md:py-24 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80"
+            alt=""
+            aria-hidden="true"
+            className="h-full w-full object-cover object-center"
+            style={{ aspectRatio: '16/9' }}
+            loading="lazy"
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(135deg, rgba(0,0,0,0.92) 0%, rgba(139,0,0,0.75) 60%, rgba(0,0,0,0.92) 100%)',
+            }}
+          />
+        </div>
+
+        <div className="relative z-20 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
-            <h2 className="mb-3 font-heading text-3xl font-semibold text-black md:text-4xl">Our Process</h2>
-            <br/>
-            <div className="mx-auto mb-8 h-1 w-10 bg-red-600" />
-            <h3>At ALFAFUJI Elevator India Pvt Ltd , we believe that every project deserves meticulous attention, expert guidance, and seamless execution. Here’s how we efficiently manage every lift enquiry — from initial consultation to project handover:</h3>
+            <h2 className="mb-3 font-heading text-3xl font-semibold text-white md:text-4xl">
+              Our Process
+            </h2>
+            <div className="mx-auto mb-8 h-1 w-10 bg-red-500" />
+            <p className="mx-auto max-w-3xl text-sm leading-relaxed text-white/80 md:text-base">
+              At ALFAFUJI Elevator India Pvt Ltd, we believe that every project deserves
+              meticulous attention, expert guidance, and seamless execution. Here&apos;s how
+              we efficiently manage every lift enquiry — from initial consultation to
+              project handover:
+            </p>
           </div>
           <ProcessStepper />
         </div>
+
       </section>
 
       <section className="bg-gray-50 py-16 md:py-24">

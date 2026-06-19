@@ -7,7 +7,7 @@ export default function CTABanner({ title = 'Ready to Elevate Your Building?', s
 
   return (
     <section className="relative overflow-hidden bg-black py-16 md:py-24">
-      <div className="absolute inset-0 bg-gradient-to-r from-black to-red-600 opacity-50" />
+      <div className="absolute inset-0  bg-gradient-to-r from-black via-red-600 to-black opacity-40" />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

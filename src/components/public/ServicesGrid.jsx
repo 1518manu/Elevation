@@ -34,21 +34,21 @@ export default function ServicesGrid() {
           >
             <Link
               to={`/services/${service.slug}`}
-              className="group flex flex-col h-full rounded-xl bg-white p-6 shadow-card transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:shadow-card-hover"
+              className="group flex flex-col h-full rounded-xl bg-white p-6 shadow-card transition-all duration-500 ease-&lsqb;cubic-bezier(0.22,1,0.36,1)&rsqb; hover:shadow-card-hover"
             >
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-black/10 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:bg-red-50">
-                <Icon className="h-6 w-6 text-black transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110 group-hover:text-red-600" />
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-black/10 transition-all duration-500 ease-&lsqb;cubic-bezier(0.22,1,0.36,1)&rsqb; group-hover:bg-red-50">
+                <Icon className="h-6 w-6 text-black transition-all duration-500 ease-&lsqb;cubic-bezier(0.22,1,0.36,1)&rsqb; group-hover:scale-110 group-hover:text-red-600" />
               </div>
 
-              <h3 className="mb-2 font-heading text-xl font-semibold text-black transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:text-red-700">
+              <h3 className="mb-2 font-heading text-xl font-semibold text-black transition-colors duration-500 ease-&lsqb;cubic-bezier(0.22,1,0.36,1)&rsqb; group-hover:text-red-700">
                 {service.title}
               </h3>
 
-              <p className="text-sm text-gray-600 transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:text-gray-800 flex-1">
+              <p className="text-sm text-gray-600 transition-colors duration-500 ease-&lsqb;cubic-bezier(0.22,1,0.36,1)&rsqb; group-hover:text-gray-800 flex-1">
                 {service.short_description}
               </p>
 
-              <div className="mt-5 h-[2px] w-0 bg-red-600 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:w-full"></div>
+              <div className="mt-5 h-[2px] w-0 bg-red-600 transition-all duration-500 ease-&lsqb;cubic-bezier(0.22,1,0.36,1)&rsqb; group-hover:w-full"></div>
             </Link>
           </motion.div>
         )

@@ -16,7 +16,7 @@ export default function ProcessStepper() {
 
   return (
     <div className="relative">
-      <div className="hidden md:absolute md:left-0 md:right-0 md:top-8 md:block md:h-0.5 md:bg-red-600/30" />
+      <div className="hidden md:absolute md:left-0 md:right-0 md:top-8 md:block md:h-0.5 md:bg-red-600/50" />
       <div className="grid grid-cols-2 gap-4 md:grid-cols-5 lg:grid-cols-10">
         {steps.map((step, i) => {
           const Icon = LucideIcons[step.icon_name] || LucideIcons.Circle
@@ -35,8 +35,8 @@ export default function ProcessStepper() {
                   {step.step_number}
                 </span>
               </div>
-              <h4 className="mb-1 text-sm font-semibold text-black">{step.title}</h4>
-              <p className="hidden text-xs text-gray-500 lg:block">{step.description}</p>
+              <h4 className="mb-1 text-sm font-semibold text-white">{step.title}</h4>
+              <p className="hidden text-xs text-white/80 lg:block">{step.description}</p>
             </motion.div>
           )
         })}
