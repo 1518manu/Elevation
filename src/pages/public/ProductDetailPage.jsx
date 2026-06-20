@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Thumbs, Navigation, FreeMode } from 'swiper/modules'
-import { Check, Download, ArrowLeft, ChevronRight } from 'lucide-react'
+import { Check, Download, ArrowLeft, ChevronRight, ChevronLeft } from 'lucide-react'
 import SEOHead from '@/components/common/SEOHead'
 import ProductCard from '@/components/public/ProductCard'
 import PageLoader from '@/components/common/PageLoader'
@@ -64,11 +64,11 @@ export default function ProductDetailPage() {
         jsonLd={jsonLd}
       />
 
-      <section className="bg-black py-12 text-white">
-        <div className="mx-auto my-16 py-8 max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="bg-black py-8 text-white">
+        <div className="mx-auto mt-20 py-4  max-w-7xl px-4 sm:px-6 lg:px-8">
           <nav
             aria-label="Breadcrumb"
-            className="flex items-center gap-1 text-sm text-white/70"
+            className="flex items-center pb-4 gap-1 text-sm text-white/70"
           >
             <Link to="/" className="hover:text-white">
               Home
@@ -84,7 +84,9 @@ export default function ProductDetailPage() {
 
             <span className="text-white">{product.name}</span>
           </nav>
+          <h1 className="font-heading text-4xl font-bold">Product Details</h1>
         </div>
+        
       </section> 
 
       <section className="py-12 lg:py-16">
@@ -96,24 +98,49 @@ export default function ProductDetailPage() {
               {hasImages ? (
                 <div className="space-y-3">
                   
-                  <Swiper
-                    modules={[Navigation, Thumbs, FreeMode]}
-                    navigation
-                    thumbs={thumbsSwiper ? { swiper: thumbsSwiper } : undefined}
-                    spaceBetween={10}
-                    className="rounded-xl overflow-hidden border border-gray-100 shadow-sm"
-                  >
-                    {product.images.map((img, i) => (
-                      <SwiperSlide key={i}>
-                        <img
-                          src={imgUrl(img, 1200, 85)}
-                          alt={`${product.name} — view ${i + 1}`}
-                          className="aspect-video w-full object-cover"
-                          loading={i === 0 ? 'eager' : 'lazy'}
-                        />
-                      </SwiperSlide>
-                    ))}
-                  </Swiper>
+                  <div className="relative">
+                    <Swiper
+                      modules={[Navigation, Thumbs, FreeMode]}
+                      navigation={{
+                        nextEl: '.product-swiper-button-next',
+                        prevEl: '.product-swiper-button-prev',
+                      }}
+                      thumbs={thumbsSwiper ? { swiper: thumbsSwiper } : undefined}
+                      spaceBetween={10}
+                      className="rounded-xl overflow-hidden border border-gray-200 shadow-lg bg-gray-100"
+                    >
+                      {product.images.map((img, i) => {
+                        const imageUrl = typeof img === 'string' ? img : img?.url || img
+                        return (
+                          <SwiperSlide key={i}>
+                            <div className="relative w-full bg-gray-100 overflow-hidden" style={{ aspectRatio: '16/9' }}>
+                              <img
+                                src={imgUrl(imageUrl, 1200, 85)}
+                                alt={`${product.name} — view ${i + 1}`}
+                                className="w-full h-full object-contain"
+                                loading={i === 0 ? 'eager' : 'lazy'}
+                                onError={(e) => {
+                                  e.target.src = imageUrl
+                                }}
+                              />
+                            </div>
+                          </SwiperSlide>
+                        )
+                      })}
+                    </Swiper>
+                    
+                    {/* Custom Navigation Buttons - Inside the image */}
+                    {hasMultipleImages && (
+                      <>
+                        <button className="product-swiper-button-prev absolute left-4 top-1/2 -translate-y-1/2 z-10 text-red-600 transition-all hover:scale-110">
+                          <ChevronLeft className="h-8 w-8" />
+                        </button>
+                        <button className="product-swiper-button-next absolute right-4 top-1/2 -translate-y-1/2 z-10 text-red-600 transition-all hover:scale-110">
+                          <ChevronRight className="h-8 w-8" />
+                        </button>
+                      </>
+                    )}
+                  </div>
 
                   {hasMultipleImages && (
                     <Swiper
@@ -125,19 +152,27 @@ export default function ProductDetailPage() {
                       watchSlidesProgress
                       className="thumbnail-swiper"
                     >
-                      {product.images.map((img, i) => (
-                        <SwiperSlide key={i} className="cursor-pointer">
-                          <img
-                            src={imgUrl(img, 200, 70)}
-                            alt={`Thumbnail ${i + 1}`}
-                            className="h-16 w-full rounded-md object-cover border-2 border-transparent
-                                       opacity-60 transition-all duration-150
-                                       [.swiper-slide-thumb-active>&]:border-red-600
-                                       [.swiper-slide-thumb-active>&]:opacity-100"
-                            loading="lazy"
-                          />
-                        </SwiperSlide>
-                      ))}
+                      {product.images.map((img, i) => {
+                        const imageUrl = typeof img === 'string' ? img : img?.url || img
+                        return (
+                          <SwiperSlide key={i} className="cursor-pointer">
+                            <div className="overflow-hidden rounded-lg border-2 border-transparent hover:border-red-400 transition-all duration-200 bg-gray-100 aspect-video flex items-center justify-center">
+                              <img
+                                src={imgUrl(imageUrl, 200, 70)}
+                                alt={`Thumbnail ${i + 1}`}
+                                className="h-full w-full object-contain p-2
+                                           opacity-60 transition-all duration-150
+                                           [.swiper-slide-thumb-active>&]:opacity-100
+                                           [.swiper-slide-thumb-active>&]:border-red-600"
+                                loading="lazy"
+                                onError={(e) => {
+                                  e.target.src = imageUrl
+                                }}
+                              />
+                            </div>
+                          </SwiperSlide>
+                        )
+                      })}
                     </Swiper>
                   )}
                 </div>
@@ -168,18 +203,22 @@ export default function ProductDetailPage() {
               <div className="mb-7 flex flex-wrap gap-3">
                 <Button
                   onClick={openModal}
-                  className="bg-red-600 text-white hover:bg-red-700 focus-visible:ring-red-500"
+                  className="bg-red-600 text-white hover:bg-red-700 focus-visible:ring-red-500 font-semibold px-6 py-2.5 text-base shadow-md"
                 >
                   Get Free Quote
                 </Button>
 
                 {product.brochure_url && (
-                  <Button asChild variant="outline" className="border-gray-300 hover:border-red-600 hover:text-red-600">
-                    <a href={product.brochure_url} target="_blank" rel="noopener noreferrer">
-                      <Download className="mr-2 h-4 w-4" />
-                      Download Brochure
-                    </a>
-                  </Button>
+                  <a
+                    href={product.brochure_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download
+                    className="inline-flex items-center justify-center gap-2 px-6 py-2.5 text-base font-semibold border-2 border-red-600 text-red-600 rounded-lg hover:bg-red-50 transition-colors duration-200 shadow-sm"
+                  >
+                    <Download className="h-4 w-4" />
+                    Download Brochure
+                  </a>
                 )}
               </div>
 

@@ -14,6 +14,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [openDropdown, setOpenDropdown] = useState(null)
   const [mobileExpandedDropdown, setMobileExpandedDropdown] = useState(null)
+  const [dropdownTimeout, setDropdownTimeout] = useState(null)
   const location = useLocation()
   const { openModal } = useQuoteModal()
   const { data: services = [] } = useServices()
@@ -50,6 +51,32 @@ export default function Navbar() {
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [mobileOpen])
+
+  // Cleanup dropdown timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (dropdownTimeout) {
+        clearTimeout(dropdownTimeout)
+      }
+    }
+  }, [dropdownTimeout])
+
+  const handleDropdownMouseLeave = () => {
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout)
+    }
+    setDropdownTimeout(
+      setTimeout(() => {
+        setOpenDropdown(null)
+      }, 300) // 300ms delay before closing
+    )
+  }
+
+  const handleDropdownMouseEnter = () => {
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout)
+    }
+  }
 
   const [showNavbar, setShowNavbar] = useState(true)
 const [lastScrollY, setLastScrollY] = useState(0)
@@ -96,9 +123,7 @@ const [lastScrollY, setLastScrollY] = useState(0)
         {/* Logo */}
         <Link to="/" className="flex items-center p-2">
           <img src={logo} alt="Elevation Logo" className="h-14 w-auto" />
-          {/* <span className="hidden md:block font-heading text-sm font-bold tracking-wide text-black p-2">
-            ALFAFUJI ELEVATOR <br /> INDIA PVT LTD.
-          </span> */}
+          
         </Link>
 
         {/* Desktop Nav */}
@@ -107,15 +132,20 @@ const [lastScrollY, setLastScrollY] = useState(0)
             <div
               key={link.href}
               className="relative"
-              onMouseEnter={() => link.hasDropdown && setOpenDropdown(link.hasDropdown)}
-              onMouseLeave={() => setOpenDropdown(null)}
+              onMouseEnter={() => {
+                if (link.hasDropdown) {
+                  if (dropdownTimeout) clearTimeout(dropdownTimeout)
+                  setOpenDropdown(link.hasDropdown)
+                }
+              }}
+              onMouseLeave={handleDropdownMouseLeave}
             >
               <Link
                 to={link.href}
                 className={cn(
                   'relative px-1 py-0 text-[15px] font-medium leading-none text-gray-700 transition-all duration-200 hover:text-[#9B2D30]',
                   isActive(link.href) &&
-                    'text-[#9B2D30] after:absolute after:left-0 after:-bottom-[28px] after:h-[3px] after:w-full after:bg-[#9B2D30] after:content-[""]'
+                    ' after:absolute after:left-0 after:-bottom-[28px] after:h-[3px] after:w-full  after:content-[""]'
                 )}
               >
                 <span className="flex items-center gap-1">
@@ -125,15 +155,22 @@ const [lastScrollY, setLastScrollY] = useState(0)
               </Link>
 
               {link.hasDropdown === 'products' && openDropdown === 'products' && (
-                <div className="absolute left-0 top-full z-50 mt-3 w-[480px] rounded-xl border border-gray-100 bg-white p-4 shadow-xl">
+                <div 
+                  className="absolute left-0 top-full z-50 mt-3 w-[480px] rounded-xl border border-gray-100 bg-white p-4 shadow-xl"
+                  onMouseEnter={handleDropdownMouseEnter}
+                  onMouseLeave={handleDropdownMouseLeave}
+                >
                   <div className="grid grid-cols-3 gap-2">
                     {PRODUCT_CATEGORIES.map((cat) => (
                       <Link
                         key={cat.value}
                         to={`/products?category=${cat.value}`}
-                        className="rounded-lg p-3 text-center hover:bg-gray-50 transition duration-200 ease-out transform hover:scale-105 hover:font-bold"
+                        className="block rounded-lg p-3 relative group hover:bg-white transition duration-200 ease-out transform hover:scale-105"
                       >
-                        <p className="text-xs font-semibold text-black">{cat.label}</p>
+                        <p className="text-xs font-semibold text-gray-900 group-hover:text-[#9B2D30] transition-colors">
+                          {cat.label}
+                        </p>
+                        <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#9B2D30] group-hover:w-full transition-all duration-200"></span>
                       </Link>
                     ))}
                   </div>
@@ -141,15 +178,22 @@ const [lastScrollY, setLastScrollY] = useState(0)
               )}
 
               {link.hasDropdown === 'services' && openDropdown === 'services' && (
-                <div className="absolute left-0 top-full z-50 mt-3 w-72 rounded-xl border border-gray-100 bg-white p-2 shadow-xl">
+                <div 
+                  className="absolute left-0 top-full z-50 mt-3 w-72 rounded-xl border border-gray-100 bg-white p-2 shadow-xl"
+                  onMouseEnter={handleDropdownMouseEnter}
+                  onMouseLeave={handleDropdownMouseLeave}
+                >
                   {services.slice(0, 3).map((svc) => (
                     <Link
                       key={svc.id}
                       to={`/services/${svc.slug}`}
-                      className="block rounded-lg p-3 hover:bg-gray-50 transition duration-200 ease-out transform hover:scale-105 hover:font-bold"
+                      className="block rounded-lg p-3 relative group hover:bg-white transition duration-200 ease-out transform hover:scale-105"
                     >
-                      <p className="text-sm font-semibold text-black">{svc.title}</p>
+                      <p className="text-sm font-semibold text-gray-900 group-hover:text-[#9B2D30] transition-colors">
+                        {svc.title}
+                      </p>
                       <p className="text-xs text-gray-500">{svc.short_description?.slice(0, 60)}</p>
+                      <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#9B2D30] group-hover:w-full transition-all duration-200"></span>
                     </Link>
                   ))}
                 </div>

@@ -63,32 +63,46 @@ export default function ContactPage() {
                 <div className="mt-6 overflow-hidden rounded-xl" dangerouslySetInnerHTML={{ __html: settings.google_maps_embed }} />
               )}
             </div>
-            <form onSubmit={handleSubmit(onSubmit)} className="rounded-xl bg-white p-6 shadow-card space-y-4">
-              <div>
-                <Label htmlFor="full_name">Full Name</Label>
-                <Input id="full_name" {...register('full_name')} />
-                {errors.full_name && <p className="text-xs text-red-500">{errors.full_name.message}</p>}
+            <form onSubmit={handleSubmit(onSubmit)} className="rounded-xl bg-white p-6 shadow-card">
+              <h2 className="mb-4 font-heading text-2xl font-semibold text-black">Send Your Queries</h2>
+
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div>
+                  <Label htmlFor="full_name">Full Name</Label>
+                  <Input id="full_name" {...register('full_name')} />
+                  {errors.full_name && <p className="text-xs text-red-500">{errors.full_name.message}</p>}
+                </div>
+                <div>
+                  <Label htmlFor="email">Email</Label>
+                  <Input id="email" type="email" {...register('email')} />
+                  {errors.email && <p className="text-xs text-red-500">{errors.email.message}</p>}
+                </div>
+                <div>
+                  <Label htmlFor="phone">Phone (optional)</Label>
+                  <Input id="phone" {...register('phone')} />
+                </div>
+                <div>
+                  <Label htmlFor="subject">Subject</Label>
+                  <Input id="subject" {...register('subject')} />
+                  {errors.subject && <p className="text-xs text-red-500">{errors.subject.message}</p>}
+                </div>
               </div>
-              <div>
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" {...register('email')} />
-                {errors.email && <p className="text-xs text-red-500">{errors.email.message}</p>}
-              </div>
-              <div>
-                <Label htmlFor="phone">Phone (optional)</Label>
-                <Input id="phone" {...register('phone')} />
-              </div>
-              <div>
-                <Label htmlFor="subject">Subject</Label>
-                <Input id="subject" {...register('subject')} />
-                {errors.subject && <p className="text-xs text-red-500">{errors.subject.message}</p>}
-              </div>
-              <div>
+
+              <div className="mt-4">
                 <Label htmlFor="message">Message</Label>
                 <Textarea id="message" rows={5} {...register('message')} />
                 {errors.message && <p className="text-xs text-red-500">{errors.message.message}</p>}
               </div>
-              <Button type="submit" disabled={isSubmitting} className="w-full bg-red-600 text-black">{isSubmitting ? 'Sending...' : 'Send Message'}</Button>
+
+              <Button type="submit" disabled={isSubmitting} className="w-full bg-red-600 text-black mt-4">{isSubmitting ? 'Sending...' : 'Send Message'}</Button>
+
+              {/* Image Space 16:9 Ratio */}
+              <div className="mt-6 w-full aspect-video bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg shadow-md flex items-center justify-center border-2 border-gray-300">
+                <div className="text-center">
+                  <p className="text-gray-500 font-semibold">Image Space (16:9)</p>
+                  <p className="text-gray-400 text-sm">1600 x 900px</p>
+                </div>
+              </div>
             </form>
           </div>
         </div>
