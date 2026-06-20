@@ -48,9 +48,9 @@ export default function HomePage() {
         description={settings?.seo_defaults?.description || 'Leading elevator manufacturer in India. Passenger lifts, home elevators, freight lifts, escalators.'}
         jsonLd={jsonLd}
       />
-      <HeroSection />
+      <HeroSection /> 
       <StatsCounter />
-
+       
       <section className="relative py-16 md:py-24 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img

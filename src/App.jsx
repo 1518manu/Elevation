@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { HelmetProvider } from 'react-helmet-async'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter, useLocation } from 'react-router-dom'
@@ -11,10 +12,15 @@ import Footer from '@/components/common/Footer'
 import WhatsAppButton from '@/components/common/WhatsAppButton'
 import CookieConsent from '@/components/common/CookieConsent'
 import AppRouter from '@/router/index'
+import { ensureSiteSettingsExists } from '@/lib/initSiteSettings'
 
 function AppShell() {
   const location = useLocation()
   const isAdmin = location.pathname.startsWith('/admin') || location.pathname === '/login'
+
+  useEffect(() => {
+    ensureSiteSettingsExists()
+  }, [])
 
   if (isAdmin) {
     return (

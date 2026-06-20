@@ -91,11 +91,13 @@ export default function StatsCounter() {
 
             {/* Body copy — left-justified */}
             <p className="mb-10 max-w-xl text-base leading-relaxed text-gray-500">
-              From residential homes to commercial towers, ALFAFUJI Elevator India Pvt Ltd
-              delivers safe, intelligent, and trusted mobility solutions that move people
-              forward at every level. Our lifts are built to last, maintained to perform,
-              and modernized to transform.
-            </p>
+            In today’s rapidly growing urban landscape, elevators are essential for ensuring safe, efficient,
+             and comfortable vertical transportation. ALFAFUJI Elevator India Pvt. Ltd. provides innovative elevator solutions for residential,
+              commercial, industrial, and institutional buildings across India. We specialize in customized elevators that combine advanced technology, 
+              safety, reliability, and elegant design. Our solutions are tailored to complement modern architecture while delivering superior performance. 
+              With a commitment to quality and customer satisfaction, we help shape smarter and more accessible spaces. 
+              ALFAFUJI continues to set new benchmarks in vertical mobility across India.
+        </p>
 
             {/* Stats — 2×2 grid, left-aligned */}
             <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
@@ -105,16 +107,14 @@ export default function StatsCounter() {
             </div>
           </div>
 
-          {/* RIGHT — placeholder box for future content */}
-          <div className="flex items-stretch lg:min-h-[480px]">
-            <div className="w-full rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50 flex flex-col items-center justify-center gap-3 p-8">
-              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gray-100">
-                <Building2 className="h-7 w-7 text-gray-300" />
-              </div>
-              <p className="text-sm font-medium text-gray-300 tracking-wide uppercase">
-                Coming soon
-              </p>
-            </div>
+
+          <div className="flex pt-16  items-stretch lg:min-h-[480px]">
+            <img 
+              src="/lift.png" 
+              alt="ALFAFUJI Luxury Elevator" 
+              className="w-full h-full object-contain rounded-2xl"
+              style={{ maxHeight: 560 }}
+            />
           </div>
 
         </div>

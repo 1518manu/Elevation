@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import { Save, Building2, Share2, Home, Search, Eye } from 'lucide-react'
+import { Save, Building2, Share2, Home, Search, Eye, CheckCircle2 } from 'lucide-react'
 import ImageUpload from '@/components/admin/ImageUpload'
-import { useSiteSettings, useUpdateSiteSettings } from '@/hooks/useSiteSettings'
+import { useSiteSettings, useUpdateSiteSettings, useAutoSaveSiteSettings } from '@/hooks/useSiteSettings'
 import { STORAGE_BUCKETS } from '@/lib/constants'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
@@ -14,21 +14,48 @@ import PageLoader from '@/components/common/PageLoader'
 export default function SiteSettingsPage() {
   const { data: settings, isLoading } = useSiteSettings()
   const updateSettings = useUpdateSiteSettings()
+  const { autoSave, isAutoSaving } = useAutoSaveSiteSettings()
   const { toast } = useToast()
   const [form, setForm] = useState(null)
+  const [lastSavedTime, setLastSavedTime] = useState(null)
 
   useEffect(() => {
     if (settings) setForm(settings)
   }, [settings])
 
+  useEffect(() => {
+    if (form && form.id && settings) {
+      const formData = { ...form }
+      delete formData.created_at
+      delete formData.updated_at
+
+      const settingsData = { ...settings }
+      delete settingsData.created_at
+      delete settingsData.updated_at
+
+      const isChanged = JSON.stringify(formData) !== JSON.stringify(settingsData)
+      if (isChanged) {
+        autoSave(form)
+      }
+    }
+  }, [form, autoSave, settings])
+
   if (isLoading || !form) return <PageLoader />
 
   const handleSave = async () => {
     try {
-      await updateSettings.mutateAsync({ id: form.id, ...form })
+      // eslint-disable-next-line no-unused-vars
+      const { created_at, updated_at, ...cleanForm } = form
+      await updateSettings.mutateAsync({ id: form.id, ...cleanForm })
+      setLastSavedTime(new Date())
       toast({ title: 'Settings saved successfully' })
     } catch (err) {
-      toast({ title: 'Error', description: err.message, variant: 'destructive' })
+      console.error('Save error:', err)
+      toast({
+        title: 'Error saving settings',
+        description: err?.message || 'Please try again',
+        variant: 'destructive'
+      })
     }
   }
 
@@ -62,41 +89,55 @@ export default function SiteSettingsPage() {
               Manage company information and website configuration
             </p>
           </div>
-          <Button variant="admin-primary" onClick={handleSave}>
-            <Save className="mr-2 h-4 w-4" /> Save Settings
-          </Button>
+          <div className="flex items-center gap-3">
+            {isAutoSaving && (
+              <span className="text-sm text-gray-500 flex items-center gap-2">
+                <div className="animate-spin h-4 w-4 border-2 border-[#D42B2B] border-t-transparent rounded-full"></div>
+                Auto-saving...
+              </span>
+            )}
+            {lastSavedTime && !isAutoSaving && (
+              <span className="text-sm text-green-600 flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4" />
+                Saved
+              </span>
+            )}
+            <Button variant="admin-primary" onClick={handleSave}>
+              <Save className="mr-2 h-4 w-4" /> Save Settings
+            </Button>
+          </div>
         </div>
       </div>
 
       {/* Tabs */}
       <Tabs defaultValue="company" className="space-y-6">
         <TabsList className="bg-[#F7F7F7] border border-[#E5E5E5] rounded-lg p-1">
-          <TabsTrigger 
-            value="company" 
+          <TabsTrigger
+            value="company"
             className="data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#D42B2B]"
           >
             <Building2 className="mr-2 h-4 w-4" /> Company Info
           </TabsTrigger>
-          <TabsTrigger 
-            value="social" 
+          <TabsTrigger
+            value="social"
             className="data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#D42B2B]"
           >
             <Share2 className="mr-2 h-4 w-4" /> Social Media
           </TabsTrigger>
-          <TabsTrigger 
-            value="homepage" 
+          <TabsTrigger
+            value="homepage"
             className="data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#D42B2B]"
           >
             <Home className="mr-2 h-4 w-4" /> Homepage
           </TabsTrigger>
-          <TabsTrigger 
-            value="seo" 
+          <TabsTrigger
+            value="seo"
             className="data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#D42B2B]"
           >
             <Search className="mr-2 h-4 w-4" /> SEO Defaults
           </TabsTrigger>
-          <TabsTrigger 
-            value="visibility" 
+          <TabsTrigger
+            value="visibility"
             className="data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#D42B2B]"
           >
             <Eye className="mr-2 h-4 w-4" /> Visibility
@@ -282,10 +323,10 @@ export default function SiteSettingsPage() {
               </div>
               <div className="space-y-2">
                 <Label>Default OG Image</Label>
-                <ImageUpload 
-                  bucket={STORAGE_BUCKETS.companyAssets} 
-                  value={form.seo_defaults?.og_image} 
-                  onChange={(url) => setForm({ ...form, seo_defaults: { ...form.seo_defaults, og_image: url } })} 
+                <ImageUpload
+                  bucket={STORAGE_BUCKETS.companyAssets}
+                  value={form.seo_defaults?.og_image}
+                  onChange={(url) => setForm({ ...form, seo_defaults: { ...form.seo_defaults, og_image: url } })}
                 />
               </div>
             </div>
