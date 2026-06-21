@@ -10,7 +10,22 @@ export const QuoteFormSchema = z.object({
   phone: indianPhone,
   city: z.string().min(2, 'City is required'),
   state: z.string().optional(),
-  elevator_type: z.enum(['Passenger', 'Freight', 'Home', 'Hospital', 'Dumbwaiter', 'Escalator'], {
+  elevator_type: z.enum([
+    'Passenger',
+    'Freight',
+    'Home',
+    'Hospital',
+    'Pneumatic',
+    'MRL',
+    'Panoramic',
+    'Platform',
+    'Cargo',
+    'Car',
+    'Chair',
+    'Scissor',
+    'Dumbwaiter',
+    'Escalator',
+  ], {
     required_error: 'Select an elevator type',
   }),
   num_floors: z.coerce.number().min(2, 'Minimum 2 floors').max(100, 'Maximum 100 floors'),
@@ -48,7 +63,7 @@ export const JobApplicationSchema = z.object({
 export const ProductFormSchema = z.object({
   name: z.string().min(2, 'Name is required'),
   slug: z.string().min(2, 'Slug is required'),
-  category: z.enum(['passenger', 'freight', 'home', 'hospital', 'dumbwaiter', 'escalator', 'car']),
+  category: z.enum(['passenger', 'freight', 'home', 'hospital', 'dumbwaiter', 'escalator', 'car', 'pneumatic', 'mrl', 'panoramic', 'platform', 'cargo', 'chair', 'scissor']),
   short_description: z.string().optional(),
   description: z.string().optional(),
   specifications: z.record(z.string()).optional(),

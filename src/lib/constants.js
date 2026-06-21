@@ -1,13 +1,20 @@
 export const USER_ROLES = ['super_admin', 'admin']
 
 export const PRODUCT_CATEGORIES = [
-  { value: 'passenger', label: 'Passenger', icon: 'Users' },
-  { value: 'freight', label: 'Freight', icon: 'Package' },
-  { value: 'home', label: 'Home Lift', icon: 'Home' },
-  { value: 'hospital', label: 'Hospital', icon: 'HeartPulse' },
+  { value: 'home', label: 'Home Lifts', icon: 'Home' },
+  { value: 'passenger', label: 'Passenger Elevator', icon: 'Users' },
+  { value: 'hospital', label: 'Hospital Lift', icon: 'HeartPulse' },
+  { value: 'pneumatic', label: 'Pneumatic Elevator', icon: 'Wind' },
+  { value: 'mrl', label: 'MRL Elevator', icon: 'ArrowUp' },
+  { value: 'panoramic', label: 'Panoramic Lift', icon: 'Eye' },
+  { value: 'platform', label: 'Platform Lift', icon: 'Layers' },
+  { value: 'cargo', label: 'Cargo Elevator', icon: 'Truck' },
+  { value: 'car', label: 'Car Elevator', icon: 'Car' },
+  { value: 'chair', label: 'Chair Lift', icon: 'Chair' },
+  { value: 'scissor', label: 'Scissor Elevator', icon: 'Scissors' },
   { value: 'dumbwaiter', label: 'Dumbwaiter', icon: 'UtensilsCrossed' },
+  { value: 'freight', label: 'Freight Elevator', icon: 'Package' },
   { value: 'escalator', label: 'Escalator', icon: 'ArrowUpDown' },
-  { value: 'car', label: 'Car Lift', icon: 'Car' },
 ]
 
 export const ELEVATOR_TYPES = [
@@ -15,6 +22,14 @@ export const ELEVATOR_TYPES = [
   'Freight',
   'Home',
   'Hospital',
+  'Pneumatic',
+  'MRL',
+  'Panoramic',
+  'Platform',
+  'Cargo',
+  'Car',
+  'Chair',
+  'Scissor',
   'Dumbwaiter',
   'Escalator',
 ]
@@ -81,9 +96,16 @@ export const FOOTER_LINKS = {
   products: [
     { label: 'Passenger Elevators', href: '/products?category=passenger' },
     { label: 'Home Lifts', href: '/products?category=home' },
-    { label: 'Freight Elevators', href: '/products?category=freight' },
     { label: 'Hospital Lifts', href: '/products?category=hospital' },
-    { label: 'Escalators', href: '/products?category=escalator' },
+    { label: 'Pneumatic Elevators', href: '/products?category=pneumatic' },
+    { label: 'MRL Elevators', href: '/products?category=mrl' },
+    { label: 'Panoramic Lifts', href: '/products?category=panoramic' },
+    { label: 'Platform Lifts', href: '/products?category=platform' },
+    { label: 'Cargo Elevators', href: '/products?category=cargo' },
+    { label: 'Car Elevators', href: '/products?category=car' },
+    { label: 'Chair Lifts', href: '/products?category=chair' },
+    { label: 'Scissor Elevators', href: '/products?category=scissor' },
+    { label: 'Dumbwaiter', href: '/products?category=dumbwaiter' },
   ],
   services: [
     { label: 'Installation', href: '/services/installation' },

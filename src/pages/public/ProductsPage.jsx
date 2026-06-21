@@ -22,7 +22,7 @@ export default function ProductsPage() {
     return result
   }, [products, category, search])
 
-  const tabs = [{ value: 'all', label: 'All' }, ...PRODUCT_CATEGORIES.filter((c) => c.value !== 'car')]
+  const tabs = [{ value: 'all', label: 'All' }, ...PRODUCT_CATEGORIES]
 
   return (
     <>
