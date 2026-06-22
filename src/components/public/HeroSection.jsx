@@ -7,24 +7,39 @@ import { useSiteSettings } from '@/hooks/useSiteSettings'
 import taglineImage from '@/assets/images/tagline.png'
 import brochurePdf from '@/assets/brochure.pdf'
 
+const BADGES = [
+  { icon: Shield, label: 'BIS Certified' },
+  { icon: Award, label: 'ISO 9001:2015' },
+  { icon: Clock, label: '5+ Years' },
+  { icon: Building2, label: '500+ Installations' },
+]
+
+const HEADLINE = 'ALFAFUJI \n ELEVATOR \n INDIA PVT LTD'
+
+const HEADLINE_STYLE = {
+  fontFamily: '"Playfair Display", "Cinzel", "Didot", serif',
+  letterSpacing: '-0.02em',
+  textTransform: 'uppercase',
+}
+
+const ANIMATION = {
+  headline: { initial: { opacity: 0, y: 30 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.6 } },
+  tagline: { initial: { opacity: 0, x: 20 }, animate: { opacity: 1, x: 0 }, transition: { duration: 0.8, delay: 0.3 } },
+  description: { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.6, delay: 0.1 } },
+  buttons: { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.6, delay: 0.2 } },
+  badges: { initial: { opacity: 0 }, animate: { opacity: 1 }, transition: { duration: 0.6, delay: 0.4 } },
+  card: { initial: { opacity: 0, x: 20 }, animate: { opacity: 1, x: 0 }, transition: { duration: 0.8, delay: 0.6 } },
+  scroll: { animate: { y: [0, 8, 0] }, transition: { repeat: Infinity, duration: 2 } },
+}
+
 export default function HeroSection() {
   const { openModal } = useQuoteModal()
   const { data: settings } = useSiteSettings()
-  const hero = settings?.hero_content || {}
-  const headline = "ALFAFUJI \n ELEVATOR \n INDIA PVT LTD "
-  const subheadline =
-    hero.subheadline ||
-    'From residential home lifts to commercial passenger elevators — engineered for India.'
-
-  const badges = [
-    { icon: Shield, label: 'BIS Certified' },
-    { icon: Award, label: 'ISO 9001:2015' },
-    { icon: Clock, label: '5+ Years' },
-    { icon: Building2, label: '500+ Installations' },
-  ]
+  const subheadline = settings?.hero_content?.subheadline || 'From residential home lifts to commercial passenger elevators — engineered for India.'
 
   return (
     <section className="relative flex min-h-[100svh] items-center overflow-hidden">
+      {/* Background Gradient + Image */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
@@ -32,123 +47,166 @@ export default function HeroSection() {
         }}
       />
 
-      <div className="relative z-10 mx-64 max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+      {/* Main Content Container */}
+      <div className="relative z-10 mx-4 md:mx-8 lg:mx-64 max-w-7xl px-4 py-12 md:py-16 lg:py-20 mt-6 sm:mt-12 md:mt-20 lg:mt-24 sm:px-6 lg:px-8">
 
-        {/* ── HEADLINE + ANIMATION ROW ───────────────────────────────────── */}
+        {/* Headline + Tagline Image Row */}
         <div className="mb-6 flex items-center gap-6">
+          
+          {/* Left: Headline */}
+          <motion.h1
+            {...ANIMATION.headline}
+            className="max-w-3xl font-black text-[32px] leading-tight text-white md:text-5xl lg:text-[56px] whitespace-pre-line pr-6"
+            style={HEADLINE_STYLE}
+          >
+            {HEADLINE}
+          </motion.h1>
 
-          {/* LEFT 2/3 — headline */}
-          <div className="w-18 pr-6 ">
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="max-w-3xl font-black text-[32px] leading-tight text-white md:text-5xl lg:text-[56px] whitespace-pre-line"
-              style={{
-                fontFamily: '"Playfair Display", "Cinzel", "Didot", serif',
-                letterSpacing: '-0.02em',
-                textTransform: 'uppercase',
-              }}
-            >
-              {headline}
-            </motion.h1>
-          </div>
-
-          {/* RIGHT 1/3 — tagline image */}
+         {/* Right: Tagline Image */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="flex w-1/3 items-center pl-4 justify-center"
+            {...ANIMATION.tagline}
+            className="flex w-20 sm:w-24 md:w-32 items-center justify-center pl-4"
           >
             <img
               src={taglineImage}
               alt="Rise High With Us"
-              className="h-full max-h-[220px] w-full max-w-[200px] object-contain"
+              className="h-full max-h-[120px] sm:max-h-[140px] md:max-h-[240px] lg:max-h-[280px] w-full max-w-[120px] sm:max-w-[140px] md:max-w-[220px] lg:max-w-[240px] object-contain"
             />
           </motion.div>
 
         </div>
-        {/* ── END HEADLINE + ANIMATION ROW ──────────────────────────────── */}
 
-        {/* Everything below is UNCHANGED */}
+        {/* Description */}
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="mb-8 max-w-2xl text-lg text-white/90 md:text-xl"
+          {...ANIMATION.description}
+          className="mb-8 max-w-2xl text-lg hidden sm:block text-white/90 md:text-xl"
         >
           {subheadline}
         </motion.p>
 
+        {/* CTA Buttons */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          {...ANIMATION.buttons}
           className="mb-10 flex flex-wrap gap-4"
         >
           <Button
             onClick={openModal}
-            className="bg-red-600 px-8 py-3 text-base font-bold text-white hover:bg-red-700"
+            className="bg-red-600 px-8 py-3 text-base font-bold text-white hover:bg-red-700 transition-colors"
           >
             Get Free Quote
           </Button>
           <Button
             asChild
             variant="outline"
-            className="border-2 border-white bg-transparent px-8 py-3 text-white hover:bg-white hover:text-black"
+            className="border-2 border-white bg-transparent px-8 py-3 text-white hover:bg-white hover:text-black transition-colors"
           >
             <Link to="/products">View Our Products</Link>
           </Button>
         </motion.div>
 
+        {/* Badges */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          {...ANIMATION.badges}
           className="flex flex-wrap gap-3"
         >
-          {badges.map(({ icon: Icon, label }) => (
+          {BADGES.map(({ icon: Icon, label }) => (
             <span
               key={label}
-              className="flex items-center gap-2 rounded-full border border-white/30 bg-white/5 px-4 py-2 text-sm text-white"
+              className="flex items-center gap-2 rounded-full border border-white/30 bg-white/5 px-4 py-2 text-sm text-white hover:border-white/60 transition-colors"
             >
               <Icon className="h-4 w-4 text-red-500" />
               {label}
             </span>
           ))}
         </motion.div>
+
       </div>
 
+      {/* Download Brochure Card - Desktop Only */}
       <motion.div
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 0.6 }}
-        className="absolute bottom-28 right-32 hidden max-w-xs rounded-xl bg-white/95 p-5 shadow-lg lg:block"
+        {...ANIMATION.card}
+        className="absolute bottom-28 right-32 hidden lg:block max-w-xs rounded-xl bg-white/95 p-5 shadow-lg"
       >
-        <p className="text-xs font-black uppercase tracking-widest text-red-600 mb-2">Download Brochure</p>
-        <p className="font-black text-lg text-black">Company Profile</p>
-        <a 
-          href={brochurePdf} 
+        <p className="text-xs font-black uppercase tracking-widest text-red-600 mb-2">
+          Download Brochure
+        </p>
+        <p className="font-black text-lg text-black mb-3">
+          Company Profile
+        </p>
+        <a
+          href={brochurePdf}
           download="alfafuji-brochure.pdf"
-          className="mt-3 inline-flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-red-700 transition-colors"
+          className="inline-flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-red-700 transition-colors"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
           </svg>
           Download PDF
         </a>
       </motion.div>
 
+      {/* Mobile Brochure Circular Button */}
       <motion.div
-        animate={{ y: [0, 8, 0] }}
-        transition={{ repeat: Infinity, duration: 2 }}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6, delay: 0.8 }}
+        className="absolute bottom-24 right-4 z-20 lg:hidden"
+      >
+        <a
+          href={brochurePdf}
+          download="alfafuji-brochure.pdf"
+          className="group relative flex items-center justify-center w-14 h-14 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 overflow-visible"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="text-red-600 flex-shrink-0"
+          >
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          <div className="absolute bottom-full right-0 mb-3 flex w-72 flex-col rounded-3xl bg-white p-6 text-left text-black shadow-xl opacity-0 scale-95 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 group-hover:translate-y-0 lg:hidden">
+            <p className="text-xs font-black uppercase tracking-widest text-red-600 mb-2">
+              Download Brochure
+            </p>
+            <p className="font-black text-lg text-black mb-4">
+              Company Profile
+            </p>
+            <span className="inline-flex items-center justify-center bg-red-600 px-3 py-2 rounded-lg text-sm font-bold text-white">
+              Download PDF
+            </span>
+          </div>
+        </a>
+      </motion.div>
+
+      {/* Scroll Down Indicator */}
+      <motion.div
+        {...ANIMATION.scroll}
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
       >
         <ChevronDown className="h-8 w-8 text-white/70" />
       </motion.div>
+
     </section>
   )
 }

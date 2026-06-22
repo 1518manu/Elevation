@@ -19,10 +19,10 @@ export default function ProjectsPage() {
         </div>
       </section>
       <section className="py-8">
-        <div className="mx-52 max-w-7xl px-4">
+        <div className="mx-auto max-w-7xl px-4 lg:mx-52">
           <div className="inline-block -left-12 relative mb-6">
-            <h2 className="mb-2 font-heading text-2xl font-bold text-black">Showcasing infrastructure that moves people and places.</h2>
-            <div className="absolute mx-1 top-full mt-2 h-1 w-32 bg-red-600" />
+            <h2 className="mb-2 mx-12 font-heading text-2xl font-bold text-black">Showcasing infrastructure that moves people and places.</h2>
+            <div className="absolute mx-1 top-full mt-2 mx-12 h-1 w-32 bg-red-600" />
           </div>
           <div className="space-y-4 text-gray-700">
             <p className="text-base font-semibold leading-8">
@@ -35,7 +35,7 @@ export default function ProjectsPage() {
         </div>
       </section>
       <section className="py-1 mb-16">
-        <div className="mx-40 max-w-7xl px-4">
+        <div className="mx-auto max-w-7xl px-4 lg:mx-40">
           <div className="mx-0 mb-16 ">
             <h2 className="mb-3 font-heading text-2xl font-bold text-black">Featured work across markets and building types.</h2>
             <div className="absolute mx-1  mb-4 h-1 w-32 bg-red-600" />

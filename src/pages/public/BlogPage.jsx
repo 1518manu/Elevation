@@ -40,10 +40,10 @@ export default function BlogPage() {
         </div>
       </section>
       <section className="py-8">
-        <div className="mx-52 max-w-7xl px-4">
+        <div className="mx-auto max-w-7xl px-4 lg:mx-52">
           <div className="inline-block -left-12 relative mb-6">
-            <h2 className="mb-2 font-heading text-2xl font-bold text-black">Industry insights, buying guides, and company news.</h2>
-            <div className="absolute mx-1 top-full mt-2 h-1 w-32 bg-red-600" />
+            <h2 className="mb-2 mx-12 font-heading text-2xl font-bold text-black">Industry insights, buying guides, and company news.</h2>
+            <div className="absolute mx-1 mx-12 top-full mt-2 h-1 w-32 bg-red-600" />
           </div>
           <div className="space-y-4 text-gray-700">
             <p className="text-base font-semibold leading-8">
@@ -53,7 +53,7 @@ export default function BlogPage() {
           </div>
         </div>
       </section>
-      <section className="py-0 pb-8">
+      <section className="py-0 pb-8 px-16">
         <div className="mx-auto max-w-7xl px-4">
           <div className="flex items-center justify-end mb-6">
             <input
