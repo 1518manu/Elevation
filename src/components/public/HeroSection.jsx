@@ -74,7 +74,7 @@ export default function HeroSection() {
               alt="Rise High With Us"
               width="240"
               height="280"
-              fetchPriority="high"
+              fetchpriority="high"
               decoding="async"
               className="w-full h-auto object-contain"
             />
