@@ -10,7 +10,7 @@ export default function JobCard({ job }) {
   const type = JOB_TYPES.find((t) => t.value === job.job_type)
 
   return (
-    <div className="rounded-xl bg-white p-6 shadow-card transition-all hover:shadow-card-hover">
+    <div className="rounded-xl bg-white p-6 shadow-card transition-all hover:shadow-card-hover border-b-4 border-red-600">
       <div className="mb-3 flex flex-wrap gap-2">
         <Badge className="bg-black/10 capitalize text-black">{dept?.label || job.department}</Badge>
         <Badge variant="outline">{type?.label || job.job_type}</Badge>

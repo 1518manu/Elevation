@@ -11,6 +11,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/toast'
 import { APP_URL } from '@/lib/constants'
+import contactPhoto from '@/assets/images/contactphoto.png'
 
 export default function ContactPage() {
   const { toast } = useToast()
@@ -31,14 +32,14 @@ export default function ContactPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
-    name: settings?.company_name || 'Alfa Elevator',
+    name: settings?.company_name || 'ALFAFUJI ELEVATOR INDIA PVT LTD',
     url: APP_URL,
     telephone: settings?.phones?.[0],
   }
 
   return (
     <>
-      <SEOHead title="Contact Us" description="Get in touch with Alfa Elevator for quotes, support, and inquiries." jsonLd={jsonLd} />
+      <SEOHead title="Contact Us" description="Get in touch with ALFAFUJI ELEVATOR INDIA PVT LTD for quotes, support, and inquiries." jsonLd={jsonLd} />
       <section className="bg-black py-16 text-white">
         <div className="mx-auto mt-10 max-w-7xl px-4 py-10 md:ml-32 md:mt-12 md:py-4">
           <nav className="mb-4 text-sm text-white/70">Home / Contact</nav>
@@ -96,12 +97,13 @@ export default function ContactPage() {
 
               <Button type="submit" disabled={isSubmitting} className="w-full bg-red-600 text-black mt-4">{isSubmitting ? 'Sending...' : 'Send Message'}</Button>
 
-              {/* Image Space 16:9 Ratio */}
-              <div className="mt-6 w-full aspect-video bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg shadow-md flex items-center justify-center border-2 border-gray-300">
-                <div className="text-center">
-                  <p className="text-gray-500 font-semibold">Image Space (16:9)</p>
-                  <p className="text-gray-400 text-sm">1600 x 900px</p>
-                </div>
+              {/* Contact Image */}
+              <div className="mt-6 w-full aspect-video rounded-lg shadow-md overflow-hidden">
+                <img 
+                  src={contactPhoto} 
+                  alt="Contact Us" 
+                  className="w-full h-full object-cover"
+                />
               </div>
             </form>
           </div>

@@ -3,17 +3,32 @@ import DOMPurify from 'dompurify'
 import SEOHead from '@/components/common/SEOHead'
 import PageLoader from '@/components/common/PageLoader'
 import { useBlog } from '@/hooks/useBlogs'
-import { getImageUrl, formatDate } from '@/lib/utils'
+import { formatDate } from '@/lib/utils'
 import { APP_URL } from '@/lib/constants'
 import { Badge } from '@/components/ui/badge'
-import { Clock } from 'lucide-react'
+import { Clock, ChevronLeft, ChevronRight } from 'lucide-react'
+import { useState } from 'react'
 
 export default function BlogDetailPage() {
   const { slug } = useParams()
   const { data: blog, isLoading } = useBlog(slug)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   if (isLoading) return <PageLoader />
   if (!blog) return <div className="py-16 text-center">Article not found</div>
+
+  // Extract images from content
+  const extractImages = (html) => {
+    const tempDiv = document.createElement('div')
+    tempDiv.innerHTML = html
+    const images = Array.from(tempDiv.querySelectorAll('img')).map(img => img.src)
+    // Remove images from content
+    tempDiv.querySelectorAll('img').forEach(img => img.remove())
+    const cleanContent = tempDiv.innerHTML
+    return { images, cleanContent }
+  }
+
+  const { images: contentImages, cleanContent } = extractImages(blog.content || '')
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -60,7 +75,7 @@ export default function BlogDetailPage() {
 
       {/* Article Content */}
       <article className="py-12 lg:py-16">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-10">
             {blog.category && (
               <Badge className="mb-4 bg-red-600 text-white">
@@ -84,15 +99,67 @@ export default function BlogDetailPage() {
             </div>
           </div>
 
-          {blog.cover_image && (
-            <img
-              src={getImageUrl(blog.cover_image, 1200, 85)}
-              alt={blog.title}
-              className="mb-10 aspect-video w-full rounded-xl object-cover"
-            />
-          )}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Left: Images (1/3) */}
+            <div className="lg:col-span-1 space-y-4">
+              {/* Cover Image */}
+              {blog.cover_image && (
+                <div className="aspect-[4/3] rounded-xl overflow-hidden bg-gray-100">
+                  <img
+                    src={blog.cover_image}
+                    alt={blog.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              )}
 
-          <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog.content || '') }} />
+              {/* Content Images Carousel */}
+              {contentImages.length > 0 && (
+                <div className="relative">
+                  <div className="aspect-[4/3] rounded-xl overflow-hidden bg-gray-100">
+                    <img
+                      src={contentImages[currentImageIndex]}
+                      alt={`Content image ${currentImageIndex + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  
+                  {/* Navigation Buttons */}
+                  {contentImages.length > 1 && (
+                    <>
+                      <button
+                        onClick={() => setCurrentImageIndex((prev) => (prev === 0 ? contentImages.length - 1 : prev - 1))}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow-md hover:bg-white transition-colors"
+                      >
+                        <ChevronLeft className="h-4 w-4" />
+                      </button>
+                      <button
+                        onClick={() => setCurrentImageIndex((prev) => (prev === contentImages.length - 1 ? 0 : prev + 1))}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow-md hover:bg-white transition-colors"
+                      >
+                        <ChevronRight className="h-4 w-4" />
+                      </button>
+                    </>
+                  )}
+
+                  {/* Image Counter */}
+                  {contentImages.length > 1 && (
+                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 rounded-full bg-black/70 px-3 py-1 text-xs text-white">
+                      {currentImageIndex + 1} / {contentImages.length}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Right: Content (2/3) */}
+            <div className="lg:col-span-2">
+              <div 
+                className="prose max-w-none" 
+                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(cleanContent) }} 
+              />
+            </div>
+          </div>
         </div>
       </article>
     </>

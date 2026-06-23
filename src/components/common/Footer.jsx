@@ -158,7 +158,8 @@ export default function Footer() {
         {/* Bottom bar — unchanged */}
         <div className="mt-12 border-t border-white/10 pt-6">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <p className="text-sm text-gray-100">© {year} {APP_NAME} All rights reserved.</p>
+            <p className="text-sm text-gray-100">© {year} {APP_NAME} </p>
+            <p>All rights reserved.</p>
             <div className="flex gap-4 text-xs text-gray-100">
               <span>GST: {GST_NUMBER}</span>
               <span>CIN: {CIN_NUMBER}</span>

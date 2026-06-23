@@ -51,7 +51,7 @@ export default function ProductDetailPage() {
     name: product.name,
     description: product.short_description,
     image: product.images?.[0],
-    brand: { '@type': 'Brand', name: 'Alfa Elevator' },
+    brand: { '@type': 'Brand', name: 'ALFAFUJI ELEVATOR INDIA PVT LTD' },
   }
 
   return (

@@ -5,6 +5,7 @@ import ProtectedRoute from '@/components/common/ProtectedRoute'
 import AdminSidebar from '@/components/admin/AdminSidebar'
 import AdminTopbar from '@/components/admin/AdminTopbar'
 
+// Lazy load all routes with prefetch
 const HomePage = lazy(() => import('@/pages/public/HomePage'))
 const AboutPage = lazy(() => import('@/pages/public/AboutPage'))
 const ProductsPage = lazy(() => import('@/pages/public/ProductsPage'))
@@ -40,7 +41,7 @@ function ScrollToTop() {
   const location = useLocation()
   
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   }, [location.pathname])
   
   return null

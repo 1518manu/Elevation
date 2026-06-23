@@ -9,7 +9,7 @@ export default function ProjectsPage() {
 
   return (
     <>
-      <SEOHead title="Our Projects" description="Explore Alfa Elevator installations across India — commercial towers, hospitals, malls and more." />
+      <SEOHead title="Our Projects" description="Explore ALFAFUJI ELEVATOR INDIA PVT LTD installations across India — commercial towers, hospitals, malls and more." />
       <section className="bg-black py-20  text-white">
         <div className="mx-auto mt-10 max-w-7xl px-4 py-8 md:ml-32 md:mt-12 md:py-4">
           <nav className="mb-4 text-sm text-white/70">

@@ -108,7 +108,7 @@ export default function ContactInquiriesPage() {
             </p>
           </div>
           <div className="flex gap-3">
-            <Button variant="admin-ghost" onClick={() => exportToCSV(filteredContacts, 'alfa-contacts.csv')}>
+            <Button variant="admin-ghost" onClick={() => exportToCSV(filteredContacts, 'ALFAFUJI-contacts.csv')}>
               Export CSV
             </Button>
           </div>

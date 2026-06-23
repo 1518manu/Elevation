@@ -30,7 +30,7 @@ export default function AboutPage() {
           <div className="mx-1 mb-8 h-1 w-32 bg-red-600" />
 
           <p className="mb-6 text-lg leading-relaxed text-gray-600 font-semibold">
-            At ALFAFUJI Elevator India Pvt. Ltd., we believe that every journey
+            At ALFAFUJI ELEVATOR INDIA PVT LTD, we believe that every journey
             upward should be safe, seamless, and inspiring. As a trusted provider
             of advanced elevator solutions, we are committed to transforming the
             way people move within modern buildings and communities.

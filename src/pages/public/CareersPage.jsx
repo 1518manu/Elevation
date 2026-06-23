@@ -21,7 +21,7 @@ export default function CareersPage() {
   if (!careersVisible) {
     return (
       <>
-        <SEOHead title="Careers" description="Join Alfa Elevator team. Open positions in technical, sales, HR and operations across India." />
+        <SEOHead title="Careers" description="Join ALFAFUJI ELEVATOR INDIA PVT LTD team. Open positions in technical, sales, HR and operations across India." />
         <section className="bg-black py-16 text-white">
           <div className="mx-auto mt-10 max-w-7xl px-4 py-10 md:ml-32 md:mt-12 md:py-4">
             <nav className="mb-4 text-sm text-white/70">Home / Careers</nav>
@@ -64,7 +64,7 @@ export default function CareersPage() {
           </div>
           {isLoading ? <PageLoader /> : filtered.length === 0 ? (
             <div className="py-16 text-center">
-              <p className="text-lg text-gray-500">No openings right now. Send your CV to careers@alfaelevator.in</p>
+              <p className="text-lg text-gray-500">No openings right now. Send your CV to careers@ALFAFUJIelevator.in</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

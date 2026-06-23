@@ -106,7 +106,7 @@ export default function QuoteInquiriesPage() {
             </p>
           </div>
           <div className="flex gap-3">
-            <Button variant="admin-ghost" onClick={() => exportToCSV(filteredQuotes, 'alfa-quotes.csv')}>
+            <Button variant="admin-ghost" onClick={() => exportToCSV(filteredQuotes, 'ALFAFUJI-quotes.csv')}>
               Export CSV
             </Button>
           </div>

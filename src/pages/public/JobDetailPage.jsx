@@ -57,7 +57,7 @@ export default function JobDetailPage() {
     datePosted: job.created_at,
     validThrough: job.deadline,
     employmentType: job.job_type?.toUpperCase(),
-    hiringOrganization: { '@type': 'Organization', name: 'Alfa Elevator' },
+    hiringOrganization: { '@type': 'Organization', name: 'ALFAFUJI ELEVATOR INDIA PVT LTD' },
   }
 
   return (

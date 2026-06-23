@@ -59,6 +59,9 @@ export default function BlogAdminPage() {
           src={row.original.cover_image} 
           alt="" 
           className="h-10 w-16 rounded object-cover"
+          onError={(e) => {
+            e.target.src = row.original.cover_image
+          }}
         />
       ) : (
         <div className="h-10 w-16 rounded bg-gray-200 flex items-center justify-center">

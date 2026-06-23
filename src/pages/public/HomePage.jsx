@@ -26,14 +26,14 @@ export default function HomePage() {
     '@graph': [
       {
         '@type': 'Organization',
-        name: settings?.company_name || 'ALFAFUJI Elevator India Pvt Ltd.',
+        name: settings?.company_name || 'ALFAFUJI ELEVATOR INDIA PVT LTD',
         url: APP_URL,
         logo: `${APP_URL}/og-image.jpg`,
         description: settings?.tagline,
       },
       {
         '@type': 'LocalBusiness',
-        name: settings?.company_name || 'ALFAFUJI Elevator India Pvt Ltd.',
+        name: settings?.company_name || 'ALFAFUJI ELEVATOR INDIA PVT LTD',
         url: APP_URL,
         telephone: settings?.phones?.[0],
         address: settings?.addresses?.[0],
@@ -135,7 +135,7 @@ export default function HomePage() {
             </h2>
             <div className="mx-auto mb-8 h-1 w-10 bg-red-500" />
             <p className="mx-auto max-w-3xl text-sm leading-relaxed text-white/80 md:text-base">
-              At ALFAFUJI Elevator India Pvt Ltd, we believe that every project deserves
+              At ALFAFUJI ELEVATOR INDIA PVT LTD, we believe that every project deserves
               meticulous attention, expert guidance, and seamless execution. Here&apos;s how
               we efficiently manage every lift enquiry — from initial consultation to
               project handover:

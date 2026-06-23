@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { getImageUrl } from '@/lib/utils'
 import { useQuoteModal } from '@/components/common/QuoteModal'
 
 export default function ProductCard({ product, index = 0 }) {
@@ -14,19 +13,19 @@ export default function ProductCard({ product, index = 0 }) {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.08, duration: 0.4 }}
-      className="group relative overflow-hidden rounded-xl bg-white/50 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover"
+      className="group relative overflow-hidden rounded-xl bg-white/50 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover border-b-4 border-red-600"
     >
       
       <div className="relative aspect-video overflow-hidden">
         {image ? (
           <img
-            src={getImageUrl(image)}
+            src={image}
             alt={product.name}
             loading="lazy"
+            decoding="async"
+            width="640"
+            height="360"
             className="h-full w-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
-            onError={(e) => {
-              e.target.src = image
-            }}
           />
         ) : (
           <div className="flex h-full items-center justify-center bg-gray-100 text-gray-400">

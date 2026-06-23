@@ -45,6 +45,8 @@ export default function HeroSection() {
         style={{
           backgroundImage: `linear-gradient(135deg, rgba(0,0,0,0.92) 0%, rgba(139,0,0,0.75) 100%), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80')`,
         }}
+        role="img"
+        aria-label="Modern elevator building"
       />
 
       {/* Main Content Container */}
@@ -70,6 +72,10 @@ export default function HeroSection() {
             <img
               src={taglineImage}
               alt="Rise High With Us"
+              width="240"
+              height="280"
+              fetchPriority="high"
+              decoding="async"
               className="h-full max-h-[120px] sm:max-h-[140px] md:max-h-[240px] lg:max-h-[280px] w-full max-w-[120px] sm:max-w-[140px] md:max-w-[220px] lg:max-w-[240px] object-contain"
             />
           </motion.div>
@@ -135,7 +141,7 @@ export default function HeroSection() {
         </p>
         <a
           href={brochurePdf}
-          download="alfafuji-brochure.pdf"
+          download="ALFAFUJI-brochure.pdf"
           className="inline-flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-red-700 transition-colors"
         >
           <svg
@@ -166,7 +172,7 @@ export default function HeroSection() {
       >
         <a
           href={brochurePdf}
-          download="alfafuji-brochure.pdf"
+          download="ALFAFUJI-brochure.pdf"
           className="group relative flex items-center justify-center w-14 h-14 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 overflow-visible"
         >
           <svg

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom'
 
-const STORAGE_KEY = 'alfa_cookie_consent'
+const STORAGE_KEY = 'ALFAFUJI_cookie_consent'
 
 export default function CookieConsent() {
   const [visible, setVisible] = useState(false)

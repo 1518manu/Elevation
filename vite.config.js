@@ -10,14 +10,51 @@ export default defineConfig({
     },
   },
   build: {
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          supabase: ['@supabase/supabase-js'],
-          ui: ['framer-motion', 'swiper', 'recharts'],
+        manualChunks: (id) => {
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'vendor-react'
+            }
+            if (id.includes('react-router-dom')) {
+              return 'vendor-router'
+            }
+            if (id.includes('@supabase')) {
+              return 'vendor-supabase'
+            }
+            if (id.includes('@tanstack')) {
+              return 'vendor-query'
+            }
+            if (id.includes('framer-motion')) {
+              return 'vendor-motion'
+            }
+            if (id.includes('swiper')) {
+              return 'vendor-swiper'
+            }
+            if (id.includes('recharts')) {
+              return 'vendor-charts'
+            }
+            if (id.includes('@tiptap')) {
+              return 'vendor-editor'
+            }
+            if (id.includes('@radix-ui')) {
+              return 'vendor-ui'
+            }
+            if (id.includes('lucide')) {
+              return 'vendor-icons'
+            }
+            return 'vendor'
+          }
         },
       },
+    },
+    cssCodeSplit: true,
+  },
+  server: {
+    headers: {
+      'X-Content-Type-Options': 'nosniff',
     },
   },
 })

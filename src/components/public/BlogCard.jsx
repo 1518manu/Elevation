@@ -1,22 +1,21 @@
 import { Link } from 'react-router-dom'
 import { Clock } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
-import { getImageUrl, formatDate } from '@/lib/utils'
+import { formatDate } from '@/lib/utils'
 
 export default function BlogCard({ blog }) {
   return (
-    <Link to={`/blog/${blog.slug}`} className="group block overflow-hidden rounded-xl bg-white shadow-card transition-all hover:-translate-y-1 hover:shadow-card-hover">
+    <Link to={`/blog/${blog.slug}`} className="group block overflow-hidden rounded-xl bg-white shadow-card transition-all hover:-translate-y-1 hover:shadow-card-hover border-b-4 border-red-600">
       <div className="aspect-video overflow-hidden">
         {blog.cover_image ? (
           <img 
-            src={getImageUrl(blog.cover_image)} 
+            src={blog.cover_image} 
             alt={blog.title} 
             loading="lazy" 
+            decoding="async"
+            width="640"
+            height="360"
             className="h-full w-full object-cover transition-transform group-hover:scale-105"
-            onError={(e) => {
-              // Fallback to original URL if transformed version fails
-              e.target.src = blog.cover_image
-            }}
           />
         ) : (
           <div className="flex h-full items-center justify-center bg-gray-100 text-gray-400">No cover</div>

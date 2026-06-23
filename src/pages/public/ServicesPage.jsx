@@ -29,7 +29,7 @@ export default function ServicesPage() {
         </div>
       </section>
       <section className="py-8">
-        <div className="mx-52 max-w-6xl px-4">
+        <div className="mx-auto max-w-7xl px-4 lg:mx-52">
           <div className="inline-block relative mb-6">
             <h2 className="mb-2 font-heading text-2xl font-bold text-black">Engineering Excellence. Delivering Mobility.</h2>
             <div className="absolute mx-1 top-full mt-2 h-1 w-32 bg-red-600" />
@@ -42,7 +42,7 @@ export default function ServicesPage() {
             <p className="text-base font-semibold leading-8">
               From design, supply, and installation to testing, modernization, and preventive maintenance, we manage every stage of the elevator lifecycle. With a strong focus on safety, quality, and performance, our team ensures dependable operation, responsive support, and long-term value for every project we undertake.
             </p>
-            
+
           </div>
         </div>
       </section>

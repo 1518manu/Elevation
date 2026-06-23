@@ -34,7 +34,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <SEOHead title="Admin Login" description="Sign in to Alfa Elevator admin portal" noIndex />
+      <SEOHead title="Admin Login" description="Sign in to ALFAFUJI ELEVATOR INDIA PVT LTD admin portal" noIndex />
       <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
         <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-card">
           <div className="mb-8 flex flex-col items-center">

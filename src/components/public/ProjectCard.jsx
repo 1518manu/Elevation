@@ -1,15 +1,14 @@
 import { Link } from 'react-router-dom'
 import { MapPin, Building2 } from 'lucide-react'
-import { getImageUrl } from '@/lib/utils'
 
 export default function ProjectCard({ project }) {
   const image = project.images?.[0]
 
   return (
-    <Link to={`/projects/${project.slug}`} className="group block overflow-hidden rounded-xl bg-white shadow-card transition-all hover:-translate-y-1 hover:shadow-card-hover">
+    <Link to={`/projects/${project.slug}`} className="group block overflow-hidden rounded-xl bg-white shadow-card transition-all hover:-translate-y-1 hover:shadow-card-hover border-b-4 border-red-600">
       <div className="aspect-video overflow-hidden">
         {image ? (
-          <img src={getImageUrl(image)} alt={project.title} loading="lazy" className="h-full w-full object-cover transition-transform group-hover:scale-105" />
+          <img src={image} alt={project.title} loading="lazy" decoding="async" width="640" height="360" className="h-full w-full object-cover transition-transform group-hover:scale-105" />
         ) : (
           <div className="flex h-full items-center justify-center bg-black/10">
             <Building2 className="h-12 w-12 text-black/30" />

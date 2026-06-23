@@ -126,7 +126,7 @@ export const FOOTER_LINKS = {
 }
 
 export const DEFAULT_OG_IMAGE = '/og-image.jpg'
-export const APP_NAME = import.meta.env.VITE_APP_NAME || 'AlfaFuji Elevator India Pvt Ltd'
+export const APP_NAME = import.meta.env.VITE_APP_NAME || 'ALFAFUJI ELEVATOR INDIA PVT LTD'
 export const APP_URL = import.meta.env.VITE_APP_URL || 'https://alfafujielevator.vercel.app/'
 export const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '917902512987'
 
