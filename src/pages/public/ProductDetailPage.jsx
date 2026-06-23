@@ -92,9 +92,9 @@ export default function ProductDetailPage() {
       <section className="py-12 lg:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-5 lg:gap-14">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-14">
 
-            <div className="lg:col-span-3">
+            <div className="md:col-span-1 lg:col-span-3">
               {hasImages ? (
                 <div className="space-y-3">
                   
@@ -198,6 +198,15 @@ export default function ProductDetailPage() {
                   <p className="mt-4 max-w-3xl text-lg leading-relaxed text-gray-600">
                     {product.short_description}
                   </p>
+                )}
+
+                {product.description && (
+                  <div className="mt-6 prose prose-sm max-w-none">
+                    <div 
+                      className="text-gray-700 leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: product.description }}
+                    />
+                  </div>
                 )}
               </div>
               <div className="mb-7 flex flex-wrap gap-3">

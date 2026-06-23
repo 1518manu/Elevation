@@ -53,12 +53,12 @@ export default function HeroSection() {
       <div className="relative z-10 mx-4 md:mx-8 lg:mx-64 max-w-7xl px-4 py-12 md:py-16 lg:py-20 mt-6 sm:mt-12 md:mt-20 lg:mt-24 sm:px-6 lg:px-8">
 
         {/* Headline + Tagline Image Row */}
-        <div className="mb-6 flex items-center gap-6">
+        <div className="mb-6 flex items-center justify-between gap-4">
           
           {/* Left: Headline */}
           <motion.h1
             {...ANIMATION.headline}
-            className="max-w-3xl font-black text-[32px] leading-tight text-white md:text-5xl lg:text-[56px] whitespace-pre-line pr-6"
+            className="flex-1 font-black text-[28px] leading-tight text-white md:text-5xl lg:text-[56px] whitespace-pre-line"
             style={HEADLINE_STYLE}
           >
             {HEADLINE}
@@ -67,7 +67,7 @@ export default function HeroSection() {
          {/* Right: Tagline Image */}
           <motion.div
             {...ANIMATION.tagline}
-            className="flex w-20 sm:w-24 md:w-32 items-center justify-center pl-4"
+            className="flex-shrink-0 w-[100px] sm:w-[120px] md:w-[160px] lg:w-[180px]"
           >
             <img
               src={taglineImage}
@@ -76,7 +76,7 @@ export default function HeroSection() {
               height="280"
               fetchPriority="high"
               decoding="async"
-              className="h-full max-h-[120px] sm:max-h-[140px] md:max-h-[240px] lg:max-h-[280px] w-full max-w-[120px] sm:max-w-[140px] md:max-w-[220px] lg:max-w-[240px] object-contain"
+              className="w-full h-auto object-contain"
             />
           </motion.div>
 
