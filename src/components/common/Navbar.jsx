@@ -40,7 +40,7 @@ export default function Navbar() {
     setMobileExpandedDropdown(null)
   }, [location.pathname])
 
-  // Close popup on outside click
+  // Close popup on outside click (desktop and mobile)
   useEffect(() => {
     if (!mobileOpen) return
     const handleClickOutside = (e) => {
@@ -48,8 +48,13 @@ export default function Navbar() {
         setMobileOpen(false)
       }
     }
+    // Support both mouse and touch events
     document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
+    document.addEventListener('touchstart', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('touchstart', handleClickOutside)
+    }
   }, [mobileOpen])
 
   // Cleanup dropdown timeout on unmount
