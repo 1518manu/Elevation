@@ -1,3 +1,43 @@
+/* iOS Safari 100vh fix */
+:root {
+  --app-height: 100vh;
+}
+
+/* Remove tap highlight on Samsung and Android */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  box-sizing: border-box;
+}
+
+/* iOS momentum scroll + prevent horizontal overflow */
+html, body {
+  -webkit-overflow-scrolling: touch;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Scrollbar hide — works on Safari which ignores Tailwind's scrollbar-hide */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Prevent images breaking layout on old Samsung Internet */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Fix iOS input zoom — prevents page zoom on input focus */
+input, select, textarea {
+  font-size: 16px !important;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

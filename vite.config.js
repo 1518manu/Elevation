@@ -1,60 +1,43 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import legacy from '@vitejs/plugin-legacy'
 import path from 'path'
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    legacy({
+      targets: [
+        'defaults',
+        'not IE 11',
+        'iOS >= 12',
+        'Samsung >= 10',
+        'Android >= 6',
+        'Chrome >= 70',
+      ],
+      additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
+    }),
+  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
   },
   build: {
-    chunkSizeWarningLimit: 1000,
+    target: 'es2015',
     rollupOptions: {
       output: {
-        manualChunks: (id) => {
-          if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom')) {
-              return 'vendor-react'
-            }
-            if (id.includes('react-router-dom')) {
-              return 'vendor-router'
-            }
-            if (id.includes('@supabase')) {
-              return 'vendor-supabase'
-            }
-            if (id.includes('@tanstack')) {
-              return 'vendor-query'
-            }
-            if (id.includes('framer-motion')) {
-              return 'vendor-motion'
-            }
-            if (id.includes('swiper')) {
-              return 'vendor-swiper'
-            }
-            if (id.includes('recharts')) {
-              return 'vendor-charts'
-            }
-            if (id.includes('@tiptap')) {
-              return 'vendor-editor'
-            }
-            if (id.includes('@radix-ui')) {
-              return 'vendor-ui'
-            }
-            if (id.includes('lucide')) {
-              return 'vendor-icons'
-            }
-            return 'vendor'
-          }
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-motion': ['framer-motion'],
+          'vendor-query': ['@tanstack/react-query'],
+          'vendor-supabase': ['@supabase/supabase-js'],
         },
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]',
       },
     },
-    cssCodeSplit: true,
-  },
-  server: {
-    headers: {
-      'X-Content-Type-Options': 'nosniff',
-    },
+    chunkSizeWarningLimit: 600,
   },
 })

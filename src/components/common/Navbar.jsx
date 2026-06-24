@@ -1,13 +1,111 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X, ChevronDown, Phone } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { NAV_LINKS, PRODUCT_CATEGORIES } from '@/lib/constants'
 import { useQuoteModal } from './QuoteModal'
 import { useServices } from '@/hooks/useServices'
 import { useSiteSettings } from '@/hooks/useSiteSettings'
 import { Button } from '@/components/ui/button'
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/logo.png"
+
+const ChevronDownIcon = () => (
+  <svg
+    width="12"
+    height="12"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="h-3 w-3"
+  >
+    <path d="m6 9 6 6 6-6" />
+  </svg>
+)
+
+const PhoneIcon = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="h-4 w-4"
+  >
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+  </svg>
+)
+
+const MenuIcon = () => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="h-6 w-6"
+  >
+    <line x1="4" x2="20" y1="12" y2="12" />
+    <line x1="4" x2="20" y1="6" y2="6" />
+    <line x1="4" x2="20" y1="18" y2="18" />
+  </svg>
+)
+
+const XIcon = () => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="h-6 w-6"
+  >
+    <path d="M18 6 6 18" />
+    <path d="m6 6 12 12" />
+  </svg>
+)
+
+const ChevronDownMobileIcon = ({ className }) => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="m6 9 6 6 6-6" />
+  </svg>
+)
+
+const PhoneMobileIcon = () => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="h-5 w-5"
+  >
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+  </svg>
+)
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -23,14 +121,17 @@ export default function Navbar() {
   const careersVisible = settings?.careers_visible ?? true
   const popupRef = useRef(null)
 
-  // Filter navigation links based on visibility settings
+  const prefersReducedMotion = typeof window !== 'undefined' 
+    ? window.matchMedia('(prefers-reduced-motion: reduce)').matches 
+    : false
+
   const visibleNavLinks = NAV_LINKS.filter(link => 
     link.href !== '/careers' || careersVisible
   )
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', onScroll)
+    window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
@@ -40,7 +141,6 @@ export default function Navbar() {
     setMobileExpandedDropdown(null)
   }, [location.pathname])
 
-  // Close popup on outside click (desktop and mobile)
   useEffect(() => {
     if (!mobileOpen) return
     const handleClickOutside = (e) => {
@@ -48,16 +148,14 @@ export default function Navbar() {
         setMobileOpen(false)
       }
     }
-    // Support both mouse and touch events
     document.addEventListener('mousedown', handleClickOutside)
-    document.addEventListener('touchstart', handleClickOutside)
+    document.addEventListener('touchstart', handleClickOutside, { passive: true })
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
       document.removeEventListener('touchstart', handleClickOutside)
     }
   }, [mobileOpen])
 
-  // Cleanup dropdown timeout on unmount
   useEffect(() => {
     return () => {
       if (dropdownTimeout) {
@@ -73,7 +171,7 @@ export default function Navbar() {
     setDropdownTimeout(
       setTimeout(() => {
         setOpenDropdown(null)
-      }, 300) // 300ms delay before closing
+      }, 300)
     )
   }
 
@@ -84,28 +182,26 @@ export default function Navbar() {
   }
 
   const [showNavbar, setShowNavbar] = useState(true)
-const [lastScrollY, setLastScrollY] = useState(0)
+  const [lastScrollY, setLastScrollY] = useState(0)
   useEffect(() => {
-  const handleScroll = () => {
-    const currentScrollY = window.scrollY
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
 
-    if (currentScrollY < 50) {
-      setShowNavbar(true)
-    } else if (currentScrollY > lastScrollY) {
-      // scrolling down
-      setShowNavbar(false)
-    } else {
-      // scrolling up
-      setShowNavbar(true)
+      if (currentScrollY < 50) {
+        setShowNavbar(true)
+      } else if (currentScrollY > lastScrollY) {
+        setShowNavbar(false)
+      } else {
+        setShowNavbar(true)
+      }
+
+      setLastScrollY(currentScrollY)
     }
 
-    setLastScrollY(currentScrollY)
-  }
+    window.addEventListener('scroll', handleScroll, { passive: true })
 
-  window.addEventListener('scroll', handleScroll)
-
-  return () => window.removeEventListener('scroll', handleScroll)
-}, [lastScrollY])
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [lastScrollY])
 
   const isActive = (href) => {
     if (href === '/') return location.pathname === '/'
@@ -116,22 +212,31 @@ const [lastScrollY, setLastScrollY] = useState(0)
     setMobileExpandedDropdown((prev) => (prev === key ? null : key))
   }
 
+  const headerAnimation = prefersReducedMotion ? {} : {
+    transition: 'all 0.3s ease'
+  }
+
   return (
     <header
       className={cn(
-  "fixed left-1/2 z-50 w-[calc(100%-1rem)] max-w-7xl -translate-x-1/2 rounded-2xl bg-white/95 backdrop-blur-md transition-all duration-300",
-  showNavbar ? "top-10 opacity-100" : "-top-32 opacity-0",
-  scrolled && "shadow-xl"
-)}
+        "fixed left-1/2 z-50 w-[calc(100%-1rem)] max-w-7xl -translate-x-1/2 rounded-2xl bg-white/95 backdrop-blur-md",
+        showNavbar ? "top-10 opacity-100" : "-top-32 opacity-0",
+        scrolled && "shadow-xl"
+      )}
+      style={headerAnimation}
     >
       <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-10 lg:px-8">
-        {/* Logo */}
         <Link to="/" className="flex items-center p-2">
-          <img src={logo} alt="Elevation Logo" className="h-14 w-auto" />
-          
+          <img 
+            src={logo} 
+            alt="Elevation Logo" 
+            className="h-14 w-auto" 
+            width="56"
+            height="56"
+            loading="eager"
+          />
         </Link>
 
-        {/* Desktop Nav */}
         <nav className="hidden items-center gap-5 lg:flex xl:gap-5">
           {visibleNavLinks.map((link) => (
             <div
@@ -148,14 +253,14 @@ const [lastScrollY, setLastScrollY] = useState(0)
               <Link
                 to={link.href}
                 className={cn(
-                  'relative px-1 py-0 text-[15px] font-medium leading-none text-gray-700 transition-all duration-200 hover:text-[#9B2D30]',
+                  'relative px-1 py-0 text-[15px] font-medium leading-none text-gray-700 transition-colors duration-200 hover:text-[#9B2D30]',
                   isActive(link.href) &&
-                    ' after:absolute after:left-0 after:-bottom-[28px] after:h-[3px] after:w-full  after:content-[""]'
+                    'after:absolute after:left-0 after:-bottom-[28px] after:h-[3px] after:w-full after:bg-[#9B2D30] after:content-[""]'
                 )}
               >
                 <span className="flex items-center gap-1">
                   {link.label}
-                  {link.hasDropdown && <ChevronDown className="h-3 w-3" />}
+                  {link.hasDropdown && <ChevronDownIcon />}
                 </span>
               </Link>
 
@@ -164,13 +269,14 @@ const [lastScrollY, setLastScrollY] = useState(0)
                   className="absolute left-0 top-full z-50 mt-3 w-[480px] rounded-xl border border-gray-100 bg-white p-4 shadow-xl"
                   onMouseEnter={handleDropdownMouseEnter}
                   onMouseLeave={handleDropdownMouseLeave}
+                  style={{ willChange: 'transform' }}
                 >
                   <div className="grid grid-cols-3 gap-2">
                     {PRODUCT_CATEGORIES.map((cat) => (
                       <Link
                         key={cat.value}
                         to={`/products?category=${cat.value}`}
-                        className="block rounded-lg p-3 relative group hover:bg-white transition duration-200 ease-out transform hover:scale-105"
+                        className="block rounded-lg p-3 relative group hover:bg-gray-50 transition-colors duration-200"
                       >
                         <p className="text-xs font-semibold text-gray-900 group-hover:text-[#9B2D30] transition-colors">
                           {cat.label}
@@ -187,12 +293,13 @@ const [lastScrollY, setLastScrollY] = useState(0)
                   className="absolute left-0 top-full z-50 mt-3 w-72 rounded-xl border border-gray-100 bg-white p-2 shadow-xl"
                   onMouseEnter={handleDropdownMouseEnter}
                   onMouseLeave={handleDropdownMouseLeave}
+                  style={{ willChange: 'transform' }}
                 >
                   {services.slice(0, 3).map((svc) => (
                     <Link
                       key={svc.id}
                       to={`/services/${svc.slug}`}
-                      className="block rounded-lg p-3 relative group hover:bg-white transition duration-200 ease-out transform hover:scale-105"
+                      className="block rounded-lg p-3 relative group hover:bg-gray-50 transition-colors duration-200"
                     >
                       <p className="text-sm font-semibold text-gray-900 group-hover:text-[#9B2D30] transition-colors">
                         {svc.title}
@@ -207,13 +314,12 @@ const [lastScrollY, setLastScrollY] = useState(0)
           ))}
         </nav>
 
-        {/* Desktop Right Actions */}
         <div className="hidden lg:flex items-center gap-5 p-5">
           <a
             href={`tel:${phone.replace(/\s/g, '')}`}
             className="flex items-center gap-1 text-sm font-medium text-black"
           >
-            <Phone className="h-4 w-4 text-black" />
+            <PhoneIcon />
             {phone}
           </a>
           <Button
@@ -224,14 +330,13 @@ const [lastScrollY, setLastScrollY] = useState(0)
           </Button>
         </div>
 
-        {/* Mobile Right: Phone + Quote + Hamburger with Popup */}
         <div className="relative flex items-center gap-2 lg:hidden" ref={popupRef}>
           <a
             href={`tel:${phone.replace(/\s/g, '')}`}
             className="flex items-center justify-center rounded-full border border-gray-200 p-2 text-black transition hover:bg-gray-100"
             aria-label={`Call ${phone}`}
           >
-            <Phone className="h-5 w-5" />
+            <PhoneMobileIcon />
           </a>
           <Button
             onClick={openModal}
@@ -244,13 +349,11 @@ const [lastScrollY, setLastScrollY] = useState(0)
             aria-label="Toggle menu"
             className="ml-1 flex items-center justify-center rounded-md p-1 text-gray-700 transition hover:bg-gray-100"
           >
-            {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {mobileOpen ? <XIcon /> : <MenuIcon />}
           </button>
 
-          {/* Popup Menu Panel */}
           {mobileOpen && (
             <div className="absolute right-0 top-[calc(100%+12px)] z-50 w-64 rounded-2xl border border-gray-100 bg-white shadow-2xl overflow-hidden">
-              {/* Arrow tip */}
               <div className="absolute -top-[7px] right-4 h-3.5 w-3.5 rotate-45 border-l border-t border-gray-100 bg-white" />
 
               <nav className="flex flex-col py-2">
@@ -261,12 +364,12 @@ const [lastScrollY, setLastScrollY] = useState(0)
                         <button
                           onClick={() => toggleMobileDropdown(link.hasDropdown)}
                           className={cn(
-                            'flex w-full items-center justify-between px-4 py-3 text-sm font-medium transition hover:bg-gray-50',
+                            'flex w-full items-center justify-between px-4 py-3 text-sm font-medium transition-colors hover:bg-gray-50',
                             isActive(link.href) ? 'text-[#9B2D30]' : 'text-gray-800'
                           )}
                         >
                           {link.label}
-                          <ChevronDown
+                          <ChevronDownMobileIcon
                             className={cn(
                               'h-4 w-4 text-gray-400 transition-transform duration-200',
                               mobileExpandedDropdown === link.hasDropdown && 'rotate-180'
@@ -280,7 +383,7 @@ const [lastScrollY, setLastScrollY] = useState(0)
                               <Link
                                 key={cat.value}
                                 to={`/products?category=${cat.value}`}
-                                className="block py-1.5 text-xs font-medium text-gray-600 transition hover:text-[#9B2D30]"
+                                className="block py-1.5 text-xs font-medium text-gray-600 transition-colors hover:text-[#9B2D30]"
                                 onClick={() => setMobileOpen(false)}
                               >
                                 {cat.label}
@@ -295,7 +398,7 @@ const [lastScrollY, setLastScrollY] = useState(0)
                               <Link
                                 key={svc.id}
                                 to={`/services/${svc.slug}`}
-                                className="block py-1.5 text-xs font-medium text-gray-600 transition hover:text-[#9B2D30]"
+                                className="block py-1.5 text-xs font-medium text-gray-600 transition-colors hover:text-[#9B2D30]"
                                 onClick={() => setMobileOpen(false)}
                               >
                                 {svc.title}
@@ -308,7 +411,7 @@ const [lastScrollY, setLastScrollY] = useState(0)
                       <Link
                         to={link.href}
                         className={cn(
-                          'block px-4 py-3 text-sm font-medium transition hover:bg-gray-50',
+                          'block px-4 py-3 text-sm font-medium transition-colors hover:bg-gray-50',
                           isActive(link.href) ? 'text-[#9B2D30]' : 'text-gray-800'
                         )}
                         onClick={() => setMobileOpen(false)}
