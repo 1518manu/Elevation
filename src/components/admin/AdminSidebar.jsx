@@ -21,31 +21,15 @@ export default function AdminSidebar({ mobileMenuOpen, setMobileMenuOpen }) {
     navigate('/login')
   }
 
-  // Close mobile menu when clicking outside or on resize
+  // Close mobile menu when clicking outside
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024 && mobileMenuOpen) {
         setMobileMenuOpen(false)
       }
     }
-    
-    const handleClickOutside = (e) => {
-      const sidebar = document.querySelector('.admin-sidebar')
-      const toggle = document.querySelector('[data-menu-toggle]')
-      if (mobileMenuOpen && sidebar && !sidebar.contains(e.target) && toggle && !toggle.contains(e.target)) {
-        setMobileMenuOpen(false)
-      }
-    }
-    
     window.addEventListener('resize', handleResize)
-    document.addEventListener('mousedown', handleClickOutside)
-    document.addEventListener('touchstart', handleClickOutside)
-    
-    return () => {
-      window.removeEventListener('resize', handleResize)
-      document.removeEventListener('mousedown', handleClickOutside)
-      document.removeEventListener('touchstart', handleClickOutside)
-    }
+    return () => window.removeEventListener('resize', handleResize)
   }, [mobileMenuOpen, setMobileMenuOpen])
 
   // Group navigation items by category

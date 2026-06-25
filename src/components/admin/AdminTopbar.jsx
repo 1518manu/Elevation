@@ -87,7 +87,6 @@ export default function AdminTopbar({ title, breadcrumb, mobileMenuOpen, setMobi
         <button
           className="lg:hidden p-2 rounded hover:bg-gray-100"
           onClick={() => setMobileMenuOpen && setMobileMenuOpen(!mobileMenuOpen)}
-          data-menu-toggle
         >
           <Menu className="h-5 w-5" />
         </button>
