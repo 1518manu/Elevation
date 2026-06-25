@@ -54,35 +54,29 @@ export default function HomePage() {
       <section className="relative py-16 md:py-24 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80"
+            src="/assets/images/our_service.jpg"
             alt=""
             aria-hidden="true"
             className="h-full w-full object-cover object-center"
             loading="lazy"
           />
-           <div
-              className="absolute inset-0 "
-              style={{
-                background:
-                  'linear-gradient(1deg, rgba(158, 152, 152, 0.88) 0%, rgba(171, 160, 160, 0.7) 60%, rgba(158, 152, 152, 0.88) 100%)',
-              }}
-            />
+           
         </div>
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="mb-12 text-center"
+            className="mb-16 text-center bg-gray-100 rounded-xl p-8"
           >
-            <h2 className="mb-3 font-heading text-3xl font-semibold text-black md:text-4xl">
+            <h2 className="mb-0 font-heading text-3xl font-semibold text-black md:text-4xl ">
               Our Services
             </h2>
-            <div className="mx-auto mb-8 h-1 w-10 bg-red-500" />
-            <p className="mb-4 text-base font-bold text-black md:text-lg">
-              Built to Last. Maintained to Perform. Modernized to Transform.
+            <div className="mx-auto mb-8 h-1 w-10 bg-red-700" />
+            <p className="mb-4 text-base font-bold text-red-600 md:text-lg">
+              Built to Last  - Maintained to Perform  - Modernized to Transform 
             </p>
-            <p className="mx-auto max-w-3xl text-sm leading-relaxed text-Black/80 md:text-base">
+            <p className="mx-auto max-w-3xl font-semibold text-sm leading-relaxed text-Black/80 md:text-base">
               From expert elevator installation and proactive maintenance to complete
               modernization solutions, ALFAFUJI delivers reliable performance at every
               stage of your elevator&apos;s journey. We ensure safety, efficiency, and
