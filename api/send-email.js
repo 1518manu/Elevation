@@ -1,9 +1,19 @@
 import { Resend } from 'resend'
+import { createClient } from '@supabase/supabase-js'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
-const RECIPIENT_EMAIL = 'manudev2987@gmail.com'
+const SALES_TEAM_EMAIL = 'manudev2987@gmail.com' // TODO: Change to info@alfaelevator.in after domain verification
 const SENDER_EMAIL = 'onboarding@resend.dev' // Free Resend onboarding email for development. TODO: Change to 'noreply@alfaelevator.in' after domain verification at https://resend.com/domains
-const SIGNATURE_IMAGE_URL = process.env.SIGNATURE_IMAGE_URL || 'https://[SUPABASE_SIGNATURE_IMAGE_URL]' // TODO: Replace with actual Supabase image URL
+
+// Initialize Supabase for signature image
+const supabaseUrl = process.env.SUPABASE_URL
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY
+const supabase = createClient(supabaseUrl, supabaseAnonKey)
+
+// Fetch signature image URL from Supabase storage
+const { data: { publicUrl: SIGNATURE_IMAGE_URL } } = supabase.storage
+  .from('resumes')
+  .getPublicUrl('signature.png')
 
 export default async function handler(req, res) {
   // Set CORS headers
@@ -47,7 +57,7 @@ export default async function handler(req, res) {
 
     const result = await resend.emails.send({
       from: `ALFAFUJI Elevator <${SENDER_EMAIL}>`,
-      to: recipient || RECIPIENT_EMAIL,
+      to: recipient || SALES_TEAM_EMAIL,
       subject: emailContent.subject,
       html: emailContent.html,
     })
@@ -63,29 +73,87 @@ function formatQuoteEmail(data) {
   return {
     subject: `New Quote Request - ${data.full_name}`,
     html: `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-        <h2 style="color: #dc2626; border-bottom: 2px solid #dc2626; padding-bottom: 10px;">New Quote Request</h2>
-        
-        <div style="background-color: #f9fafb; padding: 15px; border-radius: 8px; margin: 20px 0;">
-          <h3 style="color: #1f2937; margin: 0 0 10px 0;">Customer Details</h3>
-          <p><strong>Name:</strong> ${data.full_name}</p>
-          <p><strong>Email:</strong> ${data.email}</p>
-          <p><strong>Phone:</strong> +91 ${data.phone}</p>
-          <p><strong>City:</strong> ${data.city}</p>
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>New Quote Request</title>
+      </head>
+      <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #ffffff;">
+        <div style="max-width: 650px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
+          
+          <div style="margin-bottom: 30px;">
+            <h1 style="font-size: 22px; font-weight: bold; color: #222; margin: 0 0 10px 0;">ALFAFUJI Elevators</h1>
+            <div style="width: 100%; height: 1px; background-color: #ddd; margin: 10px 0 20px 0;"></div>
+          </div>
+          
+          <div style="margin-bottom: 30px; font-size: 14px; color: #222; line-height: 1.7;">
+            <p style="margin: 0 0 10px 0;">Dear Sales Team,</p>
+            <p style="margin: 0 0 15px 0;">Greetings!</p>
+            
+            <p style="margin: 0 0 15px 0;">
+              A new quote request has been received. Please find the client details below and approach them for review.
+            </p>
+          </div>
+          
+          <div style="margin-bottom: 30px; background-color: #f9f9f9; padding: 20px; border-left: 4px solid #E87722;">
+            <h3 style="margin: 0 0 15px 0; color: #222; font-size: 16px; font-weight: bold;">Client Details</h3>
+            <div style="font-size: 14px; color: #222; line-height: 1.8;">
+              <p style="margin: 5px 0;"><strong>Name:</strong> ${data.full_name}</p>
+              <p style="margin: 5px 0;"><strong>Email:</strong> ${data.email}</p>
+              <p style="margin: 5px 0;"><strong>Phone:</strong> +91 ${data.phone}</p>
+              <p style="margin: 5px 0;"><strong>City:</strong> ${data.city}</p>
+            </div>
+          </div>
+          
+          <div style="margin-bottom: 30px; background-color: #f9f9f9; padding: 20px; border-left: 4px solid #E87722;">
+            <h3 style="margin: 0 0 15px 0; color: #222; font-size: 16px; font-weight: bold;">Quote Details</h3>
+            <div style="font-size: 14px; color: #222; line-height: 1.8;">
+              <p style="margin: 5px 0;"><strong>Elevator Type:</strong> ${data.elevator_type}</p>
+              <p style="margin: 5px 0;"><strong>Building Type:</strong> ${data.building_type}</p>
+              <p style="margin: 5px 0;"><strong>Number of Floors:</strong> ${data.num_floors}</p>
+            </div>
+          </div>
+          
+          ${data.message ? `
+          <div style="margin-bottom: 30px; background-color: #f9f9f9; padding: 20px; border-left: 4px solid #E87722;">
+            <h3 style="margin: 0 0 15px 0; color: #222; font-size: 16px; font-weight: bold;">Client Message</h3>
+            <p style="margin: 0; font-size: 14px; color: #222; line-height: 1.7; white-space: pre-wrap;">${data.message}</p>
+          </div>
+          ` : ''}
+          
+          <div style="margin-bottom: 30px; background-color: #FFF5EE; padding: 20px; border-left: 4px solid #E87722;">
+            <h3 style="margin: 0 0 10px 0; color: #E87722; font-size: 16px; font-weight: bold;">Action Required</h3>
+            <p style="margin: 0; font-size: 14px; color: #222; line-height: 1.7;">
+              Please approach this client for review and update the status with the manager.
+            </p>
+          </div>
+          
+          <div style="margin-bottom: 30px; font-size: 14px; color: #222; line-height: 1.7;">
+            <p style="margin: 0 0 10px 0;">Best Regards,</p>
+            <p style="margin: 0 0 5px 0; font-weight: bold;">Admin</p>
+            <p style="margin: 0; font-weight: bold;">ALFAFUJI Elevators</p>
+          </div>
+          
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+              <td style="width: 45%; vertical-align: top; padding-right: 20px;">
+                <img src="${SIGNATURE_IMAGE_URL}" alt="Signature" style="max-width: 100%; height: auto; display: block;">
+              </td>
+              <td style="width: 55%; vertical-align: top; font-size: 12px; color: #666;">
+                <p style="margin: 0 0 5px 0;"><strong>ALFAFUJI Elevators</strong></p>
+                <p style="margin: 0 0 5px 0;">[REPLACE THIS - Address]</p>
+                <p style="margin: 0 0 5px 0;">Phone: [REPLACE THIS]</p>
+                <!-- TODO: Uncomment after domain verification -->
+                <!-- <p style="margin: 0;">Email: info@alfaelevator.in</p> -->
+              </td>
+            </tr>
+          </table>
+          
         </div>
-
-        <div style="background-color: #f9fafb; padding: 15px; border-radius: 8px; margin: 20px 0;">
-          <h3 style="color: #1f2937; margin: 0 0 10px 0;">Elevator Requirements</h3>
-          <p><strong>Elevator Type:</strong> ${data.elevator_type}</p>
-          <p><strong>Number of Floors:</strong> ${data.num_floors}</p>
-          <p><strong>Building Type:</strong> ${data.building_type}</p>
-          ${data.message ? `<p><strong>Message:</strong> ${data.message}</p>` : ''}
-        </div>
-
-        <p style="color: #6b7280; font-size: 12px; margin-top: 20px;">
-          This inquiry was submitted on ${new Date().toLocaleDateString('en-IN', { dateStyle: 'full' })}
-        </p>
-      </div>
+      </body>
+      </html>
     `
   }
 }
@@ -94,27 +162,82 @@ function formatContactEmail(data) {
   return {
     subject: `New Contact Inquiry - ${data.subject}`,
     html: `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-        <h2 style="color: #dc2626; border-bottom: 2px solid #dc2626; padding-bottom: 10px;">New Contact Inquiry</h2>
-        
-        <div style="background-color: #f9fafb; padding: 15px; border-radius: 8px; margin: 20px 0;">
-          <h3 style="color: #1f2937; margin: 0 0 10px 0;">Contact Details</h3>
-          <p><strong>Name:</strong> ${data.full_name}</p>
-          <p><strong>Email:</strong> ${data.email}</p>
-          ${data.phone ? `<p><strong>Phone:</strong> ${data.phone}</p>` : ''}
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>New Contact Inquiry</title>
+      </head>
+      <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #ffffff;">
+        <div style="max-width: 650px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
+          
+          <div style="margin-bottom: 30px;">
+            <h1 style="font-size: 22px; font-weight: bold; color: #222; margin: 0 0 10px 0;">ALFAFUJI Elevators</h1>
+            <div style="width: 100%; height: 1px; background-color: #ddd; margin: 10px 0 20px 0;"></div>
+          </div>
+          
+          <div style="margin-bottom: 30px; font-size: 14px; color: #222; line-height: 1.7;">
+            <p style="margin: 0 0 10px 0;">Dear Sales Team,</p>
+            <p style="margin: 0 0 15px 0;">Greetings!</p>
+            
+            <p style="margin: 0 0 15px 0;">
+              A new contact inquiry has been received. Please find the client details below and approach them for review.
+            </p>
+          </div>
+          
+          <div style="margin-bottom: 30px; background-color: #f9f9f9; padding: 20px; border-left: 4px solid #E87722;">
+            <h3 style="margin: 0 0 15px 0; color: #222; font-size: 16px; font-weight: bold;">Client Details</h3>
+            <div style="font-size: 14px; color: #222; line-height: 1.8;">
+              <p style="margin: 5px 0;"><strong>Name:</strong> ${data.full_name}</p>
+              <p style="margin: 5px 0;"><strong>Email:</strong> ${data.email}</p>
+              ${data.phone ? `<p style="margin: 5px 0;"><strong>Phone:</strong> ${data.phone}</p>` : ''}
+            </div>
+          </div>
+          
+          <div style="margin-bottom: 30px; background-color: #f9f9f9; padding: 20px; border-left: 4px solid #E87722;">
+            <h3 style="margin: 0 0 15px 0; color: #222; font-size: 16px; font-weight: bold;">Inquiry Details</h3>
+            <div style="font-size: 14px; color: #222; line-height: 1.8;">
+              <p style="margin: 5px 0;"><strong>Subject:</strong> ${data.subject}</p>
+            </div>
+          </div>
+          
+          <div style="margin-bottom: 30px; background-color: #f9f9f9; padding: 20px; border-left: 4px solid #E87722;">
+            <h3 style="margin: 0 0 15px 0; color: #222; font-size: 16px; font-weight: bold;">Client Message</h3>
+            <p style="margin: 0; font-size: 14px; color: #222; line-height: 1.7; white-space: pre-wrap;">${data.message}</p>
+          </div>
+          
+          <div style="margin-bottom: 30px; background-color: #FFF5EE; padding: 20px; border-left: 4px solid #E87722;">
+            <h3 style="margin: 0 0 10px 0; color: #E87722; font-size: 16px; font-weight: bold;">Action Required</h3>
+            <p style="margin: 0; font-size: 14px; color: #222; line-height: 1.7;">
+              Please approach this client for review and update the status with the manager.
+            </p>
+          </div>
+          
+          <div style="margin-bottom: 30px; font-size: 14px; color: #222; line-height: 1.7;">
+            <p style="margin: 0 0 10px 0;">Best Regards,</p>
+            <p style="margin: 0 0 5px 0; font-weight: bold;">Admin</p>
+            <p style="margin: 0; font-weight: bold;">ALFAFUJI Elevators</p>
+          </div>
+          
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+              <td style="width: 45%; vertical-align: top; padding-right: 20px;">
+                <img src="${SIGNATURE_IMAGE_URL}" alt="Signature" style="max-width: 100%; height: auto; display: block;">
+              </td>
+              <td style="width: 55%; vertical-align: top; font-size: 12px; color: #666;">
+                <p style="margin: 0 0 5px 0;"><strong>ALFAFUJI Elevators</strong></p>
+                <p style="margin: 0 0 5px 0;">[REPLACE THIS - Address]</p>
+                <p style="margin: 0 0 5px 0;">Phone: [REPLACE THIS]</p>
+                <!-- TODO: Uncomment after domain verification -->
+                <!-- <p style="margin: 0;">Email: info@alfaelevator.in</p> -->
+              </td>
+            </tr>
+          </table>
+          
         </div>
-
-        <div style="background-color: #f9fafb; padding: 15px; border-radius: 8px; margin: 20px 0;">
-          <h3 style="color: #1f2937; margin: 0 0 10px 0;">Message</h3>
-          <p><strong>Subject:</strong> ${data.subject}</p>
-          <p><strong>Message:</strong></p>
-          <p style="white-space: pre-wrap;">${data.message}</p>
-        </div>
-
-        <p style="color: #6b7280; font-size: 12px; margin-top: 20px;">
-          This inquiry was submitted on ${new Date().toLocaleDateString('en-IN', { dateStyle: 'full' })}
-        </p>
-      </div>
+      </body>
+      </html>
     `
   }
 }
