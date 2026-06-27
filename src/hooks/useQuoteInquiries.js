@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase'
 import { STALE_TIME } from '@/lib/queryClient'
+import { sendQuoteEmail } from '@/lib/email'
 
 export const quoteInquiryKeys = {
   all: ['quote_inquiries'],
@@ -50,8 +51,13 @@ export function useCreateQuoteInquiry() {
       if (error) throw error
       return data
     },
-    onSuccess: () => {
+    onSuccess: async (data) => {
       queryClient.invalidateQueries({ queryKey: quoteInquiryKeys.all })
+      try {
+        await sendQuoteEmail(data)
+      } catch (emailError) {
+        console.error('Email sending failed, but inquiry was saved:', emailError)
+      }
     },
   })
 }

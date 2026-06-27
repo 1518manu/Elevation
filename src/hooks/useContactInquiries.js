@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase'
 import { STALE_TIME } from '@/lib/queryClient'
+import { sendContactEmail } from '@/lib/email'
 
 export const contactInquiryKeys = {
   all: ['contact_inquiries'],
@@ -47,8 +48,13 @@ export function useCreateContactInquiry() {
       if (error) throw error
       return data
     },
-    onSuccess: () => {
+    onSuccess: async (data) => {
       queryClient.invalidateQueries({ queryKey: contactInquiryKeys.all })
+      try {
+        await sendContactEmail(data)
+      } catch (emailError) {
+        console.error('Email sending failed, but inquiry was saved:', emailError)
+      }
     },
   })
 }

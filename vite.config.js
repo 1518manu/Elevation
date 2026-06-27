@@ -56,5 +56,17 @@ export default defineConfig({
     headers: {
       'X-Content-Type-Options': 'nosniff',
     },
+    proxy: {
+      '/api/resend': {
+        target: 'https://api.resend.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/resend/, ''),
+        configure: (proxy, options) => {
+          proxy.on('proxyReq', (proxyReq) => {
+            proxyReq.setHeader('Origin', 'https://api.resend.com')
+          })
+        },
+      },
+    },
   },
 })
