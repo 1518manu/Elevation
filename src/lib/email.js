@@ -1,11 +1,4 @@
-import { supabase } from '@/lib/supabase'
 
-// Fetch signature image URL from Supabase storage
-const { data: { publicUrl: SIGNATURE_IMAGE_URL } } = supabase.storage
-  .from('resumes')
-  .getPublicUrl('resumes-signature.png')
-
-const SALES_TEAM_EMAIL = 'manudev2987@gmail.com' // TODO: Change to info@alfaelevator.in after domain verification
 
 // Client acknowledgment email - sent to the quote/contact sender
 export function formatQuoteAcknowledgmentEmail(data) {
@@ -47,20 +40,6 @@ export function formatQuoteAcknowledgmentEmail(data) {
             <p style="margin: 0 0 10px 0;">Best Regards,</p>
             <p style="margin: 0 0 5px 0; font-weight: bold;">ALFAFUJI Elevators Team</p>
           </div>
-          
-          <table style="width: 100%; border-collapse: collapse;">
-            <tr>
-              <td style="width: 45%; vertical-align: top; padding-right: 20px;">
-                <img src="${SIGNATURE_IMAGE_URL}" alt="Signature" style="max-width: 100%; height: auto; display: block;">
-              </td>
-              <td style="width: 55%; vertical-align: top; font-size: 12px; color: #666;">
-                <p style="margin: 0 0 5px 0;"><strong>ALFAFUJI Elevators</strong></p>
-                <p style="margin: 0 0 5px 0;">[REPLACE THIS - Address]</p>
-                <p style="margin: 0 0 5px 0;">Phone: [REPLACE THIS]</p>
-                <p style="margin: 0;">Email: info@alfaelevator.in</p>
-              </td>
-            </tr>
-          </table>
           
         </div>
       </body>
@@ -109,20 +88,6 @@ export function formatContactAcknowledgmentEmail(data) {
             <p style="margin: 0 0 10px 0;">Best Regards,</p>
             <p style="margin: 0 0 5px 0; font-weight: bold;">ALFAFUJI Elevators Team</p>
           </div>
-          
-          <table style="width: 100%; border-collapse: collapse;">
-            <tr>
-              <td style="width: 45%; vertical-align: top; padding-right: 20px;">
-                <img src="${SIGNATURE_IMAGE_URL}" alt="Signature" style="max-width: 100%; height: auto; display: block;">
-              </td>
-              <td style="width: 55%; vertical-align: top; font-size: 12px; color: #666;">
-                <p style="margin: 0 0 5px 0;"><strong>ALFAFUJI Elevators</strong></p>
-                <p style="margin: 0 0 5px 0;">[REPLACE THIS - Address]</p>
-                <p style="margin: 0 0 5px 0;">Phone: [REPLACE THIS]</p>
-                <p style="margin: 0;">Email: info@alfaelevator.in</p>
-              </td>
-            </tr>
-          </table>
           
         </div>
       </body>
@@ -199,21 +164,6 @@ export function formatQuoteEmail(data) {
             <p style="margin: 0; font-weight: bold;">ALFAFUJI Elevators</p>
           </div>
           
-          <table style="width: 100%; border-collapse: collapse;">
-            <tr>
-              <td style="width: 45%; vertical-align: top; padding-right: 20px;">
-                <img src="${SIGNATURE_IMAGE_URL}" alt="Signature" style="max-width: 100%; height: auto; display: block;">
-              </td>
-              <td style="width: 55%; vertical-align: top; font-size: 12px; color: #666;">
-                <p style="margin: 0 0 5px 0;"><strong>ALFAFUJI Elevators</strong></p>
-                <p style="margin: 0 0 5px 0;">[REPLACE THIS - Address]</p>
-                <p style="margin: 0 0 5px 0;">Phone: [REPLACE THIS]</p>
-                <!-- TODO: Uncomment after domain verification -->
-                <!-- <p style="margin: 0;">Email: info@alfaelevator.in</p> -->
-              </td>
-            </tr>
-          </table>
-          
         </div>
       </body>
       </html>
@@ -283,48 +233,11 @@ export function formatContactEmail(data) {
             <p style="margin: 0; font-weight: bold;">ALFAFUJI Elevators</p>
           </div>
           
-          <table style="width: 100%; border-collapse: collapse;">
-            <tr>
-              <td style="width: 45%; vertical-align: top; padding-right: 20px;">
-                <img src="${SIGNATURE_IMAGE_URL}" alt="Signature" style="max-width: 100%; height: auto; display: block;">
-              </td>
-              <td style="width: 55%; vertical-align: top; font-size: 12px; color: #666;">
-                <p style="margin: 0 0 5px 0;"><strong>ALFAFUJI Elevators</strong></p>
-                <p style="margin: 0 0 5px 0;">[REPLACE THIS - Address]</p>
-                <p style="margin: 0 0 5px 0;">Phone: [REPLACE THIS]</p>
-                <!-- TODO: Uncomment after domain verification -->
-                <!-- <p style="margin: 0;">Email: info@alfaelevator.in</p> -->
-              </td>
-            </tr>
-          </table>
-          
         </div>
       </body>
       </html>
     `
   }
-}
-
-async function sendEmailToRecipient(recipient, subject, html) {
-  const response = await fetch('/api/send-email', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      type: 'custom',
-      recipient,
-      subject,
-      html,
-    }),
-  })
-  
-  if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error.message || 'Failed to send email')
-  }
-  
-  return await response.json()
 }
 
 export async function sendQuoteEmail(data) {
