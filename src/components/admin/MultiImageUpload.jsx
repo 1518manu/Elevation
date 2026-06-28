@@ -15,7 +15,7 @@ function SortableImage({ id, url, onRemove }) {
   return (
     <div ref={setNodeRef} style={style} className="relative flex items-center gap-2 rounded-lg border bg-white p-2">
       <button type="button" {...attributes} {...listeners} className="cursor-grab text-gray-400"><GripVertical className="h-4 w-4" /></button>
-      <img src={getImageUrl(url, 100)} alt="" className="h-12 w-12 rounded object-cover" />
+      <img src={getImageUrl(url, 100)} alt="" className="h-12 w-12 rounded object-cover" crossOrigin="anonymous" />
       <button type="button" onClick={() => onRemove(url)} className="ml-auto text-red-500"><X className="h-4 w-4" /></button>
     </div>
   )

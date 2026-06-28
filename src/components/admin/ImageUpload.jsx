@@ -61,6 +61,7 @@ export default function ImageUpload({
             src={getImageUrl(value, 800, 90)} 
             alt="Preview" 
             className="h-32 w-32 rounded-lg object-cover"
+            crossOrigin="anonymous"
             onError={(e) => {
               // Fallback to original URL if transformed version fails
               e.target.src = value

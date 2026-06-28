@@ -28,6 +28,7 @@ function Avatar({ name, photoUrl }) {
         src={getImageUrl(photoUrl, 80)}
         alt={name}
         className="h-11 w-11 shrink-0 rounded-full object-cover ring-2 ring-red-100"
+        crossOrigin="anonymous"
       />
     )
   }

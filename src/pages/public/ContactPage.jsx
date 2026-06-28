@@ -70,28 +70,28 @@ export default function ContactPage() {
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
                   <Label htmlFor="full_name">Full Name</Label>
-                  <Input id="full_name" {...register('full_name')} />
+                  <Input id="full_name" name="full_name" autoComplete="name" {...register('full_name')} />
                   {errors.full_name && <p className="text-xs text-red-500">{errors.full_name.message}</p>}
                 </div>
                 <div>
                   <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" {...register('email')} />
+                  <Input id="email" name="email" type="email" autoComplete="email" {...register('email')} />
                   {errors.email && <p className="text-xs text-red-500">{errors.email.message}</p>}
                 </div>
                 <div>
                   <Label htmlFor="phone">Phone (optional)</Label>
-                  <Input id="phone" {...register('phone')} />
+                  <Input id="phone" name="phone" type="tel" autoComplete="tel" {...register('phone')} />
                 </div>
                 <div>
                   <Label htmlFor="subject">Subject</Label>
-                  <Input id="subject" {...register('subject')} />
+                  <Input id="subject" name="subject" autoComplete="off" {...register('subject')} />
                   {errors.subject && <p className="text-xs text-red-500">{errors.subject.message}</p>}
                 </div>
               </div>
 
               <div className="mt-4">
                 <Label htmlFor="message">Message</Label>
-                <Textarea id="message" rows={5} {...register('message')} />
+                <Textarea id="message" name="message" rows={5} autoComplete="off" {...register('message')} />
                 {errors.message && <p className="text-xs text-red-500">{errors.message.message}</p>}
               </div>
 

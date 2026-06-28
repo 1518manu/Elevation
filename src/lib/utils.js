@@ -72,10 +72,8 @@ export function formatPhone(phone) {
 
 export function getImageUrl(url, width = 800, quality = 80) {
   if (!url) return ''
-  if (url.includes('supabase.co')) {
-    const separator = url.includes('?') ? '&' : '?'
-    return `${url}${separator}width=${width}&quality=${quality}`
-  }
+  // Skip transformation for Supabase URLs to avoid CORB issues
+  // Use original URL to prevent cross-origin blocking
   return url
 }
 

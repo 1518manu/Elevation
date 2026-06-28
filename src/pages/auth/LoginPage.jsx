@@ -45,12 +45,12 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" {...register('email')} />
+              <Input id="email" name="email" type="email" autoComplete="email" {...register('email')} />
               {errors.email && <p className="text-xs text-red-500">{errors.email.message}</p>}
             </div>
             <div>
               <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" {...register('password')} />
+              <Input id="password" name="password" type="password" autoComplete="current-password" {...register('password')} />
               {errors.password && <p className="text-xs text-red-500">{errors.password.message}</p>}
             </div>
             <Button type="submit" disabled={isSubmitting} className="w-full bg-black">{isSubmitting ? 'Signing in...' : 'Sign In'}</Button>

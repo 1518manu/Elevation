@@ -112,28 +112,28 @@ function QuoteModal({ open, onOpenChange, submitted, setSubmitted }) {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
                 <Label htmlFor="full_name">Full Name</Label>
-                <Input id="full_name" {...register('full_name')} aria-describedby={errors.full_name ? 'full_name-error' : undefined} />
+                <Input id="full_name" name="full_name" autoComplete="name" {...register('full_name')} aria-describedby={errors.full_name ? 'full_name-error' : undefined} />
                 {errors.full_name && <p id="full_name-error" className="mt-1 text-xs text-red-500">{errors.full_name.message}</p>}
               </div>
               <div>
                 <Label htmlFor="email">Email Address</Label>
-                <Input id="email" type="email" {...register('email')} aria-describedby={errors.email ? 'email-error' : undefined} />
+                <Input id="email" name="email" type="email" autoComplete="email" {...register('email')} aria-describedby={errors.email ? 'email-error' : undefined} />
                 {errors.email && <p id="email-error" className="mt-1 text-xs text-red-500">{errors.email.message}</p>}
               </div>
               <div>
                 <Label htmlFor="phone">Phone (+91)</Label>
-                <Input id="phone" type="tel" placeholder="7902512987" {...register('phone')} aria-describedby={errors.phone ? 'phone-error' : undefined} />
+                <Input id="phone" name="phone" type="tel" placeholder="7902512987" autoComplete="tel" {...register('phone')} aria-describedby={errors.phone ? 'phone-error' : undefined} />
                 {errors.phone && <p id="phone-error" className="mt-1 text-xs text-red-500">{errors.phone.message}</p>}
               </div>
               <div>
                 <Label htmlFor="city">City</Label>
-                <Input id="city" {...register('city')} aria-describedby={errors.city ? 'city-error' : undefined} />
+                <Input id="city" name="city" autoComplete="address-level2" {...register('city')} aria-describedby={errors.city ? 'city-error' : undefined} />
                 {errors.city && <p id="city-error" className="mt-1 text-xs text-red-500">{errors.city.message}</p>}
               </div>
               <div>
                 <Label htmlFor="elevator_type">Elevator Type</Label>
                 <Select value={watch('elevator_type')} onValueChange={(v) => setValue('elevator_type', v)}>
-                  <SelectTrigger id="elevator_type"><SelectValue placeholder="Select type" /></SelectTrigger>
+                  <SelectTrigger id="elevator_type" name="elevator_type"><SelectValue placeholder="Select type" /></SelectTrigger>
                   <SelectContent>
                     {ELEVATOR_TYPES.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}
                   </SelectContent>
@@ -142,13 +142,13 @@ function QuoteModal({ open, onOpenChange, submitted, setSubmitted }) {
               </div>
               <div>
                 <Label htmlFor="num_floors">Number of Floors</Label>
-                <Input id="num_floors" type="number" min={2} {...register('num_floors')} aria-describedby={errors.num_floors ? 'num_floors-error' : undefined} />
+                <Input id="num_floors" name="num_floors" type="number" min={2} autoComplete="off" {...register('num_floors')} aria-describedby={errors.num_floors ? 'num_floors-error' : undefined} />
                 {errors.num_floors && <p id="num_floors-error" className="mt-1 text-xs text-red-500">{errors.num_floors.message}</p>}
               </div>
               <div className="sm:col-span-2">
                 <Label htmlFor="building_type">Building Type</Label>
                 <Select value={watch('building_type')} onValueChange={(v) => setValue('building_type', v)}>
-                  <SelectTrigger id="building_type"><SelectValue placeholder="Select building type" /></SelectTrigger>
+                  <SelectTrigger id="building_type" name="building_type"><SelectValue placeholder="Select building type" /></SelectTrigger>
                   <SelectContent>
                     {BUILDING_TYPES.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}
                   </SelectContent>
@@ -157,7 +157,7 @@ function QuoteModal({ open, onOpenChange, submitted, setSubmitted }) {
               </div>
               <div className="sm:col-span-2">
                 <Label htmlFor="message">Message / Requirements (optional)</Label>
-                <Textarea id="message" rows={3} {...register('message')} />
+                <Textarea id="message" name="message" rows={3} autoComplete="off" {...register('message')} />
               </div>
             </div>
             <Button type="submit" disabled={isSubmitting} className="w-full bg-red-600 font-bold text-black hover:bg-red-700">

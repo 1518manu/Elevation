@@ -152,26 +152,26 @@ export default function JobDetailPage() {
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                   <div>
                     <Label htmlFor="full_name">Full Name</Label>
-                    <Input id="full_name" {...register('full_name')} />
+                    <Input id="full_name" name="full_name" autoComplete="name" {...register('full_name')} />
                     {errors.full_name && <p className="text-xs text-red-500">{errors.full_name.message}</p>}
                   </div>
                   <div>
                     <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" {...register('email')} />
+                    <Input id="email" name="email" type="email" autoComplete="email" {...register('email')} />
                     {errors.email && <p className="text-xs text-red-500">{errors.email.message}</p>}
                   </div>
                   <div>
                     <Label htmlFor="phone">Phone</Label>
-                    <Input id="phone" {...register('phone')} />
+                    <Input id="phone" name="phone" type="tel" autoComplete="tel" {...register('phone')} />
                     {errors.phone && <p className="text-xs text-red-500">{errors.phone.message}</p>}
                   </div>
                   <div>
                     <Label htmlFor="cover_letter">Cover Letter (optional)</Label>
-                    <Textarea id="cover_letter" {...register('cover_letter')} />
+                    <Textarea id="cover_letter" name="cover_letter" autoComplete="off" {...register('cover_letter')} />
                   </div>
                   <div>
                     <Label htmlFor="resume">Resume (PDF/DOCX, max 8MB)</Label>
-                    <Input id="resume" type="file" accept=".pdf,.docx" onChange={(e) => setValue('resume', e.target.files[0])} />
+                    <Input id="resume" name="resume" type="file" accept=".pdf,.docx" onChange={(e) => setValue('resume', e.target.files[0])} />
                     {errors.resume && <p className="text-xs text-red-500">{errors.resume.message}</p>}
                   </div>
                   <Button type="submit" disabled={isSubmitting} className="w-full bg-red-600 text-black">{isSubmitting ? 'Submitting...' : 'Submit Application'}</Button>
