@@ -1,13 +1,10 @@
 import { supabase } from '@/lib/supabase'
 
-const SENDER_EMAIL = 'onboarding@resend.dev' // Free Resend onboarding email for development. TODO: Change to 'noreply@alfaelevator.in' after domain verification at https://resend.com/domains
-
 // Fetch signature image URL from Supabase storage
 const { data: { publicUrl: SIGNATURE_IMAGE_URL } } = supabase.storage
   .from('resumes')
   .getPublicUrl('resumes-signature.png')
 
-const RESEND_API_KEY = import.meta.env.VITE_RESEND_API_KEY
 const SALES_TEAM_EMAIL = 'manudev2987@gmail.com' // TODO: Change to info@alfaelevator.in after domain verification
 
 // Client acknowledgment email - sent to the quote/contact sender
@@ -309,40 +306,37 @@ export function formatContactEmail(data) {
 }
 
 async function sendEmailToRecipient(recipient, subject, html) {
-  const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  const response = await fetch('/api/send-email', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      type: 'custom',
+      recipient,
+      subject,
+      html,
+    }),
+  })
   
-  if (isLocalhost) {
-    const response = await fetch('/api/resend/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: `ALFAFUJI Elevator <${SENDER_EMAIL}>`,
-        to: recipient,
-        subject,
-        html,
-      }),
-    })
-    
-    if (!response.ok) {
-      const error = await response.json()
-      throw new Error(error.message || 'Failed to send email')
-    }
-    
-    return await response.json()
-  } else {
+  if (!response.ok) {
+    const error = await response.json()
+    throw new Error(error.message || 'Failed to send email')
+  }
+  
+  return await response.json()
+}
+
+export async function sendQuoteEmail(data) {
+  try {
     const response = await fetch('/api/send-email', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        type: 'custom',
-        recipient,
-        subject,
-        html,
+        type: 'quote',
+        data,
       }),
     })
     
@@ -352,23 +346,6 @@ async function sendEmailToRecipient(recipient, subject, html) {
     }
     
     return await response.json()
-  }
-}
-
-export async function sendQuoteEmail(data) {
-  try {
-    // TODO: Uncomment after domain verification at https://resend.com/domains
-    // Send acknowledgment to client
-    // const { subject, html } = formatQuoteAcknowledgmentEmail(data)
-    // await sendEmailToRecipient(data.email, subject, html)
-    // console.log('Quote acknowledgment sent to client:', data.email)
-    
-    // Send internal email to sales team
-    const internalEmail = formatQuoteEmail(data)
-    await sendEmailToRecipient(SALES_TEAM_EMAIL, internalEmail.subject, internalEmail.html)
-    console.warn('Quote details sent to sales team:', SALES_TEAM_EMAIL)
-    
-    return { success: true }
   } catch (error) {
     console.error('Failed to send quote email:', error)
     throw error
@@ -377,18 +354,23 @@ export async function sendQuoteEmail(data) {
 
 export async function sendContactEmail(data) {
   try {
-    // TODO: Uncomment after domain verification at https://resend.com/domains
-    // Send acknowledgment to client
-    // const { subject, html } = formatContactAcknowledgmentEmail(data)
-    // await sendEmailToRecipient(data.email, subject, html)
-    // console.log('Contact acknowledgment sent to client:', data.email)
+    const response = await fetch('/api/send-email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        type: 'contact',
+        data,
+      }),
+    })
     
-    // Send internal email to sales team
-    const internalEmail = formatContactEmail(data)
-    await sendEmailToRecipient(SALES_TEAM_EMAIL, internalEmail.subject, internalEmail.html)
-    console.warn('Contact details sent to sales team:', SALES_TEAM_EMAIL)
+    if (!response.ok) {
+      const error = await response.json()
+      throw new Error(error.message || 'Failed to send email')
+    }
     
-    return { success: true }
+    return await response.json()
   } catch (error) {
     console.error('Failed to send contact email:', error)
     throw error

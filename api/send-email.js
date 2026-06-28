@@ -8,14 +8,23 @@ const SENDER_EMAIL = 'onboarding@resend.dev' // Free Resend onboarding email for
 // Initialize Supabase for signature image
 const supabaseUrl = process.env.SUPABASE_URL
 const supabaseAnonKey = process.env.SUPABASE_ANON_KEY
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('Missing Supabase environment variables: SUPABASE_URL and SUPABASE_ANON_KEY')
+}
+
 const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
-// Fetch signature image URL from Supabase storage
-const { data: { publicUrl: SIGNATURE_IMAGE_URL } } = supabase.storage
-  .from('resumes')
-  .getPublicUrl('signature.png')
+// Initialize Supabase for signature image
+const supabaseUrl = process.env.SUPABASE_URL
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY
+const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 export default async function handler(req, res) {
+  // Fetch signature image URL from Supabase storage
+  const { data: { publicUrl: SIGNATURE_IMAGE_URL } } = supabase.storage
+    .from('resumes')
+    .getPublicUrl('signature.png')
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Credentials', true)
   res.setHeader('Access-Control-Allow-Origin', '*')
@@ -46,9 +55,9 @@ export default async function handler(req, res) {
     let emailContent
 
     if (type === 'quote') {
-      emailContent = formatQuoteEmail(data)
+      emailContent = formatQuoteEmail(data, SIGNATURE_IMAGE_URL)
     } else if (type === 'contact') {
-      emailContent = formatContactEmail(data)
+      emailContent = formatContactEmail(data, SIGNATURE_IMAGE_URL)
     } else if (subject && html) {
       emailContent = { subject, html }
     } else {
@@ -69,7 +78,7 @@ export default async function handler(req, res) {
   }
 }
 
-function formatQuoteEmail(data) {
+function formatQuoteEmail(data, SIGNATURE_IMAGE_URL) {
   return {
     subject: `New Quote Request - ${data.full_name}`,
     html: `
@@ -158,7 +167,7 @@ function formatQuoteEmail(data) {
   }
 }
 
-function formatContactEmail(data) {
+function formatContactEmail(data, SIGNATURE_IMAGE_URL) {
   return {
     subject: `New Contact Inquiry - ${data.subject}`,
     html: `
